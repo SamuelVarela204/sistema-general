@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assest/sty.css">
+    <title>Inicio de sesión</title>
+</head>
+<body>
+    <!-- Volver-->
+    <form action="../index.html" class="back-form"><button class="back-btn" type="submit">← Volver</button></form>
+
+    <!-- Zona central (tarjeta) -->
+    <div class="spc">
+        <div class="profile-center">
+        <img src="../imagenes/placeholder.jfif" alt="Perfil" class="cirp" height="100" width="100">
+    </div>
+
+        <h1>Inicio de sesión</h1>
+        <!-- Formulario -->
+        <form class="login" action="princ.html" method="post" novalidate>
+            
+            <input type="email" name="correo" placeholder="Correo electrónico" required class="input-pastel" autocomplete="email">
+            <input type="password" name="contrasena" placeholder="Contraseña" required class="input-pastel" autocomplete="current-password">
+            <div class="secondary-row">
+                <label class="remember-label">
+                    <input type="checkbox" name="recordar" style="transform:scale(1.02); accent-color: #ff7a18;"> Recordarme
+                </label>
+                <a class="link-reg" href="registro.html">¿No estás registrado?</a>
+            </div>
+
+            <button type="submit" class="submit-btn">Iniciar sesión</button>
+        </form>
+    </div>
+</body>
+</html>
