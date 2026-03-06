@@ -19,7 +19,7 @@
     box-shadow: 0 4px 24px rgba(174,231,248,0.18);
 }
 .but{
-    background: linear-gradient(90deg, #ff8a65, #f06292);
+    background: linear-gradient(90deg, #ffddd2, #d69aae);
     color: white;
     padding: 12px 32px;
     border: none;
@@ -57,8 +57,8 @@
     box-shadow: 0 2px 8px rgba(174,231,248,0.08);
 }
 .input-pastel:focus {
-    border: 2.5px solid #f06292;
-    box-shadow: 0 0 8px #AEE7F8;
+    border: 2.5px solid #e0a6b9;
+    box-shadow: 0 0 8px #c0e3ee;
 }
 .tab {
     width: 40%;
@@ -76,8 +76,7 @@
 
 /* --- estilos movidos para princ.html --- */
 body {
-    background-image: url(../imagenes/wall.jpg);
-    background-repeat: no-repeat;
+    background: linear-gradient(135deg, #FAEBE1 100%, #F2FFF2 100%, #FAF0F9 100%);
     background-size: cover;
     display: flex;
     margin: 0;
@@ -281,7 +280,7 @@ body {
     cursor: pointer;
     padding: 0 16px;
     font-weight: 600;
-    background: linear-gradient(90deg,#ff8a65,#f06292);
+    background: linear-gradient(90deg,#fdccbd,#ffc0d5);
     color: white;
     border: none;
     box-shadow: 0 8px 20px rgba(240,100,140,0.12);
@@ -390,7 +389,7 @@ body {
 html,body{height:100%; margin:0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;}
 body{
     /* quitar oscurecimiento: solo la imagen de fondo */
-    background: url('../imagenes/wall.jpg') center/cover no-repeat;
+    background: linear-gradient(135deg, #FAEBE1 0%, #F2FFF2 50%, #FAF0F9 100%);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -486,7 +485,7 @@ body{
     color:#fff;
     font-weight:700;
     cursor:pointer;
-    background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    background: linear-gradient(90deg,#ecbfb1,#df9cb2);
     box-shadow: 0 8px 30px rgba(175,0,45,0.12);
     transition: transform .12s ease, box-shadow .12s ease;
 }
@@ -507,7 +506,7 @@ body{
     cursor: pointer;
     padding: 0 16px;
     font-weight: 600;
-    background: linear-gradient(90deg,#ff8a65,#f06292);
+    background: linear-gradient(90deg,#ecbfb1,#df9cb2);
     color: white;
     border: none;
     box-shadow: 0 8px 20px rgba(240,100,140,0.12);
@@ -574,5 +573,12 @@ body{
 @media (max-width: 600px){
     .site-footer{ padding: 10px 12px; margin: 16px 12px 0; font-size:0.9rem; }
 }
-
-/* ...existing code... */
+.cirlogo{
+    position: fixed;
+    top: 50px;
+    left: 150px;
+    border-radius: 50%;
+    border: 3px solid rgba(0,0,0,0.06);
+    box-shadow: 0 6px 18px rgba(228, 121, 0, 0.06);
+    background: #fff;
+}
