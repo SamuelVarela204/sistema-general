@@ -6,6 +6,13 @@ require_once __DIR__ . '/includes/functions.php';
 $con = conectarBD();
 $page = $_GET['page'] ?? 'home';
 
+// Manejar logout
+if ($page === 'logout') {
+    session_destroy();
+    header('Location: index.php');
+    exit;
+}
+
 switch ($page) {
     case 'login':
         require_once __DIR__ . '/views/login.php';
@@ -18,9 +25,6 @@ switch ($page) {
         break;
     case 'buscar':
         require_once __DIR__ . '/views/buscar.php';
-        break;
-    case 'logout':
-        require_once __DIR__ . '/logout.php';
         break;
     case 'home':
     default:
@@ -58,4 +62,5 @@ switch ($page) {
         require_once __DIR__ . '/includes/layout.php';
         break;
 }
+
 ?>

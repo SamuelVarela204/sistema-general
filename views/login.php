@@ -1,5 +1,5 @@
 <?php
-// NO iniciar sesión aquí, ya está activa
+// No iniciar sesión aquí, ya está activa
 // Solo verificamos si ya está logueado
 if (estaLogueado()) {
     redirigir('index.php');
@@ -11,11 +11,11 @@ ob_start();
 
 <div class="spc">
     <div class="profile-center">
-        <img src="public/images/placeholder.jfif" alt="Perfil" class="cirp" height="100" width="100">
+        <img src="public/images/placeholder.jfif" class="cirp" height="100" width="100">
     </div>
     <h1>Inicio de sesión</h1>
     
-    <form action="includes/verify.php" method="post" novalidate>
+    <form action="includes/procesar_login.php" method="post" novalidate>
         <input type="email" name="correo" placeholder="Correo electrónico" required class="input-pastel" autocomplete="email">
         <input type="password" name="contrasena" placeholder="Contraseña" required class="input-pastel" autocomplete="current-password">
         <div class="secondary-row">

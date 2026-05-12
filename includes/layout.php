@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="public/css/sty.css">
     <link rel="icon" href="public/images/placeholder.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title><?= $titulo ?? 'TAF - Bebidas' ?></title>
+    <title><?= isset($titulo) ? htmlspecialchars($titulo) . ' - TAF Bebidas' : 'TAF - Bebidas' ?></title>
 </head>
 
 <body>
@@ -21,9 +21,7 @@
             <a href="index.php?page=login"><button type="button" class="regINI-buttons">Iniciar sesión</button></a>
             <a href="index.php?page=register"><button type="button" class="regINI-buttons">Registro</button></a>
         <?php else: ?>
-            <form action="index.php?page=logout" method="post">
-                <button type="submit" class="regINI-buttons">Cerrar sesión</button>
-            </form>
+            <a href="index.php?page=logout"><button type="button" class="regINI-buttons">Cerrar sesión</button></a>
         <?php endif; ?>
     </div>
 

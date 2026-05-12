@@ -17,11 +17,11 @@ ob_start();
         </label>
     </div>
 
-    <form action="register_procesar.php" method="post" enctype="multipart/form-data" novalidate>
+    <form action="includes/procesar_registro.php" method="post" enctype="multipart/form-data" novalidate>
         <input type="file" id="profile-pic" name="profile-pic" accept="image/*" style="display:none;">
         <input type="text" name="nombre" placeholder="Nombre" required class="input-pastel">
         <input type="email" name="correo" placeholder="Correo" required class="input-pastel">
-        <input type="password" name="contrasena" placeholder="Contraseña" required class="input-pastel">
+        <input type="password" name="contrasena" placeholder="Contraseña (mínimo 6 caracteres)" required class="input-pastel">
         <label style="font-size:0.95rem; display:flex; gap:8px; align-items:center;">
             <input type="checkbox" name="terminos" required>
             <a href="https://youtu.be/GBcJyVTDYH4?t=8" target="_blank">Acepto los términos y condiciones</a>
@@ -29,6 +29,38 @@ ob_start();
         <button type="submit" class="submit-btn" style="width:100%;" name="regi">Registrar</button>
     </form>
 </div>
+
+<?php if (isset($_GET['error'])): ?>
+<script>
+    let message = '';
+    let type = 'error';
+    switch ('<?= htmlspecialchars($_GET['error'], ENT_QUOTES, 'UTF-8') ?>') {
+        case 'empty_fields':
+            message = 'Todos los campos son obligatorios.';
+            type = 'warning';
+            break;
+        case 'invalid_email':
+            message = 'El correo electrónico no es válido.';
+            break;
+        case 'weak_password':
+            message = 'La contraseña debe tener al menos 6 caracteres.';
+            break;
+        case 'email_exists':
+            message = 'Este correo ya está registrado.';
+            break;
+        case 'register_failed':
+            message = 'Error al registrar. Intenta de nuevo.';
+            break;
+        default:
+            message = 'Error desconocido.';
+    }
+    Swal.fire({
+        icon: type,
+        title: message,
+        confirmButtonText: 'Aceptar'
+    });
+</script>
+<?php endif; ?>
 
 <script>
     document.getElementById('profile-pic')?.addEventListener('change', function(e) {
