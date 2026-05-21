@@ -9,30 +9,24 @@ ob_start();
 ?>
 
 <div class="spc" style="width: 500px; gap: 20px;">
-    <div class="logo-tf">
-        <h3>Tropical & Fresh</h3>
-        <p>Sabores naturales</p>
-    </div>
+    <h1>REGISTRO</h1>
+
     <div class="profile-center">
-        <h1 style="margin-top: -30px;">REGISTRO</h1>
-        <label for="profile-pic" style="cursor: pointer; width:100%; height:100%; display:flex; align-items:center; justify-content:center; margin-top: -10px; margin-bottom: 20px;">
+        <label for="profile-pic" style="cursor: pointer; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
             <div id="circle-preview" class="cirp" aria-hidden="true"></div>
         </label>
     </div>
 
-    <form action="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/includes/procesar_registro.php" method="post" enctype="multipart/form-data" novalidate>
-       <input type="file" id="profile-pic" name="profile-pic" accept="image/*" style="display:none;">
+    <form action="includes/procesar_registro.php" method="post" enctype="multipart/form-data" novalidate>
+        <input type="file" id="profile-pic" name="profile-pic" accept="image/*" style="display:none;">
         <input type="text" name="nombre" placeholder="Nombre" required class="input-pastel">
         <input type="email" name="correo" placeholder="Correo" required class="input-pastel">
         <input type="password" name="contrasena" placeholder="Contraseña (mínimo 6 caracteres)" required class="input-pastel">
         <label style="font-size:0.95rem; display:flex; gap:8px; align-items:center;">
             <input type="checkbox" name="terminos" required>
-            <a href="https://youtu.be/GBcJyVTDYH4?t=8" target="_blank" style="margin-top: -5px;">Acepto los términos y condiciones</a>
+            <a href="https://youtu.be/GBcJyVTDYH4?t=8" target="_blank">Acepto los términos y condiciones</a>
         </label>
-        <button type="submit" class="submit-btn" style="width:100%; margin-top: 20px;" name="regi">Registrar</button>
-    <div class="back-home">
-        <a href="index.php">← Volver al inicio</a>
-    </div>
+        <button type="submit" class="submit-btn" style="width:100%;" name="regi">Registrar</button>
     </form>
 </div>
 

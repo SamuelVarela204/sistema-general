@@ -25,19 +25,6 @@
         <?php endif; ?>
     </div>
 
-    <?php
-    $descripcionPerfil = '';
-    if (estaLogueado() && !empty($_SESSION['correo'])) {
-        require_once __DIR__ . '/../config/db.php';
-        $con = conectarBD();
-        $descripcionPerfil = obtenerDescripcionUsuario($con, $_SESSION['correo']);
-        mysqli_close($con);
-        if (empty($descripcionPerfil) && !empty($_SESSION['descripcion'])) {
-            $descripcionPerfil = $_SESSION['descripcion'];
-        }
-    }
-    ?>
-
     <!-- Sidebar (solo para logueados) -->
     <?php if (estaLogueado()): ?>
         <div class="sidebar" id="sidebar">
@@ -48,8 +35,7 @@
                     <img src="public/images/placeholder.jfif" alt="Perfil">
                 <?php endif; ?>
             </div>
-            <h1 style="text-align: center; margin-bottom: 10px;"><?= htmlspecialchars($_SESSION['usuario']) ?></h1>
-            <h2 style="text-align: center;"><?= htmlspecialchars($descripcionPerfil) ?></h2>
+            <h2 style="text-align: center;"><?= htmlspecialchars($_SESSION['usuario']) ?></h2>
             <nav class="sidebar-menu">
                 <a href="index.php?page=perfil" class="menu-item">Perfil</a>
                 <a href="index.php?page=pedidos" class="menu-item">Pedidos</a>

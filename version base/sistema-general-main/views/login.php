@@ -1,4 +1,6 @@
-                                                                                                                                                                                                                                                                                                    <?php
+<?php
+// No iniciar sesión aquí, ya está activa
+// Solo verificamos si ya está logueado
 if (estaLogueado()) {
     redirigir('index.php');
 }
@@ -8,39 +10,24 @@ ob_start();
 ?>
 
 <div class="spc">
-    <div class="logo-tf">
-        <div class="logo-circle">
-            <span>T&F</span>
-        </div>
-        <h3>Tropical & Fresh</h3>
-        <p>Sabores naturales</p>
+    <div class="profile-center">
+        <img src="public/images/placeholder.jfif" class="cirp" height="100" width="100">
     </div>
-
-    <div class="welcome-message" style="margin-top: -40px">
-        <h1>Bienvenido de vuelta</h1>
-        <p>Ingresa tus datos para continuar</p>
-    </div>
+    <h1>Inicio de sesión</h1>
     
-    <form action="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/includes/verify.php" method="post" novalidate style="margin-top: -30px;">
+    <form action="includes/procesar_login.php" method="post" novalidate>
         <input type="email" name="correo" placeholder="Correo electrónico" required class="input-pastel" autocomplete="email">
         <input type="password" name="contrasena" placeholder="Contraseña" required class="input-pastel" autocomplete="current-password">
-        
         <div class="secondary-row">
             <label class="remember-label">
-                <input type="checkbox" name="recordar" class="checkbox-recordar" style="margin-left: 10px;margin-top: -10px;"> Recordarme    
+                <input type="checkbox" name="recordar" class="checkbox-recordar"> Recordarme
             </label>
-            <a class="link-reg" href="index.php?page=register" style="margin-left: 110px;">¿No estás registrado?</a><br>
+            <a class="link-reg" href="index.php?page=register">¿No estás registrado?</a>
         </div>
-        
-        <button type="submit" class="submit-btn" name="inic">Iniciar sesión</button><br>
+        <button type="submit" class="submit-btn" name="inic">Iniciar sesión</button>
     </form>
-
-    <div class="back-home">
-        <a href="index.php">← Volver al inicio</a>
-    </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php if (isset($_GET['error'])): ?>
 <script>
     let message = '';

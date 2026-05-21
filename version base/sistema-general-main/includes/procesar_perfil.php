@@ -84,9 +84,6 @@ if ($accion === 'actualizar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($imagen !== null) {
             $_SESSION['imagen'] = $imagen;
         }
-        if (!empty($descripcion)) {
-            $_SESSION['descripcion'] = $descripcion;
-        }
         mysqli_stmt_close($stmt);
         respuestaJSON(true, 'Perfil actualizado correctamente');
     }

@@ -39,7 +39,61 @@ $userData = obtenerCamposUsuario($con, $userEmail);
 ?>
 
 <style>
-
+.perfil-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+.perfil-foto {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+.profile-info {
+    flex: 1;
+    min-width: 260px;
+    max-width: 720px;
+}
+.profile-info h1 {
+    margin-bottom: 8px;
+}
+.profile-item {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+.profile-grid {
+    display: grid;
+    gap: 12px;
+    margin-top: 22px;
+}
+.profile-summary {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto 0 auto;
+    padding: 18px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+@media (max-width: 820px) {
+    main.spc {
+        width: calc(100% - 32px);
+        padding: 20px 16px;
+    }
+    .perfil-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .profile-info {
+        width: 100%;
+    }
+}
 </style>
 
 <main class="spc" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 20px 16px; position: relative;">

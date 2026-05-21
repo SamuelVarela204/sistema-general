@@ -19,23 +19,6 @@ function obtenerProductos($con, $busqueda = '') {
 }
 
 /**
- * Obtener descripción de perfil de un usuario
- */
-function obtenerDescripcionUsuario($con, $correo) {
-    $stmt = mysqli_prepare($con, 'SELECT descripcion FROM usuarios WHERE correo = ? LIMIT 1');
-    mysqli_stmt_bind_param($stmt, 's', $correo);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $descripcion = '';
-    if ($result && mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
-        $descripcion = $row['descripcion'] ?? '';
-    }
-    mysqli_stmt_close($stmt);
-    return $descripcion;
-}
-
-/**
  * Verificar si el usuario está logueado
  */
 function estaLogueado() {
@@ -46,11 +29,6 @@ function estaLogueado() {
  * Redirigir a una URL
  */
 function redirigir($url) {
-    if (strpos($url, '/') !== 0 && !preg_match('#^[a-zA-Z][a-zA-Z0-9+.-]*://#', $url)) {
-        $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
-        $url = ($base === '' || $base === '/') ? '/' . ltrim($url, '/') : $base . '/' . ltrim($url, '/');
-    }
-
     header("Location: $url");
     exit;
 }

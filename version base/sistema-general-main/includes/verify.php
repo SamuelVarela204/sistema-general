@@ -1,7 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/functions.php';
-require_once __DIR__ . '/../config/db.php';
+include 'config/db.php';
 
 $con = conectarBD();
 
@@ -10,7 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inic'])) {
     $password = $_POST['contrasena'] ?? '';
 
     if (empty($email) || empty($password)) {
-        redirigir('index.php?page=login&error=empty_fields');
+        header('Location: index.php?page=login&error=empty_fields');
+        exit;
     } else {
         $stmt = mysqli_prepare($con, 'SELECT nom_com, usu_con, imagen FROM usuarios WHERE correo = ? LIMIT 1');
         mysqli_stmt_bind_param($stmt, 's', $email);
@@ -29,12 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inic'])) {
                     setcookie('correo', $email, time() + 86400 * 30, '/');
                 }
 
-                redirigir('index.php?page=perfil');
+                header('Location: index.php?page=perfil');
+                exit;
             } else {
-                redirigir('index.php?page=login&error=wrong_password');
+                header('Location: index.php?page=login&error=wrong_password');
+                exit;
             }
         } else {
-            redirigir('index.php?page=login&error=user_not_found');
+            header('Location: index.php?page=login&error=user_not_found');
+            exit;
         }
 
         mysqli_stmt_close($stmt);
