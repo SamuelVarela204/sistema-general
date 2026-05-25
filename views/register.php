@@ -21,7 +21,7 @@ ob_start();
     </div>
 
     <form action="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/includes/procesar_registro.php" method="post" enctype="multipart/form-data" novalidate>
-       <input type="file" id="profile-pic" name="profile-pic" accept="image/*" style="display:none;">
+        <input type="file" id="profile-pic" name="profile-pic" accept="image/*" style="display:none;">
         <input type="text" name="nombre" placeholder="Nombre" required class="input-pastel">
         <input type="email" name="correo" placeholder="Correo" required class="input-pastel">
         <input type="password" name="contrasena" placeholder="Contraseña (mínimo 6 caracteres)" required class="input-pastel">
@@ -30,42 +30,42 @@ ob_start();
             <a href="https://youtu.be/GBcJyVTDYH4?t=8" target="_blank" style="margin-top: -5px;">Acepto los términos y condiciones</a>
         </label>
         <button type="submit" class="submit-btn" style="width:100%; margin-top: 20px;" name="regi">Registrar</button>
-    <div class="back-home">
-        <a href="index.php">← Volver al inicio</a>
-    </div>
+        <div class="back-home">
+            <a href="index.php">← Volver al inicio</a>
+        </div>
     </form>
 </div>
 
 <?php if (isset($_GET['error'])): ?>
-<script>
-    let message = '';
-    let type = 'error';
-    switch ('<?= htmlspecialchars($_GET['error'], ENT_QUOTES, 'UTF-8') ?>') {
-        case 'empty_fields':
-            message = 'Todos los campos son obligatorios.';
-            type = 'warning';
-            break;
-        case 'invalid_email':
-            message = 'El correo electrónico no es válido.';
-            break;
-        case 'weak_password':
-            message = 'La contraseña debe tener al menos 6 caracteres.';
-            break;
-        case 'email_exists':
-            message = 'Este correo ya está registrado.';
-            break;
-        case 'register_failed':
-            message = 'Error al registrar. Intenta de nuevo.';
-            break;
-        default:
-            message = 'Error desconocido.';
-    }
-    Swal.fire({
-        icon: type,
-        title: message,
-        confirmButtonText: 'Aceptar'
-    });
-</script>
+    <script>
+        let message = '';
+        let type = 'error';
+        switch ('<?= htmlspecialchars($_GET['error'], ENT_QUOTES, 'UTF-8') ?>') {
+            case 'empty_fields':
+                message = 'Todos los campos son obligatorios.';
+                type = 'warning';
+                break;
+            case 'invalid_email':
+                message = 'El correo electrónico no es válido.';
+                break;
+            case 'weak_password':
+                message = 'La contraseña debe tener al menos 6 caracteres.';
+                break;
+            case 'email_exists':
+                message = 'Este correo ya está registrado.';
+                break;
+            case 'register_failed':
+                message = 'Error al registrar. Intenta de nuevo.';
+                break;
+            default:
+                message = 'Error desconocido.';
+        }
+        Swal.fire({
+            icon: type,
+            title: message,
+            confirmButtonText: 'Aceptar'
+        });
+    </script>
 <?php endif; ?>
 
 <script>

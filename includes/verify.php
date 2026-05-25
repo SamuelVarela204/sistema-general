@@ -42,4 +42,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inic'])) {
 }
 
 mysqli_close($con);
-?>

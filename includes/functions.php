@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Obtener productos de la BD con búsqueda opcional
  */
-function obtenerProductos($con, $busqueda = '') {
+function obtenerProductos($con, $busqueda = '')
+{
     if ($busqueda) {
         $busqueda = "%$busqueda%";
         $stmt = mysqli_prepare($con, "SELECT id_pro, nom_pro, descripcion, precio FROM producto WHERE nom_pro LIKE ? OR descripcion LIKE ? LIMIT 20");
@@ -21,7 +23,8 @@ function obtenerProductos($con, $busqueda = '') {
 /**
  * Obtener descripción de perfil de un usuario
  */
-function obtenerDescripcionUsuario($con, $correo) {
+function obtenerDescripcionUsuario($con, $correo)
+{
     $stmt = mysqli_prepare($con, 'SELECT descripcion FROM usuarios WHERE correo = ? LIMIT 1');
     mysqli_stmt_bind_param($stmt, 's', $correo);
     mysqli_stmt_execute($stmt);
@@ -38,14 +41,16 @@ function obtenerDescripcionUsuario($con, $correo) {
 /**
  * Verificar si el usuario está logueado
  */
-function estaLogueado() {
+function estaLogueado()
+{
     return isset($_SESSION['usuario']) && !empty($_SESSION['usuario']);
 }
 
 /**
  * Redirigir a una URL
  */
-function redirigir($url) {
+function redirigir($url)
+{
     if (strpos($url, '/') !== 0 && !preg_match('#^[a-zA-Z][a-zA-Z0-9+.-]*://#', $url)) {
         $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
         $url = ($base === '' || $base === '/') ? '/' . ltrim($url, '/') : $base . '/' . ltrim($url, '/');
@@ -58,21 +63,24 @@ function redirigir($url) {
 /**
  * Sanitizar HTML para mostrar
  */
-function sanitizar($texto) {
+function sanitizar($texto)
+{
     return htmlspecialchars($texto, ENT_QUOTES, 'UTF-8');
 }
 
 /**
  * Validar email
  */
-function esEmailValido($email) {
+function esEmailValido($email)
+{
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
 /**
  * Generar respuesta JSON
  */
-function respuestaJSON($exito, $mensaje, $datos = []) {
+function respuestaJSON($exito, $mensaje, $datos = [])
+{
     header('Content-Type: application/json');
     echo json_encode([
         'exito' => $exito,
@@ -81,5 +89,3 @@ function respuestaJSON($exito, $mensaje, $datos = []) {
     ]);
     exit;
 }
-
-?>

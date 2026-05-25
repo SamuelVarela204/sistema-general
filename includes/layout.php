@@ -45,7 +45,7 @@
                 <?php if (!empty($_SESSION['imagen'])): ?>
                     <img src="data:image/jpeg;base64,<?= base64_encode($_SESSION['imagen']) ?>" alt="Perfil">
                 <?php else: ?>
-                    <img src="public/images/placeholder.jfif" alt="Perfil">
+                    <img src="public/images/placeholder.png" alt="Perfil">
                 <?php endif; ?>
             </div>
             <h1 style="text-align: center; margin-bottom: 10px;"><?= htmlspecialchars($_SESSION['usuario']) ?></h1>
@@ -61,7 +61,7 @@
     <?php endif; ?>
 
     <!-- Contenido específico de cada página -->
-    <?= $contenido ?>
+    <?= $contenido ?? '' ?>
 
     <!-- Footer -->
     <footer class="site-footer">

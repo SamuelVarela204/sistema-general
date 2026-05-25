@@ -27,13 +27,13 @@ ob_start();
 
     <?php if (!empty($busqueda)): ?>
         <h2>Resultados para: <strong><?= htmlspecialchars($busqueda) ?></strong></h2>
-        
+
         <?php if (!empty($productos)): ?>
             <div class="cards-grid">
                 <?php foreach ($productos as $prod): ?>
                     <div class="card">
                         <div class="thumb">
-                            <img src="public/images/placeholder.jfif" alt="<?= htmlspecialchars($prod['nom_pro']) ?>">
+                            <img src="public/images/placeholder.png" alt="<?= htmlspecialchars($prod['nom_pro']) ?>">
                         </div>
                         <div class="info">
                             <h3><?= htmlspecialchars($prod['nom_pro']) ?></h3>

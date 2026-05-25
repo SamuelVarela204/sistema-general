@@ -11,13 +11,15 @@ ob_start();
 $userEmail = $_SESSION['correo'];
 $con = conectarBD();
 
-function columnaExiste($con, $columna) {
+function columnaExiste($con, $columna)
+{
     $columna = mysqli_real_escape_string($con, $columna);
     $resultado = mysqli_query($con, "SHOW COLUMNS FROM usuarios LIKE '" . $columna . "'");
     return $resultado && mysqli_num_rows($resultado) > 0;
 }
 
-function obtenerCamposUsuario($con, $correo) {
+function obtenerCamposUsuario($con, $correo)
+{
     $campos = ['nom_com', 'imagen', 'telefono'];
     foreach (['direccion', 'alergias', 'descripcion'] as $campo) {
         if (columnaExiste($con, $campo)) {
@@ -46,7 +48,7 @@ $userData = obtenerCamposUsuario($con, $userEmail);
     <div style="text-align: center;">
         <h1><strong>MI PERFIL</strong></h1>
     </div>
-    
+
     <section class="perfil-header">
         <div class="cirp perfil-foto" style="background-image: url('data:image/jpeg;base64,<?php echo $_SESSION['imagen'] ? base64_encode($_SESSION['imagen']) : ''; ?>');"></div>
         <div class="profile-info">
@@ -80,17 +82,19 @@ $userData = obtenerCamposUsuario($con, $userEmail);
 </main>
 
 <script>
-const defaultNombre = <?php echo json_encode($userData['nom_com'] ?: $_SESSION['usuario']); ?>;
-const defaultTelefono = <?php echo json_encode($userData['telefono'] ?? ''); ?>;
-const defaultDireccion = <?php echo json_encode($userData['direccion'] ?? ''); ?>;
-const defaultAlergias = <?php echo json_encode($userData['alergias'] ?? ''); ?>;
-const defaultDescripcion = <?php echo json_encode($userData['descripcion'] ?? ''); ?>;
+    const defaultNombre = <?php echo json_encode($userData['nom_com'] ?: $_SESSION['usuario']); ?>;
+    const defaultTelefono = <?php echo json_encode($userData['telefono'] ?? ''); ?>;
+    const defaultDireccion = <?php echo json_encode($userData['direccion'] ?? ''); ?>;
+    const defaultAlergias = <?php echo json_encode($userData['alergias'] ?? ''); ?>;
+    const defaultDescripcion = <?php echo json_encode($userData['descripcion'] ?? ''); ?>;
 
-// Editar perfil con SweetAlert2
-document.getElementById('editarPerfilBtn')?.addEventListener('click', async () => {
-    const { value: formValues } = await Swal.fire({
-        title: 'Editar Perfil',
-        html: `
+    // Editar perfil con SweetAlert2
+    document.getElementById('editarPerfilBtn')?.addEventListener('click', async () => {
+        const {
+            value: formValues
+        } = await Swal.fire({
+            title: 'Editar Perfil',
+            html: `
             <form id="editForm" style="display: grid; gap: 12px; text-align: left;">
                 <label>
                     <span style="font-weight: 600;">Nombre:</span>
@@ -118,115 +122,122 @@ document.getElementById('editarPerfilBtn')?.addEventListener('click', async () =
                 </label>
             </form>
         `,
-        focusConfirm: false,
-        showCancelButton: true,
-        confirmButtonText: 'Guardar cambios',
-        cancelButtonText: 'Cancelar',
-        preConfirm: () => {
-            const nombre = document.getElementById('nombre').value.trim();
-            const telefono = document.getElementById('telefono').value.trim();
-            const direccion = document.getElementById('direccion').value.trim();
-            const alergias = document.getElementById('alergias').value.trim();
-            const descripcion = document.getElementById('descripcion').value.trim();
-            const imagen = document.getElementById('imagen').files[0];
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: 'Guardar cambios',
+            cancelButtonText: 'Cancelar',
+            preConfirm: () => {
+                const nombre = document.getElementById('nombre').value.trim();
+                const telefono = document.getElementById('telefono').value.trim();
+                const direccion = document.getElementById('direccion').value.trim();
+                const alergias = document.getElementById('alergias').value.trim();
+                const descripcion = document.getElementById('descripcion').value.trim();
+                const imagen = document.getElementById('imagen').files[0];
 
-            if (!nombre) {
-                Swal.showValidationMessage('El nombre es obligatorio');
-                return false;
+                if (!nombre) {
+                    Swal.showValidationMessage('El nombre es obligatorio');
+                    return false;
+                }
+
+                return {
+                    nombre,
+                    telefono,
+                    direccion,
+                    alergias,
+                    descripcion,
+                    imagen
+                };
+            }
+        });
+
+        if (formValues) {
+            const formData = new FormData();
+            formData.append('accion', 'actualizar');
+            formData.append('nombre', formValues.nombre);
+            formData.append('telefono', formValues.telefono);
+            formData.append('direccion', formValues.direccion);
+            formData.append('alergias', formValues.alergias);
+            formData.append('descripcion', formValues.descripcion);
+            if (formValues.imagen) {
+                formData.append('imagen', formValues.imagen);
             }
 
-            return { nombre, telefono, direccion, alergias, descripcion, imagen };
-        }
-    });
-
-    if (formValues) {
-        const formData = new FormData();
-        formData.append('accion', 'actualizar');
-        formData.append('nombre', formValues.nombre);
-        formData.append('telefono', formValues.telefono);
-        formData.append('direccion', formValues.direccion);
-        formData.append('alergias', formValues.alergias);
-        formData.append('descripcion', formValues.descripcion);
-        if (formValues.imagen) {
-            formData.append('imagen', formValues.imagen);
-        }
-
-        try {
-            const res = await fetch('includes/procesar_perfil.php', {
-                method: 'POST',
-                body: formData
-            });
-            const result = await res.json();
-
-            if (result.exito) {
-                await Swal.fire({
-                    icon: 'success',
-                    title: result.mensaje,
-                    timer: 1500
+            try {
+                const res = await fetch('includes/procesar_perfil.php', {
+                    method: 'POST',
+                    body: formData
                 });
-                location.reload();
-            } else {
+                const result = await res.json();
+
+                if (result.exito) {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: result.mensaje,
+                        timer: 1500
+                    });
+                    location.reload();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: result.mensaje
+                    });
+                }
+            } catch (error) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: result.mensaje
+                    text: 'Ocurrió un error al actualizar el perfil'
                 });
             }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Ocurrió un error al actualizar el perfil'
-            });
         }
-    }
-});
-
-// Eliminar perfil
-document.getElementById('borrarPerfilBtn')?.addEventListener('click', async () => {
-    const confirm = await Swal.fire({
-        title: '¿Eliminar perfil?',
-        text: 'Esta acción no se puede deshacer.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
     });
 
-    if (confirm.isConfirmed) {
-        const formData = new FormData();
-        formData.append('accion', 'eliminar');
+    // Eliminar perfil
+    document.getElementById('borrarPerfilBtn')?.addEventListener('click', async () => {
+        const confirm = await Swal.fire({
+            title: '¿Eliminar perfil?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
 
-        try {
-            const res = await fetch('includes/procesar_perfil.php', {
-                method: 'POST',
-                body: formData
-            });
-            const result = await res.json();
+        if (confirm.isConfirmed) {
+            const formData = new FormData();
+            formData.append('accion', 'eliminar');
 
-            if (result.exito) {
-                await Swal.fire({
-                    icon: 'success',
-                    title: result.mensaje,
-                    timer: 1500
+            try {
+                const res = await fetch('includes/procesar_perfil.php', {
+                    method: 'POST',
+                    body: formData
                 });
-                window.location.href = 'index.php';
-            } else {
+                const result = await res.json();
+
+                if (result.exito) {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: result.mensaje,
+                        timer: 1500
+                    });
+                    window.location.href = 'index.php';
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: result.mensaje
+                    });
+                }
+            } catch (error) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: result.mensaje
+                    text: 'Ocurrió un error al eliminar el perfil'
                 });
             }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Ocurrió un error al eliminar el perfil'
-            });
         }
-    }
-});
+    });
 </script>
 
 <?php

@@ -13,7 +13,8 @@ $con = conectarBD();
 $userEmail = $_SESSION['correo'];
 $accion = $_GET['accion'] ?? $_POST['accion'] ?? '';
 
-function columnaExiste($con, $columna) {
+function columnaExiste($con, $columna)
+{
     $columna = mysqli_real_escape_string($con, $columna);
     $resultado = mysqli_query($con, "SHOW COLUMNS FROM usuarios LIKE '" . $columna . "'");
     return $resultado && mysqli_num_rows($resultado) > 0;
@@ -109,4 +110,3 @@ if ($accion === 'eliminar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 respuestaJSON(false, 'Acción no válida');
-?>
