@@ -1,6 +1,6 @@
 <?php
 if (!isset($con)) {
-    die('Error: Conexión no disponible');
+    $con = conectarBD();
 }
 
 $titulo = 'Búsqueda';
@@ -11,9 +11,7 @@ if (!empty($busqueda)) {
     $productos = obtenerProductos($con, $busqueda);
 }
 
-ob_start();
 ?>
-
 <div class="content">
     <div class="search-container">
         <div class="search-box">
@@ -50,8 +48,3 @@ ob_start();
         <p style="text-align: center; padding: 40px; font-size: 18px;">Ingresa un término de búsqueda.</p>
     <?php endif; ?>
 </div>
-
-<?php
-$contenido = ob_get_clean();
-require_once __DIR__ . '/../includes/layout.php';
-?>

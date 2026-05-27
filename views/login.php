@@ -4,7 +4,6 @@ if (estaLogueado()) {
 }
 
 $titulo = 'Iniciar sesión';
-ob_start();
 ?>
 
 <div class="spc">
@@ -66,8 +65,3 @@ ob_start();
         });
     </script>
 <?php endif; ?>
-
-<?php
-$contenido = ob_get_clean();
-require_once __DIR__ . '/../includes/layout.php';
-?>

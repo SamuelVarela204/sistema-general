@@ -5,7 +5,6 @@ if (estaLogueado()) {
 }
 
 $titulo = 'Registro';
-ob_start();
 ?>
 
 <div class="spc" style="width: 500px; gap: 20px;">
@@ -84,8 +83,3 @@ ob_start();
         document.getElementById('profile-pic').click();
     });
 </script>
-
-<?php
-$contenido = ob_get_clean();
-require_once __DIR__ . '/../includes/layout.php';
-?>

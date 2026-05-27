@@ -1,16 +1,13 @@
-<?php
-// Este archivo envuelve todas las páginas
-?>
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/css/sty.css">
+    <link rel="stylesheet" href="public/css/style.css">
     <link rel="icon" href="public/images/placeholder.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title><?= isset($titulo) ? htmlspecialchars($titulo) . ' - TAF Bebidas' : 'TAF - Bebidas' ?></title>
+    <title><?= isset($titulo) ? htmlspecialchars($titulo) . ' - Tropical & Fresh' : 'Tropical & Fresh' ?></title>
 </head>
 
 <body>
@@ -49,7 +46,7 @@
                 <?php endif; ?>
             </div>
             <h1 style="text-align: center; margin-bottom: 10px;"><?= htmlspecialchars($_SESSION['usuario']) ?></h1>
-            <h2 style="text-align: center;"><?= htmlspecialchars($descripcionPerfil) ?></h2>
+            <h2 style="text-align: center;"><?= htmlspecialchars($descripcionPerfil)?></h2>
             <nav class="sidebar-menu">
                 <a href="index.php?page=perfil" class="menu-item">Perfil</a>
                 <a href="index.php?page=pedidos" class="menu-item">Pedidos</a>
@@ -66,7 +63,7 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
-            <p><a href="index.php?page=copyright" class="footer-link">&copy;</a>2025 Samuel Varela — Todos los derechos reservados.</p>
+            <p><a href="#" class="footer-link">&copy;</a>2025 Samuel Varela — Todos los derechos reservados.</p>
         </div>
     </footer>
 

@@ -1,15 +1,15 @@
 <?php
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'taf2');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-
-function conectarBD() {
-    $con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+function conectarBD()
+{
+    $host = 'localhost';
+    $dbname = 'taf2';
+    $username = 'root';
+    $password = '';
+    $con = mysqli_connect($host, $username, $password, $dbname);
     if (!$con) {
-        die("Error de conexión: " . mysqli_connect_error());
+        error_log('Error de conexión a la base de datos: ' . mysqli_connect_error());
+        die('Error de conexión a la base de datos: ' . mysqli_connect_error());
     }
-    mysqli_set_charset($con, 'utf8');
+    mysqli_set_charset($con, 'utf8mb4');
     return $con;
 }
-?>

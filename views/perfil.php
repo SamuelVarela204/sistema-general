@@ -5,7 +5,6 @@ if (!estaLogueado()) {
 }
 
 $titulo = 'Mi Perfil';
-ob_start();
 
 // Obtener datos actualizados del usuario
 $userEmail = $_SESSION['correo'];
@@ -239,8 +238,3 @@ $userData = obtenerCamposUsuario($con, $userEmail);
         }
     });
 </script>
-
-<?php
-$contenido = ob_get_clean();
-require_once __DIR__ . '/../includes/layout.php';
-?>
