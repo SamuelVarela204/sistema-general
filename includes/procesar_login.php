@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inic'])) {
                 setcookie('correo', $email, time() + 86400 * 30, '/');
             }
 
-            redirigir('index.php?page=perfil');
+            redirigir('index.php');
         } else {
             redirigir('index.php?page=login&error=wrong_password');
         }

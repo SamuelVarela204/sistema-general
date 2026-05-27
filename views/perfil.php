@@ -43,7 +43,7 @@ $userData = obtenerCamposUsuario($con, $userEmail);
 
 </style>
 
-<main class="spc" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 20px 16px; position: relative;">
+<main class="spc" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 20px 16px; position: relative; margin-top: 30px;">
     <div style="text-align: center;">
         <h1><strong>MI PERFIL</strong></h1>
     </div>
@@ -70,13 +70,26 @@ $userData = obtenerCamposUsuario($con, $userEmail);
     <section class="profile-summary">
         <h2 style="margin:0 0 10px 0;">Descripción</h2>
         <p style="margin:0; line-height: 1.75;">
-            <?php echo htmlspecialchars($userData['descripcion'] ?: "Hola, soy " . $_SESSION['usuario'] . ". Me gustan las bebidas tropicales."); ?>
+            <?php echo htmlspecialchars($userData['descripcion'] ?: "Perfil sin descripción."); ?>
         </p>
     </section>
 
     <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 30px;">
-        <button id="editarPerfilBtn" type="button" class="submit-btn">Editar perfil</button>
-        <button id="borrarPerfilBtn" class="delet-buttons">Borrar Perfil</button>
+        <button id="editarPerfilBtn" type="button" class="submit-btn" style="width: 140px; height: 56px;">Editar perfil</button>
+        <button id="borrarPerfilBtn" type="button" class="delet-buttons mi-boton" style="width: 140px; height: 56px;">Borrar Perfil</button>
+        <audio id="sonido-hover" src="public/audio/grito.mp3" preload="auto" controls style="opacity: 0; width: 0; height: 0; position: absolute; pointer-events: none; overflow: hidden;"></audio>
+        <script>
+            const sonidoHover = document.getElementById('sonido-hover');
+            const botonBorrar = document.getElementById('borrarPerfilBtn');
+
+            botonBorrar?.addEventListener('mouseenter', () => {
+                if (!sonidoHover) return;
+                sonidoHover.currentTime = 0;
+                sonidoHover.play().catch(() => {
+                    // Algunos navegadores requieren interacción previa para permitir sonido
+                });
+            });
+        </script>
     </div>
 </main>
 
@@ -94,33 +107,34 @@ $userData = obtenerCamposUsuario($con, $userEmail);
         } = await Swal.fire({
             title: 'Editar Perfil',
             html: `
-            <form id="editForm" style="display: grid; gap: 12px; text-align: left;">
-                <label>
-                    <span style="font-weight: 600;">Nombre:</span>
-                    <input type="text" id="nombre" name="nombre" value="${defaultNombre}" class="swal2-input" style="width:100%;">
+            <form id="editForm" style="display: grid; gap: 12px; max-width: 450px; margin: 0 auto;">
+                <label style="display: grid; gap: 4px;">
+                    <span style="font-weight: 600; text-align: center; font-size: 0.9rem;">Nombre</span>
+                    <input type="text" id="nombre" name="nombre" value="${defaultNombre}" class="swal2-input">
                 </label>
-                <label>
-                    <span style="font-weight: 600;">Teléfono:</span>
-                    <input type="tel" id="telefono" name="telefono" value="${defaultTelefono}" class="swal2-input" style="width:100%;">
+                <label style="display: grid; gap: 4px;">
+                    <span style="font-weight: 600; text-align: center; font-size: 0.9rem;">Teléfono</span>
+                    <input type="tel" id="telefono" name="telefono" value="${defaultTelefono}" class="swal2-input">
                 </label>
-                <label>
-                    <span style="font-weight: 600;">Dirección:</span>
-                    <input type="text" id="direccion" name="direccion" value="${defaultDireccion}" class="swal2-input" style="width:100%;">
+                <label style="display: grid; gap: 4px;">
+                    <span style="font-weight: 600; text-align: center; font-size: 0.9rem;">Dirección</span>
+                    <input type="text" id="direccion" name="direccion" value="${defaultDireccion}" class="swal2-input">
                 </label>
-                <label>
-                    <span style="font-weight: 600;">Alergias:</span>
-                    <input type="text" id="alergias" name="alergias" value="${defaultAlergias}" class="swal2-input" style="width:100%;">
+                <label style="display: grid; gap: 4px;">
+                    <span style="font-weight: 600; text-align: center; font-size: 0.9rem;">Alergias</span>
+                    <input type="text" id="alergias" name="alergias" value="${defaultAlergias}" class="swal2-input">
                 </label>
-                <label>
-                    <span style="font-weight: 600;">Descripción:</span>
-                    <textarea id="descripcion" class="swal2-textarea" style="width:100%; min-height:100px;">${defaultDescripcion}</textarea>
+                <label style="display: grid; gap: 4px;">
+                    <span style="font-weight: 600; text-align: center; font-size: 0.9rem;">Descripción</span>
+                    <textarea id="descripcion" class="swal2-textarea" style="min-height:100px;">${defaultDescripcion}</textarea>
                 </label>
-                <label>
-                    <span style="font-weight: 600;">Foto de perfil:</span>
-                    <input type="file" id="imagen" name="imagen" accept="image/*" class="swal2-file" style="width:100%; padding:8px;">
+                <label style="display: grid; gap: 4px;">
+                    <span style="font-weight: 600; text-align: center; font-size: 0.9rem;">Foto de perfil</span>
+                    <input type="file" id="imagen" name="imagen" accept="image/*" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
                 </label>
             </form>
         `,
+            width: '650px',
             focusConfirm: false,
             showCancelButton: true,
             confirmButtonText: 'Guardar cambios',

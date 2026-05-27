@@ -51,11 +51,22 @@ function estaLogueado()
  */
 function redirigir($url)
 {
-    if (strpos($url, '/') !== 0 && !preg_match('#^[a-zA-Z][a-zA-Z0-9+.-]*://#', $url)) {
-        $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
-        $url = ($base === '' || $base === '/') ? '/' . ltrim($url, '/') : $base . '/' . ltrim($url, '/');
+    // Si ya es absoluta (empieza con /) o URL completa, usar tal cual
+    if (strpos($url, '/') === 0 || preg_match('#^[a-zA-Z][a-zA-Z0-9+.-]*://#', $url)) {
+        header("Location: $url");
+        exit;
     }
-
+    
+    // Calcular la ruta URL base del proyecto una sola vez
+    static $baseUrl = null;
+    if ($baseUrl === null) {
+        $projectRoot = dirname(__DIR__); // Sube desde includes/ a la raíz
+        $docRoot = $_SERVER['DOCUMENT_ROOT'];
+        $basePath = str_replace('\\', '/', substr($projectRoot, strlen($docRoot)));
+        $baseUrl = rtrim($basePath, '/');
+    }
+    
+    $url = $baseUrl . '/' . ltrim($url, '/');
     header("Location: $url");
     exit;
 }

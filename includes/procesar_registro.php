@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regi'])) {
     $nombre = trim($_POST['nombre'] ?? '');
     $email = trim($_POST['correo'] ?? '');
     $password = $_POST['contrasena'] ?? '';
+    $descripcion = trim($_POST['descripcion'] ?? '');
     $imagen = null;
 
     // Validaciones básicas
@@ -36,22 +37,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regi'])) {
     mysqli_stmt_close($stmt);
 
     // Procesar imagen si existe
-    if (!empty($_FILES['profile-pic']['tmp_name'])) {
+    if (isset($_FILES['profile-pic']) && $_FILES['profile-pic']['error'] !== UPLOAD_ERR_NO_FILE) {
+        if ($_FILES['profile-pic']['error'] !== UPLOAD_ERR_OK) {
+            redirigir('index.php?page=register&error=upload_failed');
+        }
+
+        $check = getimagesize($_FILES['profile-pic']['tmp_name']);
+        if ($check === false) {
+            redirigir('index.php?page=register&error=invalid_image');
+        }
+
         $imagen = file_get_contents($_FILES['profile-pic']['tmp_name']);
+    }
+
+    // Establecer descripción por defecto si está vacía
+    if (empty($descripcion)) {
+        $descripcion = 'perfil sin descripcion';
     }
 
     // Hashear contraseña
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-    // Insertar usuario
-    $stmt = mysqli_prepare($con, 'INSERT INTO usuarios (nom_com, correo, usu_con, imagen) VALUES (?, ?, ?, ?)');
-    mysqli_stmt_bind_param($stmt, 'ssss', $nombre, $email, $passwordHash, $imagen);
+    if ($imagen !== null) {
+        $stmt = mysqli_prepare($con, 'INSERT INTO usuarios (nom_com, correo, usu_con, descripcion, imagen) VALUES (?, ?, ?, ?, ?)');
+        mysqli_stmt_bind_param($stmt, 'sssss', $nombre, $email, $passwordHash, $descripcion, $imagen);
+    } else {
+        $stmt = mysqli_prepare($con, 'INSERT INTO usuarios (nom_com, correo, usu_con, descripcion) VALUES (?, ?, ?, ?)');
+        mysqli_stmt_bind_param($stmt, 'ssss', $nombre, $email, $passwordHash, $descripcion);
+    }
 
-    if (mysqli_stmt_execute($stmt)) {
+    if ($stmt && mysqli_stmt_execute($stmt)) {
         $_SESSION['usuario'] = $nombre;
         $_SESSION['correo'] = $email;
-        $_SESSION['imagen'] = $imagen;
-        redirigir('index.php?page=perfil');
+        $_SESSION['descripcion'] = $descripcion;
+        if ($imagen !== null) {
+            $_SESSION['imagen'] = $imagen;
+        }
+        mysqli_stmt_close($stmt);
+        redirigir('index.php');
     } else {
         redirigir('index.php?page=register&error=register_failed');
     }

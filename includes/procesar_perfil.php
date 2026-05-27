@@ -109,4 +109,35 @@ if ($accion === 'eliminar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     respuestaJSON(false, 'Error al eliminar el perfil');
 }
 
+if ($accion === 'actualizar_alergias' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $alergias = trim($_POST['alergias'] ?? '');
+    $check = mysqli_query($con, "SHOW COLUMNS FROM usuarios LIKE 'alergias'");
+    if (mysqli_num_rows($check) == 0) {
+        mysqli_query($con, "ALTER TABLE usuarios ADD COLUMN alergias TEXT DEFAULT NULL");
+    }
+    $stmt = mysqli_prepare($con, 'UPDATE usuarios SET alergias = ? WHERE correo = ?');
+    mysqli_stmt_bind_param($stmt, 'ss', $alergias, $userEmail);
+    if (mysqli_stmt_execute($stmt)) {
+        respuestaJSON(true, 'Alergias guardadas correctamente');
+    } else {
+        respuestaJSON(false, 'Error al guardar alergias');
+    }
+}
+
+if ($accion === 'actualizar_notificaciones' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $notificaciones = (int)($_POST['notificaciones'] ?? 0);
+    // Asegurarse de que la columna exista (si no, crear)
+    $check = mysqli_query($con, "SHOW COLUMNS FROM usuarios LIKE 'notificaciones'");
+    if (mysqli_num_rows($check) == 0) {
+        mysqli_query($con, "ALTER TABLE usuarios ADD COLUMN notificaciones TINYINT(1) DEFAULT 0");
+    }
+    $stmt = mysqli_prepare($con, 'UPDATE usuarios SET notificaciones = ? WHERE correo = ?');
+    mysqli_stmt_bind_param($stmt, 'is', $notificaciones, $userEmail);
+    if (mysqli_stmt_execute($stmt)) {
+        respuestaJSON(true, 'Preferencia de notificaciones actualizada');
+    } else {
+        respuestaJSON(false, 'Error al actualizar');
+    }
+}
+
 respuestaJSON(false, 'Acción no válida');

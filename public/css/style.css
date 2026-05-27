@@ -9,14 +9,87 @@
     --text: #1b3b4a;
 }
 
+/* =========================================
+    DARK MODE GLOBAL (class: bw-mode)
+    Paleta pensada para confort visual: negros profundos, grises suaves y textos claros.
+    El fondo original se mantiene para que no cambie en modo oscuro.
+========================================= */
+.bw-mode, html.bw-mode body {
+    color: #cbd5e1 !important;
+    background-image: url('../images/cats.avif') !important;
+    background-size: cover !important;
+}
+
+.bw-mode .contenido-principal,
+.bw-mode .columna-de-acción,
+.bw-mode .card,
+.bw-mode .spc,
+.bw-mode .settings-card {
+    background: #0f1724 !important;
+    color: #cbd5e1 !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(255,255,255,0.04) !important;
+}
+
+.bw-mode .sidebar {
+    background: linear-gradient(180deg,#071428,#0b1220) !important;
+    box-shadow: 0 12px 40px rgba(2,6,23,0.6) !important;
+}
+.bw-mode .sidebar .profile-center { background: #0b1220 !important; border-color: rgba(255,255,255,0.03) !important; }
+.bw-mode .sidebar .menu-item {
+    color: #dbe7f5 !important;
+    background: transparent !important;
+    border: 1px solid rgba(255,255,255,0.03) !important;
+}
+.bw-mode .sidebar .menu-item:hover {
+    background: rgba(255,255,255,0.02) !important;
+    transform: translateX(6px);
+}
+
+.bw-mode .logo-circle { border-color: rgba(255,255,255,0.03); box-shadow:none; }
+
+.bw-mode .card > .info h3,
+.bw-mode .marca h2,
+.bw-mode .spc,
+.bw-mode .card > .info p {
+    color: #dbe7f5 !important;
+}
+
+.bw-mode .input-pastel {
+    background: #0b1220 !important;
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(255,255,255,0.04) !important;
+}
+.bw-mode .submit-btn {
+    background: linear-gradient(90deg,#164e9b,#1f63a8) !important;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.6) !important;
+}
+
+.bw-mode .delet-buttons { box-shadow: 0 6px 18px rgba(2,6,23,0.6); }
+
+/* Neutralizar colores fuertes de badges/botones cuando sea necesario */
+.bw-mode .tag,
+.bw-mode .card-color-bar,
+.bw-mode .badge,
+.bw-mode .badge-blue,
+.bw-mode .badge-pink,
+.bw-mode .color-chip {
+    background: #1f2937 !important;
+    color: #e6eef8 !important;
+    border-color: rgba(255,255,255,0.03) !important;
+}
+
+.bw-mode hr { background: linear-gradient(to right, rgba(255,255,255,0.03), transparent) !important; }
+
+
 body {
-    background: linear-gradient(135deg, #ffcfaf 0%, #ffd7f6 50%, #ffcdfa 100%);
-    background-size: 240% 240%;
     font-family: Arial, sans-serif;
     animation: gradientMove 16s ease infinite;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background: url('../images/cats.avif') no-repeat center center fixed;
+    background-size: cover;
 }
 
 @keyframes gradientMove {
@@ -36,11 +109,9 @@ body {
 ========================================= */
 
 .contenido-principal {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 50px;
-    justify-content: center;
-    align-items: stretch;
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
 }
 
 .columna-de-acción {
@@ -59,7 +130,6 @@ body {
 ========================================= */
 .marca {
     text-align: center;
-    margin-bottom: 50px;
 }
 
 .logo-circle {
@@ -212,7 +282,6 @@ body {
 ========================================= */
 .cards-grid {
     display: flex;
-    gap: 20px;
     justify-content: center;
 }
 
@@ -227,7 +296,7 @@ body {
     align-items: center;
     width: auto;
     max-width: 400px;
-    margin: 0 auto;
+    margin: 10px;
     transition:
         transform 0.18s ease,
         box-shadow 0.18s ease;
@@ -379,67 +448,6 @@ body {
 /* =========================================
     BOTONES Y ACCIONES
 ========================================= */
-.botones-dobles {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.btn-login,
-.btn-register {
-    flex: 1;
-    padding: 14px 20px;
-    border-radius: 25px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.btn-login {
-    background: linear-gradient(90deg, #ecbfb1, #df9cb2);
-    color: white;
-    border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.btn-register {
-    background: transparent;
-    color: #b86b77;
-    border: 2px solid #df9cb2;
-}
-
-.btn-login:hover,
-.btn-register:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.corner-buttons {
-    justify-content: flex-end;
-    display: flex;
-    gap: 10px;
-    margin: 20px;
-}
-
-.regINI-buttons {
-    width: 140px;
-    height: 56px;
-    border-radius: 22px;
-    cursor: pointer;
-    padding: 0 16px;
-    font-weight: 600;
-    background: linear-gradient(90deg, #ecbfb1, #df9cb2);
-    color: white;
-    border: none;
-    box-shadow: 0 8px 20px rgba(240, 100, 140, 0.12);
-    transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease;
-}
 
 .delet-buttons {
     width: 120px;
@@ -453,8 +461,14 @@ body {
     border: none;
     box-shadow: 0 6px 18px rgba(240, 100, 140, 0.12);
     transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease;
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+.delet-buttons:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(240, 100, 140, 0.16);
+    background: url('https://us-tuna-sounds-images.voicemod.net/fbe2c85e-6382-448c-8f10-4b9d83e2da19-1718609963845.png') no-repeat center center fixed;
+    background-size: cover;
 }
 
 /* =========================================
@@ -518,6 +532,7 @@ body {
     margin-left: -50vw;
     margin-right: -50vw;
     box-sizing: border-box;
+    position: relative;
 }
 
 .footer-inner {
@@ -539,6 +554,134 @@ body {
 .footer-link:focus {
     text-decoration: none;
     outline: none;
+}
+
+.notification-widget {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.notification-bell {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    color: #111827;
+    font-size: 1.35rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.notification-bell:hover {
+    transform: translateY(-1px);
+    background: #ffffff;
+}
+
+.notification-count {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    min-width: 18px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: #ef4444;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-panel {
+    width: 320px;
+    max-height: 380px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 20px;
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.18);
+    overflow: hidden;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity 0.24s ease, transform 0.24s ease;
+}
+
+.notification-panel.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    font-weight: 700;
+    color: #111827;
+}
+
+.notification-close {
+    border: none;
+    background: transparent;
+    color: #4b5563;
+    font-size: 1.3rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.notification-list {
+    max-height: 292px;
+    overflow-y: auto;
+    padding: 12px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notification-item {
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: #f8fafc;
+    color: #0f172a;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.notification-item.empty {
+    background: transparent;
+    color: #475569;
+    font-style: italic;
+    box-shadow: none;
+}
+
+.notification-panel.hidden {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .notification-widget {
+        right: 12px;
+        top: 12px;
+    }
+    .notification-panel {
+        width: calc(100vw - 28px);
+    }
 }
 
 /* =========================================
@@ -588,7 +731,28 @@ body {
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
 }
-
+.sidebar-back-button {
+    position: absolute;
+    z-index: 10;
+    top: 12px;
+    left: 12px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    text-decoration: none;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+.sidebar-back-button:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 1);
+}
 /* =========================================
     RESPONSIVE
 ========================================= */
@@ -632,3 +796,187 @@ body {
         font-size: 0.9rem;
     }
 } */
+/* =========================================
+   MODO OSCURO GLOBAL (clase .bw-mode)
+   Fondo oscuro, texto claro, sin perder contraste
+========================================= */
+
+/* Fondo principal y colores base */
+.bw-mode,
+.bw-mode body {
+    background: #0a0f1c !important;
+    color: #e2e8f0 !important;
+}
+
+/* Todas las tarjetas, contenedores principales */
+.bw-mode .contenido-principal,
+.bw-mode .columna-de-acción,
+.bw-mode .card,
+.bw-mode .spc,
+.bw-mode .settings-card,
+.bw-mode .search-hero,
+.bw-mode .demo-card,
+.bw-mode .profile-summary {
+    background: #111827 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255,255,255,0.05) !important;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3) !important;
+}
+
+/* Sidebar */
+.bw-mode .sidebar {
+    background: #0b0f17 !important;
+    border-right: 1px solid rgba(255,255,255,0.05) !important;
+}
+.bw-mode .sidebar .profile-center {
+    background: #1f2937 !important;
+    border-color: rgba(255,255,255,0.1) !important;
+}
+.bw-mode .sidebar .menu-item {
+    color: #cbd5e1 !important;
+    background: rgba(255,255,255,0.02) !important;
+    border-color: rgba(255,255,255,0.03) !important;
+}
+.bw-mode .sidebar .menu-item:hover {
+    background: rgba(255,255,255,0.08) !important;
+    color: white !important;
+}
+
+/* Inputs, campos de texto, buscador */
+.bw-mode .input-pastel,
+.bw-mode .search-field input,
+.bw-mode .search-wrapper input {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+.bw-mode .input-pastel:focus,
+.bw-mode .search-field input:focus {
+    border-color: #3b82f6 !important;
+    background: #0f172a !important;
+}
+
+/* Botones principales */
+.bw-mode .submit-btn,
+.bw-mode .search-wrapper button,
+.bw-mode .btn-primary {
+    background: #2563eb !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+.bw-mode .submit-btn:hover,
+.bw-mode .search-wrapper button:hover {
+    background: #1d4ed8 !important;
+}
+
+/* Botones secundarios y de eliminación */
+.bw-mode .delet-buttons {
+    background: #991b1b !important;
+    color: white !important;
+}
+.bw-mode .btn-outline {
+    background: transparent !important;
+    border-color: #475569 !important;
+    color: #cbd5e1 !important;
+}
+
+/* Enlaces */
+.bw-mode a:not(.btn):not(.menu-item) {
+    color: #60a5fa !important;
+}
+.bw-mode a:hover {
+    color: #93c5fd !important;
+}
+
+/* Footer */
+.bw-mode .site-footer {
+    background: #0b0f17 !important;
+    color: #9ca3af !important;
+    border-top: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+/* Tarjetas de productos (home y buscar) */
+.bw-mode .card {
+    background: #1e293b !important;
+}
+.bw-mode .card .info h3,
+.bw-mode .card .info p {
+    color: #e2e8f0 !important;
+}
+.bw-mode .tag {
+    background: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+/* Resultados de búsqueda */
+.bw-mode .results-meta {
+    border-bottom-color: #334155 !important;
+}
+.bw-mode .results-badge {
+    background: #1e293b !important;
+    color: #94a3b8 !important;
+}
+.bw-mode .empty-state {
+    background: #1e293b !important;
+    color: #cbd5e1 !important;
+    border-color: #334155 !important;
+}
+
+/* Checkbox, radio, etc */
+.bw-mode .checkbox-recordar {
+    accent-color: #3b82f6;
+}
+
+/* Perfil */
+.bw-mode .perfil-foto {
+    border: 3px solid #334155 !important;
+}
+.bw-mode .profile-item strong {
+    color: #94a3b8;
+}
+.bw-mode .profile-summary {
+    background: #1e293b !important;
+}
+
+/* Scrollbar opcional (mejora visual) */
+.bw-mode ::-webkit-scrollbar {
+    background: #0f172a;
+}
+.bw-mode ::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 8px;
+}
+/* ===== Apariencia adicional ===== */
+/* Tamaños de fuente */
+.font-small body, .font-small .card, .font-small .spc {
+    font-size: 0.85rem;
+}
+.font-large body, .font-large .card, .font-large .spc {
+    font-size: 1.1rem;
+}
+
+/* Alto contraste (fondo blanco, texto negro, bordes marcados) */
+.high-contrast, .high-contrast body {
+    background: white !important;
+    color: black !important;
+}
+.high-contrast .card, .high-contrast .spc, .high-contrast .sidebar {
+    background: white !important;
+    border: 2px solid black !important;
+    color: black !important;
+}
+.high-contrast a {
+    color: #0000EE !important;
+}
+.high-contrast .submit-btn {
+    background: black !important;
+    color: white !important;
+    border: 1px solid white;
+}
+
+/* Desactivar animaciones */
+.no-animations *, .no-animations *::before, .no-animations *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+}

@@ -24,6 +24,9 @@ switch ($page) {
     case 'login':
         $vista = 'login.php';
         break;  // ← Agregar este break
+        case 'ajustes':
+            $vista = 'ajustes.php';
+            break;
     case 'register':
         $vista = 'register.php';
         break;
@@ -33,7 +36,6 @@ switch ($page) {
     case 'buscar':
         $vista = 'buscar.php';
         break;
-    case 'home':
     default:
         $vista = 'home.php';
         $productos = obtenerProductos($con);
