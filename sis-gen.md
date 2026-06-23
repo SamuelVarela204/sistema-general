@@ -10,8 +10,6 @@ sistema-general
 в”‚   в”њв”Ђв”Ђ procesar_perfil.php
 в”‚   в””в”Ђв”Ђ procesar_registro.php
 в”њв”Ђв”Ђ public
-в”‚   в”њв”Ђв”Ђ audio
-в”‚   в”‚   в””в”Ђв”Ђ grito.mp3
 в”‚   в”њв”Ђв”Ђ css
 в”‚   в”‚   в”њв”Ђв”Ђ ajustes.css
 в”‚   в”‚   в”њв”Ђв”Ђ style.css

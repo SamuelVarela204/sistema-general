@@ -1,49 +1,39 @@
 <?php
-session_start();
-require_once __DIR__ . '/config/db.php';
-require_once __DIR__ . '/includes/functions.php';
+// index.php
+require_once 'app/config/settings.php';
 
-$con = conectarBD();
+// Determinar la página solicitada
 $page = $_GET['page'] ?? 'home';
 
-$descripcionPerfil = '';
-if (estaLogueado() && !empty($_SESSION['correo'])) {
-    $descripcionPerfil = obtenerDescripcionUsuario($con, $_SESSION['correo']);
-    if (empty($descripcionPerfil) && !empty($_SESSION['descripcion'])) {
-        $descripcionPerfil = $_SESSION['descripcion'];
-    }
-}
-
-if ($page === 'logout') {
-    session_destroy();
-    header('Location: index.php');
-    exit;
-}
-
+// Definir el controlador y método basado en la página
 switch ($page) {
     case 'login':
-        $vista = 'login.php';
-        break;  // ← Agregar este break
-        case 'ajustes':
-            $vista = 'ajustes.php';
-            break;
+        $controller = new AuthController();
+        $controller->login();
+        break;
     case 'register':
-        $vista = 'register.php';
+        $controller = new AuthController();
+        $controller->register();
+        break;
+    case 'logout':
+        $controller = new AuthController();
+        $controller->logout();
         break;
     case 'perfil':
-        $vista = 'perfil.php';
+        $controller = new UserController();
+        $controller->profile();
+        break;
+    case 'ajustes':
+        $controller = new UserController();
+        $controller->settings();
         break;
     case 'buscar':
-        $vista = 'buscar.php';
+        $controller = new ProductController();
+        $controller->search();
         break;
     default:
-        $vista = 'home.php';
-        $productos = obtenerProductos($con);
+        // Para la página home, simplemente cargar la vista
+        $titulo = 'Inicio';
+        require_once 'app/views/home.php';
         break;
 }
-
-ob_start();
-require_once __DIR__ . '/views/' . $vista;
-$contenido = ob_get_clean();
-
-require_once __DIR__ . '/includes/layout.php';
