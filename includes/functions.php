@@ -1,8 +1,4 @@
 <?php
-
-/**
- * Obtener productos de la BD con búsqueda opcional
- */
 function obtenerProductos($con, $busqueda = '')
 {
     if ($busqueda) {

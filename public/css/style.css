@@ -16,7 +16,6 @@
 ========================================= */
 .bw-mode, html.bw-mode body {
     color: #cbd5e1 !important;
-    background-image: url('../images/cats.avif') !important;
     background-size: cover !important;
 }
 
