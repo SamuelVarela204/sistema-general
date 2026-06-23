@@ -1,8 +1,4 @@
 <?php
-if (estaLogueado()) {
-    redirigir('index.php');
-}
-
 $titulo = 'Iniciar sesión';
 ?>
 
@@ -17,7 +13,6 @@ $titulo = 'Iniciar sesión';
 
     <div class="welcome-message" style="margin-top: -40px">
         <h1>Bienvenido de vuelta</h1>
-        <p>Ingresa tus datos para continuar</p>
     </div>
 
     <form action="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/includes/verify.php" method="post" novalidate style="margin-top: -30px;">

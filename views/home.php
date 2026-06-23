@@ -13,8 +13,8 @@ $productos = obtenerProductos($con);
 
     <div class="contenido-principal">
         <div class="columna-de-acción">
-            <h3>¿Qué buscas hoy?</h3>
-            <div class="subtítulo">Encuentra tu bebida favorita</div>
+            <h3 style="text-align: center;">¿Qué buscas hoy?</h3>
+            <div style="text-align: center; margin-bottom: 10px;">Encuentra tu bebida favorita</div>
 
             <div class="search-wrapper">
                 <form action="index.php?page=buscar" method="get">

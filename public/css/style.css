@@ -36,11 +36,9 @@ body {
 ========================================= */
 
 .contenido-principal {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 50px;
-    justify-content: center;
-    align-items: stretch;
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
 }
 
 .columna-de-acción {
@@ -59,7 +57,6 @@ body {
 ========================================= */
 .marca {
     text-align: center;
-    margin-bottom: 50px;
 }
 
 .logo-circle {
@@ -212,7 +209,6 @@ body {
 ========================================= */
 .cards-grid {
     display: flex;
-    gap: 20px;
     justify-content: center;
 }
 
@@ -227,7 +223,7 @@ body {
     align-items: center;
     width: auto;
     max-width: 400px;
-    margin: 0 auto;
+    margin: 10px;
     transition:
         transform 0.18s ease,
         box-shadow 0.18s ease;
