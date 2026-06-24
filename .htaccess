@@ -1,0 +1,48 @@
+# ==========================================
+# .htaccess - Sistema General
+# ==========================================
+
+# 1. Activar motor de reescritura
+RewriteEngine On
+
+# 2. Redirigir HTTP a HTTPS (descomentar cuando tengas SSL)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 3. Regla de reescritura principal (URLs limpias)
+# Si no es un archivo real y no es un directorio real...
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+# ...enviar todo a index.php?page=ruta
+RewriteRule ^(.*)$ index.php?page=$1 [QSA,L]
+
+# 4. Prohibir acceso al propio .htaccess
+<Files ".htaccess">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# 5. Bloquear IP específica (ejemplo: 192.168.1.100)
+# <FilesMatch ".*">
+#     Order Allow,Deny
+#     Allow from all
+#     Deny from 192.168.1.100
+# </FilesMatch>
+
+# 6. Páginas de error personalizadas
+ErrorDocument 404 /sistema-general/index.php?page=home
+ErrorDocument 403 /sistema-general/index.php?page=home
+ErrorDocument 500 /sistema-general/index.php?page=home
+
+# 7. Rendimiento y caché web
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# Deshabilitar listado de directorios
+Options -Indexes

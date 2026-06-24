@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/try.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/style.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/ajustes.css">
+
 </head>
 <body class="<?= isset($_COOKIE['bw-mode']) && $_COOKIE['bw-mode'] === 'true' ? 'bw-mode' : '' ?>">
     <div class="sidebar">

@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 20px;
+    background: linear-gradient(90deg, #86a550 50%, #7201bd80 50%);
+}
+
+
+.contenedor-creadores {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    background: transparent;
+}
+
+.C-Monika, .C-Mirko {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+}
+
+h1, h2, img {
+    background: transparent;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
