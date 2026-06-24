@@ -2440,12 +2440,12 @@ USE `taf2`;
 -- 1. TABLAS INDEPENDIENTES
 CREATE TABLE `roles` (
   `id_rol` int NOT NULL AUTO_INCREMENT,
-  `nombre_rol` enum('admin','gerente','cajero','trabajador','cliente') NOT NULL,
+  `nombre_rol` enum('admin','gerente','cajero','cliente') NOT NULL,
   PRIMARY KEY (`id_rol`)
 );
 
 INSERT INTO `roles` (`nombre_rol`) VALUES
-('admin'), ('gerente'), ('cajero'), ('trabajador'), ('cliente');
+('admin'), ('gerente'), ('cajero'), ('cliente');
 
 CREATE TABLE `categorias` (
   `id_cat` int NOT NULL AUTO_INCREMENT,

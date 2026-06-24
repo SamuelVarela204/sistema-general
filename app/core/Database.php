@@ -1,6 +1,7 @@
 <?php
 // app/core/Database.php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '../config/database.php';
+use PDO;
 
 class Database {
     private PDO $conn;

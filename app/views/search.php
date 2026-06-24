@@ -1,6 +1,6 @@
 <?php
 // app/views/search.php
-require_once VIEW_PATH . '/layouts/header.php';
+require_once LAYOUTS_PATH . '/header.php';
 $titulo = 'Búsqueda';
 $busqueda = $_GET['q'] ?? '';
 ?>
@@ -31,4 +31,4 @@ $busqueda = $_GET['q'] ?? '';
 </main>
 
 <?php
-require_once VIEW_PATH . '/layouts/footer.php';
+require_once VIEW_PATH . '/footer.php';

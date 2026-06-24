@@ -1,6 +1,14 @@
 <?php
 // index.php
-require_once 'app/config/settings.php';
+session_start();
+
+// DEFINICIÓN DE RUTAS ABSOLUTAS (NO TOCAR) 
+define('ROOT_PATH', __DIR__);
+define('VIEWS_PATH', ROOT_PATH . '/app/views');
+define('LAYOUTS_PATH', VIEWS_PATH . '/layouts');
+define('CONTROLLERS_PATH', ROOT_PATH . '/app/controllers');
+define('MODELS_PATH', ROOT_PATH . '/app/models');
+define('BASE_URL', '/sistema-general');
 
 // Determinar la página solicitada
 $page = $_GET['page'] ?? 'home';

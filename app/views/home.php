@@ -1,6 +1,6 @@
 <?php
 // app/views/home.php
-require_once VIEW_PATH . '/layouts/header.php';
+require_once LAYOUTS_PATH . '/header.php';
 $titulo = 'Inicio';
 ?>
 
@@ -27,4 +27,5 @@ $titulo = 'Inicio';
 </div>
 
 <?php
-require_once VIEW_PATH . '/layouts/footer.php';
+require_once LAYOUTS_PATH . '/footer.php';
+?>

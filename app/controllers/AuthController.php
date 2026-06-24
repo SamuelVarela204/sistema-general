@@ -1,7 +1,6 @@
 <?php
 // app/controllers/AuthController.php
-require_once __DIR__ . '/../models/UserModel.php';
-
+require_once __DIR__ . '../models/UserModel.php';
 class AuthController {
     public function login() {
         $error = null;
@@ -32,7 +31,7 @@ class AuthController {
         }
         
         // Cargar la vista
-        require_once VIEW_PATH . '/auth/login.php';
+        require_once VIEW_PATH . '../views/auth/login.php';
     }
     
     public function register() {
@@ -68,7 +67,7 @@ class AuthController {
             }
         }
         
-        require_once VIEW_PATH . '/auth/register.php';
+        require_once VIEW_PATH . '../views/auth/register.php';
     }
     
     public function logout() {

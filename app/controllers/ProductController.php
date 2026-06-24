@@ -1,6 +1,6 @@
 <?php
 // app/controllers/ProductController.php
-require_once __DIR__ . '/../models/ProductModel.php';
+require_once __DIR__ . '../models/ProductModel.php';
 
 class ProductController {
     public function search() {
@@ -9,6 +9,6 @@ class ProductController {
         $productos = $productModel->getAllProducts($searchTerm);
         
         // Cargar la vista con los resultados
-        require_once VIEW_PATH . '/search.php';
+        require_once VIEW_PATH . '../views/search.php';
     }
 }

@@ -1,10 +1,11 @@
 <?php
 // app/models/ProductModel.php
-require_once __DIR__ . '/../core/Database.php';
+require_once __DIR__ . '../core/Database.php';
+use PDO;
 
 class ProductModel
 {
-    private $db;
+    private PDO $db;
 
     public function __construct()
     {

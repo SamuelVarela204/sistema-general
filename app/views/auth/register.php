@@ -1,6 +1,6 @@
 <?php
 // app/views/auth/register.php
-require_once VIEW_PATH . '/layouts/header.php';
+require_once VIEW_PATH . '../layouts/header.php';
 $titulo = 'Registrarse';
 ?>
 
@@ -32,4 +32,4 @@ $titulo = 'Registrarse';
 </div>
 
 <?php
-require_once VIEW_PATH . '/layouts/footer.php';
+require_once VIEW_PATH . '../layouts/footer.php';

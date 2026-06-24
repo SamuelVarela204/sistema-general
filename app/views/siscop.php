@@ -1,6 +1,6 @@
 <?php
 // app/views/siscop.php
-require_once VIEW_PATH . '/layouts/header.php';
+require_once LAYOUTS_PATH . '/header.php';
 $titulo = 'Siscop';
 ?>
 
@@ -11,7 +11,7 @@ $titulo = 'Siscop';
             <img src="<?= BASE_URL ?>/public/images/sistema de copyright.gif" alt="">
             <h1><BR>SAMUEL VARELA</BR></h1>
             <BR><BR><BR>
-            <image src="<?= BASE_URL ?>/public/images/mirk.png" alt="" width="400px" height="400px">
+            <img src="<?= BASE_URL ?>/public/images/mirk.png" alt="" width="400px" height="400px">
             <h1><br>DIEGO GARCIA</br></h1>
             <H2>ES ILEGAL USAR ESTA PAGINA SIN SU CONCENTIMIENTO</H2>
         </center>
@@ -19,4 +19,4 @@ $titulo = 'Siscop';
 </div>
 
 <?php
-require_once VIEW_PATH . '/layouts/footer.php';
+require_once LAYOUTS_PATH . '/footer.php';

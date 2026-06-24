@@ -1,6 +1,6 @@
 <?php
 // app/controllers/UserController.php
-require_once __DIR__ . '/../models/UserModel.php';
+require_once __DIR__ . '../models/UserModel.php';
 
 class UserController {
     public function profile() {
@@ -16,7 +16,7 @@ class UserController {
             die('Usuario no encontrado');
         }
         
-        require_once VIEW_PATH . '/user/profile.php';
+        require_once VIEW_PATH . '../views/user/profile.php';
     }
     
     public function settings() {
@@ -33,7 +33,7 @@ class UserController {
             die('Usuario no encontrado');
         }
         
-        require_once VIEW_PATH . '/user/settings.php';
+        require_once VIEW_PATH . '../views/user/settings.php';
     }
     
     public function updateProfile() {
