@@ -30,9 +30,9 @@ RewriteRule ^(.*)$ index.php?page=$1 [QSA,L]
 # </FilesMatch>
 
 # 6. Páginas de error personalizadas
-ErrorDocument 404 /sistema-general/index.php?page=home
-ErrorDocument 403 /sistema-general/index.php?page=home
-ErrorDocument 500 /sistema-general/index.php?page=home
+ErrorDocument 404 /index.php?page=home
+ErrorDocument 403 /index.php?page=home
+ErrorDocument 500 /index.php?page=home
 
 # 7. Rendimiento y caché web
 <IfModule mod_expires.c>

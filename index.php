@@ -8,7 +8,9 @@ define('VIEWS_PATH', ROOT_PATH . '/app/views');
 define('LAYOUTS_PATH', VIEWS_PATH . '/layouts');
 define('CONTROLLERS_PATH', ROOT_PATH . '/app/controllers');
 define('MODELS_PATH', ROOT_PATH . '/app/models');
-define('BASE_URL', '/sistema-general');
+$scriptName = $_SERVER['SCRIPT_NAME'];
+$basePath = dirname($scriptName);
+define('BASE_URL', rtrim($basePath, '/'));
 
 // Determinar la página solicitada
 $page = $_GET['page'] ?? 'home';
