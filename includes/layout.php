@@ -15,6 +15,7 @@
         })();
     </script>
     <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/fixes.css">
     <link rel="icon" href="public/images/placeholder.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

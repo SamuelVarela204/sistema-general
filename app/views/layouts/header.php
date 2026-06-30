@@ -9,11 +9,12 @@
     <title><?= $titulo ?? 'Sistema General' ?></title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/try.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/fixes.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/css/ajustes.css">
 
 </head>
 <body class="<?= isset($_COOKIE['bw-mode']) && $_COOKIE['bw-mode'] === 'true' ? 'bw-mode' : '' ?>">
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <nav class="sidebar-menu-top">
             <a href="<?= BASE_URL ?>/" class="menu-item">Inicio</a>
             <?php if (isset($_SESSION['usuario'])): ?>

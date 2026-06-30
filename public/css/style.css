@@ -87,6 +87,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    min-height: 100vh;
     background: url('../images/cats.avif') no-repeat center center fixed;
     background-size: cover;
 }
@@ -524,12 +525,12 @@ body {
     color: #333333;
     margin: 40px 0 0 0;
     padding: 12px 0;
-    width: 100vw;
+    max-width: 100%;
     position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+
+
+
+
     box-sizing: border-box;
     position: relative;
 }

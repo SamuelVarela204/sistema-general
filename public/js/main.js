@@ -4,11 +4,11 @@ let closeTimeout = null;
 
 function openSidebar() {
     clearTimeout(closeTimeout);
-    if (sidebar) sidebar.style.transform = "translateX(0)";
+    if (sidebar) sidebar.classList.add('open');
 }
 
 function closeSidebar() {
-    if (sidebar) sidebar.style.transform = "translateX(-260px)";
+    if (sidebar) sidebar.classList.remove('open');
 }
 
 if (holder && sidebar) {
