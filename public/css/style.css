@@ -237,6 +237,19 @@ body {
     box-shadow: 0 6px 18px rgba(6, 22, 41, 0.06);
 }
 
+.sidebar-menu-bottom {
+    margin-top: auto;
+}
+.menu-item.logout {
+    background: rgba(255, 80, 80, 0.14);
+    color: #fff;
+    font-weight: 700;
+    border-color: rgba(255, 80, 80, 0.25);
+}
+.menu-item.logout:hover {
+    background: rgba(255, 80, 80, 0.2);
+}
+
 #hoverHolder {
     position: fixed;
     left: 0;
@@ -514,6 +527,288 @@ body {
 .search-wrapper button:hover {
     background: linear-gradient(90deg, #e0a6b9, #d48ba8);
     transform: translateY(-2px);
+}
+
+/* =========================================
+    BUSCADOR PÁGINA
+========================================= */
+
+.buscador-pagina * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.buscador-pagina {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: transparent;
+}
+
+.buscador-pagina .buscador-card {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 32px;
+    padding: 40px 35px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+}
+
+.buscador-pagina h1 {
+    font-size: 38px;
+    font-weight: 700;
+    color: #4a2a2a;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.buscador-pagina .subtitulo {
+    font-size: 22px;
+    font-weight: 600;
+    color: #5e3a3a;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.buscador-pagina .descripcion {
+    font-size: 15px;
+    color: #7a5a5a;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* === DOS COLUMNAS === */
+.buscador-pagina .two-columns {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 30px;
+    align-items: start;
+}
+
+.buscador-pagina .left-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* === COLUMNA DERECHA (recetas) === */
+.buscador-pagina .right-col {
+    background: rgba(255, 235, 235, 0.85);
+    border-radius: 24px;
+    padding: 22px 20px;
+    border: 1px solid rgba(255, 200, 200, 0.5);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* === BUSCADOR === */
+.buscador-pagina .search-wrapper {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.buscador-pagina .search-wrapper .input-pastel {
+    flex: 1;
+    max-width: 400px;
+}
+
+.buscador-pagina .search-wrapper .submit-btn {
+    width: auto;
+    margin-top: 0;
+    padding: 14px 28px;
+}
+
+.buscador-pagina .mensaje-info {
+    font-size: 12px;
+    color: #a07a7a;
+    text-align: center;
+    margin: 0;
+    padding: 8px 0;
+}
+
+/* === RECOMENDADOS (6 jugos en grid de 3 columnas) === */
+.buscador-pagina .recomendados-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.buscador-pagina .recomendado-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.buscador-pagina .recomendado-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.buscador-pagina .recomendado-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+
+.buscador-pagina .recomendado-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 10px 10px 4px;
+    color: #4a2a2a;
+    text-align: center;
+}
+
+.buscador-pagina .recomendado-card p {
+    font-size: 11px;
+    color: #7a5a5a;
+    margin: 0 10px 12px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.buscador-pagina .precio-producto {
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    color: #4a2a2a;
+    margin: 0 10px 12px;
+    font-size: 14px;
+}
+
+/* === CATEGORÍAS (lista de recetas) === */
+.buscador-pagina .filtros-section {
+    margin-top: 0;
+}
+
+.buscador-pagina .categorias-lista {
+    list-style: none;
+    padding-left: 0;
+}
+
+.buscador-pagina .categorias-lista > ul > li {
+    font-weight: 700;
+    font-size: 16px;
+    color: #4a2a2a;
+    margin-bottom: 12px;
+    border-left: 3px solid #ffb5a5;
+    padding-left: 10px;
+}
+
+.buscador-pagina .subcategorias {
+    margin-left: 20px;
+    margin-bottom: 8px;
+}
+
+.buscador-pagina .subcategorias li {
+    font-weight: 500;
+    font-size: 13px;
+    color: #6b4e4e;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    list-style: none;
+    padding: 4px 6px;
+    border-radius: 12px;
+}
+
+.buscador-pagina .subcategorias li:hover {
+    color: #ff7a5c;
+    background: rgba(255, 245, 235, 0.8);
+}
+
+.buscador-pagina .numero {
+    color: #b08c8c;
+    font-size: 11px;
+    margin-left: 5px;
+}
+
+.buscador-pagina .hidden {
+    display: none;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 950px) {
+    .buscador-pagina .two-columns {
+        /* Mantiene las dos columnas pero reduce el espacio lateral de la lista de recetas */
+        grid-template-columns: 1fr 260px;
+        gap: 15px;
+    }
+    .buscador-pagina .recomendados-grid {
+        /* En pantallas más chicas de laptop, baja a 2 columnas en vez de colapsar a 1 */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 15px;
+    }
+}
+
+@media (max-width: 680px) {
+    /* Solo cuando sea realmente un teléfono celular, se apilan una columna arriba de la otra */
+    .buscador-pagina .two-columns {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    .buscador-pagina .right-col {
+        max-width: 100%;
+    }
+    .buscador-pagina .buscador-card {
+        padding: 25px 15px;
+    }
+    .buscador-pagina h1 {
+        font-size: 28px;
+    }
+    .buscador-pagina .recomendados-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 columnas en móvil se ve más ordenado */
+    }
+}
+
+/* ===== Modo oscuro ===== */
+.buscador-pagina.bw-mode .buscador-card {
+    background: rgba(17, 24, 39, 0.92) !important;
+    color: #e2e8f0 !important;
+}
+.buscador-pagina.bw-mode .right-col {
+    background: rgba(17, 24, 39, 0.85) !important;
+    border-color: rgba(255,255,255,0.05) !important;
+}
+.buscador-pagina.bw-mode .recomendado-card {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+.buscador-pagina.bw-mode .recomendado-card h3 {
+    color: #f1f5f9 !important;
+}
+.buscador-pagina.bw-mode .recomendado-card p {
+    color: #94a3b8 !important;
+}
+.buscador-pagina.bw-mode .mensaje-info {
+    color: #94a3b8 !important;
+}
+.buscador-pagina.bw-mode .categorias-lista > ul > li {
+    color: #e2e8f0 !important;
+    border-left-color: #3b82f6 !important;
+}
+.buscador-pagina.bw-mode .subcategorias li {
+    color: #cbd5e1 !important;
+}
+.buscador-pagina.bw-mode .subcategorias li:hover {
+    background: rgba(255,255,255,0.05) !important;
+    color: #60a5fa !important;
+}
+.buscador-pagina.bw-mode .numero {
+    color: #64748b !important;
 }
 
 /* =========================================

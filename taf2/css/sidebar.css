@@ -1,0 +1,104 @@
+#sidebar-wrapper {
+    min-height: 100vh;
+    width: 270px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #2d3748;
+    transition: margin 0.25s ease-out;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(175, 0, 45, 0.12);
+    box-shadow: 12px 0 30px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(8px);
+}
+
+.sidebar-heading {
+    padding: 18px 20px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff7a18 0%, #af002d 100%);
+    text-align: center;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.simulador-box {
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(255, 122, 24, 0.15), rgba(175, 0, 45, 0.1));
+    text-align: center;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(175, 0, 45, 0.12);
+}
+
+.simulador-box span {
+    display: block;
+    margin-bottom: 8px;
+    color: #6b7280;
+}
+
+.menu-sections {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.section-title {
+    padding: 15px 20px 5px 20px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #6c757d;
+    letter-spacing: 1px;
+}
+
+.menu-link {
+    display: block;
+    padding: 11px 20px;
+    color: #2d3748;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(175, 0, 45, 0.08);
+    transition: background-color 0.2s, color 0.2s, transform 0.2s ease;
+}
+
+.menu-link:hover {
+    background: rgba(255, 122, 24, 0.08);
+    color: #af002d;
+    transform: translateX(4px);
+}
+
+.link-admin { color: #2d3748; }
+.link-admin:hover { background: rgba(255, 122, 24, 0.08); color: #af002d; }
+
+.link-ventas { color: #2d3748; }
+.link-ventas:hover { background: rgba(255, 122, 24, 0.08); color: #af002d; }
+
+.link-gerente { color: #2d3748; }
+.link-gerente:hover { background: rgba(255, 122, 24, 0.08); color: #af002d; }
+
+.link-inventario { color: #2d3748; }
+.link-inventario:hover { background: rgba(255, 122, 24, 0.08); color: #af002d; }
+
+.sidebar-footer {
+    padding: 20px;
+    background: linear-gradient(180deg, rgba(255, 245, 247, 0.8), rgba(255, 234, 244, 0.95));
+    border-top: 1px solid rgba(175, 0, 45, 0.12);
+}
+
+.btn-logout {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, #ff7a18 0%, #af002d 100%);
+    color: white;
+    text-align: center;
+    padding: 8px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-logout:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 15px rgba(175, 0, 45, 0.16);
+}

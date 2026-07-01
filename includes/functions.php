@@ -1,10 +1,47 @@
 <?php
 
 /**
+ * Comprobar si una tabla existe en la base de datos actual.
+ */
+function tablaExiste($con, $nombreTabla)
+{
+    $nombreTabla = mysqli_real_escape_string($con, $nombreTabla);
+    $resultado = mysqli_query($con, "SHOW TABLES LIKE '$nombreTabla'");
+    return $resultado && mysqli_num_rows($resultado) > 0;
+}
+
+/**
+ * Crear la tabla de productos si aún no existe.
+ */
+function asegurarTablaProductos($con)
+{
+    if (tablaExiste($con, 'producto')) {
+        return true;
+    }
+
+    $sql = "
+        CREATE TABLE IF NOT EXISTS producto (
+            id_pro INT NOT NULL AUTO_INCREMENT,
+            nom_pro VARCHAR(225) NOT NULL,
+            descripcion VARCHAR(100) DEFAULT NULL,
+            precio DECIMAL(10,2) NOT NULL,
+            stock INT NOT NULL DEFAULT 0,
+            categoria VARCHAR(100) NOT NULL DEFAULT 'General',
+            PRIMARY KEY (id_pro)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
+
+    return mysqli_query($con, $sql);
+}
+
+/**
  * Obtener productos de la BD con búsqueda opcional
  */
 function obtenerProductos($con, $busqueda = '')
 {
+    if (!asegurarTablaProductos($con)) {
+        return [];
+    }
+
     if ($busqueda) {
         $busqueda = "%$busqueda%";
         $stmt = mysqli_prepare($con, "SELECT id_pro, nom_pro, descripcion, precio FROM producto WHERE nom_pro LIKE ? OR descripcion LIKE ? LIMIT 20");
@@ -51,22 +88,11 @@ function estaLogueado()
  */
 function redirigir($url)
 {
-    // Si ya es absoluta (empieza con /) o URL completa, usar tal cual
-    if (strpos($url, '/') === 0 || preg_match('#^[a-zA-Z][a-zA-Z0-9+.-]*://#', $url)) {
-        header("Location: $url");
-        exit;
+    if (strpos($url, '/') !== 0 && !preg_match('#^[a-zA-Z][a-zA-Z0-9+.-]*://#', $url)) {
+        $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+        $url = ($base === '' || $base === '/') ? '/' . ltrim($url, '/') : $base . '/' . ltrim($url, '/');
     }
-    
-    // Calcular la ruta URL base del proyecto una sola vez
-    static $baseUrl = null;
-    if ($baseUrl === null) {
-        $projectRoot = dirname(__DIR__); // Sube desde includes/ a la raíz
-        $docRoot = $_SERVER['DOCUMENT_ROOT'];
-        $basePath = str_replace('\\', '/', substr($projectRoot, strlen($docRoot)));
-        $baseUrl = rtrim($basePath, '/');
-    }
-    
-    $url = $baseUrl . '/' . ltrim($url, '/');
+
     header("Location: $url");
     exit;
 }

@@ -15,7 +15,7 @@ $titulo = 'Iniciar sesión';
         <h1>Bienvenido de vuelta</h1>
     </div>
 
-    <form action="includes/procesar_login.php" method="post" novalidate style="margin-top: -30px;">
+    <form action="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/includes/verify.php" method="post" novalidate style="margin-top: -30px;">
         <input type="email" name="correo" placeholder="Correo electrónico" required class="input-pastel" autocomplete="email">
         <input type="password" name="contrasena" placeholder="Contraseña" required class="input-pastel" autocomplete="current-password">
 
@@ -23,7 +23,7 @@ $titulo = 'Iniciar sesión';
             <label class="remember-label">
                 <input type="checkbox" name="recordar" class="checkbox-recordar" style="margin-left: 10px;margin-top: -10px;"> Recordarme
             </label>
-            <a class="link-reg" href="index.php?page=register" style="margin-left: 110px;">¿No estás registrado?</a><br>
+            <a class="link-reg" href="index.php?page=recuperacion" style="margin-left: 110px;">¿No recuerdas tu contraseña?</a><br>
         </div>
 
         <button type="submit" class="submit-btn" name="inic">Iniciar sesión</button><br>
@@ -35,11 +35,12 @@ $titulo = 'Iniciar sesión';
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<?php if (isset($_GET['error'])): ?>
+<?php if (isset($_GET['error']) || isset($_GET['status'])): ?>
     <script>
         let message = '';
         let type = 'error';
-        switch ('<?= htmlspecialchars($_GET['error'], ENT_QUOTES, 'UTF-8') ?>') {
+        const code = '<?= isset($_GET['status']) ? htmlspecialchars($_GET['status'], ENT_QUOTES, 'UTF-8') : htmlspecialchars($_GET['error'], ENT_QUOTES, 'UTF-8') ?>';
+        switch (code) {
             case 'user_not_found':
                 message = 'El usuario no existe.';
                 break;
@@ -49,6 +50,10 @@ $titulo = 'Iniciar sesión';
             case 'empty_fields':
                 message = 'Correo y contraseña son obligatorios.';
                 type = 'warning';
+                break;
+            case 'password_reset':
+                message = 'Contraseña restablecida con éxito. Inicia sesión.';
+                type = 'success';
                 break;
             default:
                 message = 'Error desconocido.';

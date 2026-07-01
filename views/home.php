@@ -24,13 +24,14 @@ $productos = obtenerProductos($con);
                 </form>
             </div>
 
-            <div>
-                <a href="index.php?page=login">Iniciar sesión</a>
-                <a href="index.php?page=register">Crear Cuenta</a>
-            </div>
+            <?php if (!estaLogueado()): ?>
+                <div class="botones-dobles">
+                    <a href="index.php?page=login" class="btn-login">Iniciar sesión</a>
+                    <a href="index.php?page=register" class="btn-register">Crear Cuenta</a>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
-</div>
 </div>
 
 <div class="cards-grid">

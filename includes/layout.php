@@ -15,6 +15,7 @@
         })();
     </script>
     <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/taf2.css">
     <link rel="icon" href="public/images/placeholder.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -37,6 +38,30 @@
 
     <!-- Sidebar (solo para logueados) -->
     <?php if (estaLogueado()): ?>
+        <?php
+            $rolSidebar = strtolower((string)($_SESSION['usuario_rol'] ?? ($_SESSION['rol_id'] ?? 'cliente')));
+            $sidebarActions = [
+                ['label' => 'Perfil', 'href' => 'index.php?page=perfil'],
+                ['label' => 'Pedidos', 'href' => 'index.php?page=pedidos'],
+                ['label' => 'Recetas', 'href' => 'index.php?page=recetas'],
+                ['label' => 'Ajustes', 'href' => 'index.php?page=ajustes'],
+            ];
+
+            if ($rolSidebar === 'admin') {
+                $sidebarActions = array_merge($sidebarActions, [
+                    ['label' => 'Panel TAF2', 'href' => 'index.php?page=taf2'],
+                    ['label' => 'Usuarios', 'href' => 'index.php?page=taf2&view=usuarios'],
+                    ['label' => 'Productos', 'href' => 'index.php?page=taf2&view=productos'],
+                    ['label' => 'Pedidos TAF2', 'href' => 'index.php?page=taf2&view=pedidos'],
+                ]);
+            } elseif (in_array($rolSidebar, ['inventario', 'gerente'], true)) {
+                $sidebarActions = array_merge($sidebarActions, [
+                    ['label' => 'Panel TAF2', 'href' => 'index.php?page=taf2'],
+                    ['label' => 'Productos', 'href' => 'index.php?page=taf2&view=productos'],
+                    ['label' => 'Pedidos TAF2', 'href' => 'index.php?page=taf2&view=pedidos'],
+                ]);
+            }
+        ?>
         <div class="notification-widget" id="notificationWidget">
             <button id="notificationBell" class="notification-bell" aria-label="Abrir notificaciones">
                 <span class="bell-icon">🔔</span>
@@ -61,13 +86,13 @@
                     <img src="public/images/placeholder.png" alt="Perfil">
                 <?php endif; ?>
             </div>
-            <h1 style="text-align: center; margin-bottom: 10px;"><?= htmlspecialchars($_SESSION['usuario']) ?></h1>
-            <h1 style="text-align: center; margin-top: 0; margin-bottom: 20px; font-size: 1.2rem; color: #7e7e7e;"> <?= htmlspecialchars($descripcionPerfil ?: 'Perfil sin descripción') ?></h1>
+            <h1 style="text-align: center; margin-bottom: 6px;"><?= htmlspecialchars($_SESSION['usuario']) ?></h1>
+            <p style="text-align: center; margin: 0 0 12px; color: #d8d8d8; font-size: 0.95rem;"><?= htmlspecialchars($rolSidebar === 'admin' ? 'Aplicación admin' : 'Aplicación cliente') ?></p>
+            <h1 style="text-align: center; margin-top: 0; margin-bottom: 18px; font-size: 1.05rem; color: #7e7e7e;"> <?= htmlspecialchars($descripcionPerfil ?: 'Perfil sin descripción') ?></h1>
             <nav class="sidebar-menu">
-                <a href="index.php?page=perfil" class="menu-item">Perfil</a>
-                <a href="index.php?page=pedidos" class="menu-item">Pedidos</a>
-                <a href="index.php?page=recetas" class="menu-item">Recetas</a>
-                <a href="index.php?page=ajustes" class="menu-item">Ajustes</a>
+                <?php foreach ($sidebarActions as $action): ?>
+                    <a href="<?= htmlspecialchars($action['href']) ?>" class="menu-item"><?= htmlspecialchars($action['label']) ?></a>
+                <?php endforeach; ?>
             </nav>
             <nav class="sidebar-menu-bottom">
                 <a href="index.php?page=logout" class="menu-item logout">Cerrar sesión</a>

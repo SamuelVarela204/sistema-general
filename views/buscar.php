@@ -2,73 +2,134 @@
 if (!isset($con)) {
     $con = conectarBD();
 }
-
 $titulo = 'Búsqueda';
-$busqueda = $_GET['q'] ?? '';
-$productos = [];
-
-if (!empty($busqueda)) {
-    $productos = obtenerProductos($con, $busqueda);
-}
+$productos = obtenerProductos($con); // todos los productos
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($titulo) ?> - Sistema General</title>
-    <link rel="stylesheet" type="text/css" href="public/css/try.css">
-    <link rel="stylesheet" type="text/css" href="public/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-</head>
-<body>
-<div class="content">
-    <section class="search-page">
-        <div class="search-hero">
-            <div class="hero-text">
-                <span>Encuentra tu sabor</span>
-                <h1>Busca recetas</h1>
-                <p>Explora jugos, postres y platos frescos.</p>
-            </div>
-            <div class="search-panel">
-                <form action="index.php?page=buscar" method="get" class="search-form">
-                    <input type="hidden" name="page" value="buscar">
-                    <label class="search-field">
-                        <input type="text" name="q" placeholder="Buscar productos, bebidas o postres..." autocomplete="off" value="<?= htmlspecialchars($busqueda) ?>">
-                    </label>
-                    <button class="submit-btn" type="submit" style=" height: 54px; width: 170px;">Buscar</button>
-                </form>
-            </div>
-        </div>
+<div class="buscador-pagina">
+    <div class="container">
+        <div class="buscador-card">
+            <h1>ENCUENTRA TU SABOR</h1>
+            <p class="subtitulo">Busca recetas</p>
+            <p class="descripcion">Explora jugos, postres y platos frescos.</p>
 
-        <?php if (!empty($busqueda)): ?>
-            <div class="results-meta">
-                <p class="results-title">Resultados para: <strong><?= htmlspecialchars($busqueda) ?></strong></p>
-                <span class="results-badge"><?= count($productos) ?> producto<?= count($productos) === 1 ? '' : 's' ?></span>
-            </div>
+        <!-- DOS COLUMNAS -->
+        <div class="two-columns">
+            <!-- COLUMNA IZQUIERDA -->
+            <div class="left-col">
+                <!-- Buscador -->
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" class="input-pastel"
+                           placeholder="Buscar productos, bebidas o postres.">
+                    <button id="searchBtn" class="submit-btn">Buscar</button>
+                </div>
+                <p class="mensaje-info" id="mensajeInfo">Escribe algo en el buscador para ver resultados rápidos y detallados.</p>
 
-            <?php if (!empty($productos)): ?>
-                <div class="cards-grid">
+                <!-- Productos desde la base de datos -->
+                <div class="recomendados-grid" id="productosGrid">
                     <?php foreach ($productos as $prod): ?>
-                        <div class="card">
-                            <div class="thumb">
-                                <img src="public/images/placeholder.png" alt="<?= htmlspecialchars($prod['nom_pro']) ?>">
-                            </div>
-                            <div class="info">
-                                <h3><?= htmlspecialchars($prod['nom_pro']) ?></h3>
-                                <p><?= htmlspecialchars($prod['descripcion']) ?></p>
-                                <span class="tag">$<?= number_format($prod['precio'], 2) ?></span>
-                            </div>
+                        <div class="recomendado-card" data-nombre="<?= htmlspecialchars($prod['nom_pro']) ?>">
+                            <img src="public/images/placeholder.png" alt="<?= htmlspecialchars($prod['nom_pro']) ?>" class="recomendado-img">
+                            <h3><?= htmlspecialchars($prod['nom_pro']) ?></h3>
+                            <p><?= htmlspecialchars($prod['descripcion']) ?></p>
+                            <span class="precio-producto">$<?= number_format($prod['precio'], 2) ?></span>
                         </div>
                     <?php endforeach; ?>
                 </div>
-            <?php else: ?>
-                <div class="empty-state">No se encontraron productos para esta búsqueda <strong><?= htmlspecialchars($busqueda) ?></strong>. Intenta con otra palabra clave o consulta el nombre completo del producto.</div>
-            <?php endif; ?>
-        <?php else: ?>
-            <div class="empty-state">Escribe algo en el buscador para ver resultados rápidos y detallados.</div>
-        <?php endif; ?>
-    </section>
+            </div>
+
+            <!-- COLUMNA DERECHA: Lista de recetas estática -->
+            <div class="right-col">
+                <div class="filtros-section">
+                    <ul class="categorias-lista">
+                        <li>Recetas <span class="numero">(35)</span></li>
+                        <ul class="subcategorias">
+                            <li data-categoria="bebidas">Bebidas <span class="numero">(9)</span></li>
+                            <li data-categoria="cocteles">Cocteles <span class="numero">(6)</span></li>
+                            <li data-categoria="cocina">Cocina <span class="numero">(6)</span></li>
+                            <li data-categoria="salsas">Salsas y Aderezos <span class="numero">(3)</span></li>
+                            <li data-categoria="helados">Helados <span class="numero">(3)</span></li>
+                            <li data-categoria="postres">Postres <span class="numero">(14)</span></li>
+                            <li data-categoria="batidos">Batidos <span class="numero">(3)</span></li>
+                            <li data-categoria="comida">Comida <span class="numero">(2)</span></li>
+                            <li data-categoria="flan">Flan <span class="numero">(2)</span></li>
+                            <li data-categoria="galletas">Galletas <span class="numero">(1)</span></li>
+                            <li data-categoria="granizados">Granizados <span class="numero">(1)</span></li>
+                            <li data-categoria="limonadas">Limonadas <span class="numero">(2)</span></li>
+                            <li data-categoria="margaritas">Margaritas <span class="numero">(3)</span></li>
+                            <li data-categoria="mermeladas">Mermeladas <span class="numero">(1)</span></li>
+                            <li data-categoria="mousse">Mousse <span class="numero">(5)</span></li>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-</body>
-</html>
+
+<script>
+// ===== remplazo buscar.js (adaptado) =====
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+const categoriasItems = document.querySelectorAll('.subcategorias li');
+const recomendados = document.querySelectorAll('.recomendado-card');
+const mensajeInfo = document.getElementById('mensajeInfo');
+
+function filtrarTodo() {
+    const termino = searchInput.value.toLowerCase().trim();
+
+    let algunaCategoriaVisible = false;
+    categoriasItems.forEach(item => {
+        const texto = item.textContent.toLowerCase();
+        if (termino === '' || texto.includes(termino)) {
+            item.classList.remove('hidden');
+            algunaCategoriaVisible = true;
+        } else {
+            item.classList.add('hidden');
+        }
+    });
+
+    let algunRecomendadoVisible = false;
+    recomendados.forEach(rec => {
+        const texto = rec.querySelector('h3').textContent.toLowerCase();
+        const desc = rec.querySelector('p').textContent.toLowerCase();
+        if (termino === '' || texto.includes(termino) || desc.includes(termino)) {
+            rec.classList.remove('hidden');
+            algunRecomendadoVisible = true;
+        } else {
+            rec.classList.add('hidden');
+        }
+    });
+
+    if (termino !== '' && !algunaCategoriaVisible && !algunRecomendadoVisible) {
+        mensajeInfo.innerHTML = '😿 No encontramos resultados para "' + termino + '". Intenta con otra palabra.';
+        mensajeInfo.style.color = '#ff7a5c';
+    } else if (termino === '') {
+        mensajeInfo.innerHTML = '✨ Escribe algo en el buscador para ver resultados rápidos y detallados.';
+        mensajeInfo.style.color = '#a07a7a';
+    } else {
+        mensajeInfo.innerHTML = '🔍 Mostrando resultados para: "' + termino + '"';
+        mensajeInfo.style.color = '#6b9e6b';
+    }
+}
+
+searchInput.addEventListener('input', filtrarTodo);
+searchBtn.addEventListener('click', filtrarTodo);
+
+categoriasItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const texto = item.textContent.split('(')[0].trim();
+        searchInput.value = texto;
+        filtrarTodo();
+    });
+});
+
+recomendados.forEach(rec => {
+    rec.addEventListener('click', () => {
+        const texto = rec.querySelector('h3').textContent;
+        searchInput.value = texto;
+        filtrarTodo();
+    });
+});
+
+filtrarTodo();
+</script>

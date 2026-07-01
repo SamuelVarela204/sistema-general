@@ -19,7 +19,7 @@ $titulo = 'Registro';
         </label>
     </div>
 
-    <form action="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/includes/procesar_registro.php" method="post" enctype="multipart/form-data" novalidate>
+    <form id="formRegistro" action="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/includes/procesar_registro.php" method="post" enctype="multipart/form-data" novalidate>
         <input type="file" id="profile-pic" name="profile-pic" accept="image/*" style="display:none;">
         <input type="text" name="nombre" placeholder="Nombre" required class="input-pastel">
         <input type="email" name="correo" placeholder="Correo" required class="input-pastel">
@@ -28,7 +28,8 @@ $titulo = 'Registro';
             <input type="checkbox" name="terminos" required>
             <a href="https://youtu.be/GBcJyVTDYH4?t=8" target="_blank" style="margin-top: -5px;">Acepto los términos y condiciones</a>
         </label>
-        <button type="submit" class="submit-btn" style="width:100%; margin-top: 20px;" name="regi">Registrar</button>
+        <input type="hidden" name="regi" value="1">
+        <button type="submit" class="submit-btn" style="width:100%; margin-top: 20px;">Registrar</button>
         <div class="back-home">
             <a href="index.php">← Volver al inicio</a>
         </div>
@@ -36,6 +37,7 @@ $titulo = 'Registro';
 </div>
 
 <?php if (isset($_GET['error'])): ?>
+
     <script>
         let message = '';
         let type = 'error';
@@ -107,18 +109,31 @@ $titulo = 'Registro';
 </style>
 
 <script>
-    document.getElementById('profile-pic')?.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-            const circle = document.getElementById('circle-preview');
-            circle.style.backgroundImage = `url('${evt.target.result}')`;
-            circle.textContent = '';
-        };
-        reader.readAsDataURL(file);
-    });
-    document.getElementById('circle-preview')?.addEventListener('click', function() {
-        document.getElementById('profile-pic').click();
+    const profilePic = document.getElementById('profile-pic');
+    const circlePreview = document.getElementById('circle-preview');
+
+    if (profilePic) {
+        profilePic.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                if (!circlePreview) return;
+                circlePreview.style.backgroundImage = `url('${evt.target.result}')`;
+                circlePreview.textContent = '';
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    if (circlePreview) {
+        circlePreview.addEventListener('click', function() {
+            if (!profilePic) return;
+            profilePic.click();
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Frutas deshabilitadas temporalmente
     });
 </script>

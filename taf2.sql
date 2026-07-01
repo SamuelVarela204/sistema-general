@@ -109,11 +109,13 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `id_rol` int NOT NULL AUTO_INCREMENT,
   `nombre_rol` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT IGNORE INTO `roles` (`id_rol`, `nombre_rol`) VALUES
 	(1, 'admin'),
-	(2, 'cliente');
+	(2, 'cliente'),
+	(3, 'inventario'),
+	(4, 'gerente');
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_usu` int NOT NULL AUTO_INCREMENT,
@@ -125,15 +127,18 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `correo` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `direccion` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `descripcion` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `estado` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'activo',
   PRIMARY KEY (`id_usu`),
   UNIQUE KEY `correo` (`correo`),
   KEY `id_rol` (`id_rol`),
   CONSTRAINT `usuarios_ibfk_roles` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT IGNORE INTO `usuarios` (`id_usu`, `id_rol`, `nom_com`, `usu_con`, `imagen`, `telefono`, `correo`, `direccion`, `descripcion`) VALUES
-	(1, 1, 'Administrador de Pruebas', '123456', NULL, NULL, 'admin@correo.com', NULL, NULL),
-	(2, 2, 'Carlos Mendoza', 'password123', NULL, '3001234567', 'carlos@correo.com', 'Calle 45 # 10-20', NULL);
+INSERT IGNORE INTO `usuarios` (`id_usu`, `id_rol`, `nom_com`, `usu_con`, `imagen`, `telefono`, `correo`, `direccion`, `descripcion`, `estado`) VALUES
+	(1, 1, 'Administrador de Pruebas', '123456', NULL, NULL, 'admin@correo.com', NULL, 'Rol administrativo', 'activo'),
+	(2, 2, 'Carlos Mendoza', 'cliente123', NULL, '3001234567', 'carlos@correo.com', 'Calle 45 # 10-20', 'Cliente frecuente', 'activo'),
+	(3, 3, 'María López', 'inventario123', NULL, '3012345678', 'inventario@correo.com', 'Carrera 8 # 12-34', 'Encargada de inventario', 'activo'),
+	(4, 4, 'Sofía Ramírez', 'gerente123', NULL, '3034567890', 'gerente@correo.com', 'Calle 90 # 15-06', 'Gerente de operaciones', 'activo');
 
 CREATE TABLE IF NOT EXISTS `usuario_alergias` (
   `id_usu` int NOT NULL,
