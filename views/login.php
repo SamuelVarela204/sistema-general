@@ -15,7 +15,7 @@ $titulo = 'Iniciar sesión';
         <h1>Bienvenido de vuelta</h1>
     </div>
 
-    <form action="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/includes/verify.php" method="post" novalidate style="margin-top: -30px;">
+    <form action="/sistema-general/includes/procesar_login.php" method="post" novalidate style="margin-top: -30px;">
         <input type="email" name="correo" placeholder="Correo electrónico" required class="input-pastel" autocomplete="email">
         <input type="password" name="contrasena" placeholder="Contraseña" required class="input-pastel" autocomplete="current-password">
 

@@ -1,4 +1,9 @@
 <?php
+// Definir la URL base del proyecto
+if (!defined('BASE_URL')) {
+    define('BASE_URL', '/sistema-general');
+}
+
 function conectarBD()
 {
     $host = 'localhost';

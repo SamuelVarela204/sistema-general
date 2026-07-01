@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../includes/functions.php';
 require_once 'controlador/controlador.php';
 
 // INICIAR SESIÓN 
@@ -16,8 +17,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'nuevo_usuario') {
     $estado  = trim($_POST['estado']); // Captura el estado ('activo' o 'inactivo')
 
     if (empty($nom_com) || empty($correo) || empty($usu_con) || empty($id_rol) || empty($estado)) {
-        header("Location: paginas/usuarios.php?error=Todos los campos son requeridos.");
-        exit();
+        redirigir('taf2/paginas/usuarios.php?error=Todos los campos son requeridos.');
     }
 
     try {
@@ -29,20 +29,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'nuevo_usuario') {
         $roles_permitidos = ['inventario', 'gerente'];
 
         if (!$rolResult || !in_array($rolResult['nombre_rol'], $roles_permitidos, true)) {
-            header("Location: paginas/usuarios.php?error=Rol no permitido para el personal.");
-            exit();
+            redirigir('taf2/paginas/usuarios.php?error=Rol no permitido para el personal.');
         }
 
         // Inserción incluyendo la columna estado
         $stmt = $pdo->prepare("INSERT INTO usuarios (nom_com, correo, usu_con, id_rol, estado) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$nom_com, $correo, $usu_con, $id_rol, $estado]);
 
-        header("Location: paginas/usuarios.php?msg=Usuario creado exitosamente con estado " . $estado . ".");
-        exit();
+        redirigir('taf2/paginas/usuarios.php?msg=Usuario creado exitosamente con estado ' . $estado . '.');
 
     } catch (PDOException $e) {
-        header("Location: paginas/usuarios.php?error=El correo electronico ya se encuentra registrado.");
-        exit();
+        redirigir('taf2/paginas/usuarios.php?error=El correo electronico ya se encuentra registrado.');
     }
 }
 // --- DETECTAR ACCIONES POR MÉTODO GET (Cerrar Sesión) ---
@@ -61,8 +58,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'cerrar_sesion') {
     
     // Destruir la sesión en el servidor y redirigir inmediatamente
     session_destroy();
-    header("Location: login.php");
-    exit();
+    redirigir('taf2/login.php');
 }
 
 // --- DETECTAR ACCIONES POR MÉTODO POST (Formularios) ---
@@ -79,8 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_POST['stock'],
             $_POST['categoria']
         ]);
-        header("Location: paginas/productos.php?msg=Producto+registrado");
-        exit;
+        redirigir('taf2/paginas/productos.php?msg=Producto+registrado');
     }
     
     // ACCIÓN 2: Registrar Pedido (Venta de múltiples productos)
@@ -139,16 +134,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             $pdo->commit();
-            header("Location: index.php?msg=Pedido+creado+con+exito");
-            exit;
-            
+            redirigir('index.php?msg=Pedido+creado+con+exito');
+
         } catch (Exception $e) {
             $pdo->rollBack();
-            header("Location: index.php?error=" . urlencode($e->getMessage()));
-            exit;
+            redirigir('index.php?error=' . urlencode($e->getMessage()));
         }
     }
-    
+
     // ACCIÓN 3: Iniciar Sesión
     if (isset($_POST['action']) && $_POST['action'] === 'iniciar_sesion') {
         $correo = trim($_POST['correo']);
@@ -169,11 +162,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['nom_com'] = $usuario['nom_com'];
             $_SESSION['usuario_rol'] = $usuario['nombre_rol']; // Guarda 'admin', 'vendedor' o 'gerente'
             
-            header("Location: index.php");
-            exit();
+            redirigir('taf2/index.php');
         } else {
-            header("Location: login.php?error=Usuario o contraseña incorrectos");
-            exit();
+            redirigir('taf2/login.php?error=Usuario o contraseña incorrectos');
         }
     }
 }

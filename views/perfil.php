@@ -49,7 +49,7 @@ $userData = obtenerCamposUsuario($con, $userEmail);
     </div>
 
     <section class="perfil-header">
-        <div class="cirp perfil-foto" style="background-image: url('data:image/jpeg;base64,<?php echo $_SESSION['imagen'] ? base64_encode($_SESSION['imagen']) : ''; ?>');"></div>
+        <div class="cirp perfil-foto" style="<?php if (!empty($userData['imagen'])): ?>background-image: url('data:image/jpeg;base64,<?php echo base64_encode($userData['imagen']); ?>');<?php endif; ?>"></div>
         <div class="profile-info">
             <h1><?php echo htmlspecialchars($userData['nom_com'] ?: $_SESSION['usuario']); ?></h1>
             <div class="profile-grid">
@@ -77,7 +77,6 @@ $userData = obtenerCamposUsuario($con, $userEmail);
     <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 30px;">
         <button id="editarPerfilBtn" type="button" class="submit-btn" style="width: 140px; height: 56px;">Editar perfil</button>
         <button id="borrarPerfilBtn" type="button" class="delet-buttons mi-boton" style="width: 140px; height: 56px;">Borrar Perfil</button>
-        <audio id="sonido-hover" src="public/audio/grito.mp3" preload="auto" controls style="opacity: 0; width: 0; height: 0; position: absolute; pointer-events: none; overflow: hidden;"></audio>
         <script>
             const sonidoHover = document.getElementById('sonido-hover');
             const botonBorrar = document.getElementById('borrarPerfilBtn');

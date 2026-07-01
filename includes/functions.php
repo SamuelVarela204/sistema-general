@@ -89,8 +89,9 @@ function estaLogueado()
 function redirigir($url)
 {
     if (strpos($url, '/') !== 0 && !preg_match('#^[a-zA-Z][a-zA-Z0-9+.-]*://#', $url)) {
-        $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
-        $url = ($base === '' || $base === '/') ? '/' . ltrim($url, '/') : $base . '/' . ltrim($url, '/');
+        // Usar BASE_URL definido en config
+        $baseUrl = defined('BASE_URL') ? BASE_URL : '';
+        $url = $baseUrl . '/' . ltrim($url, '/');
     }
 
     header("Location: $url");

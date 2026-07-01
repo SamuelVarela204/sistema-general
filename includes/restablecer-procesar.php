@@ -43,8 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restablecer'])) {
         mysqli_stmt_close($stmt);
         mysqli_close($con);
         // Redirigir al login con mensaje de éxito
-        header('Location: ' . dirname(dirname($_SERVER['SCRIPT_NAME'])) . '/index.php?page=login&status=password_reset');
-        exit;
+        redirigir('index.php?page=login&status=password_reset');
     } else {
         mysqli_stmt_close($stmt);
         redirigir('index.php?page=restablecer&token=' . urlencode($token) . '&error=update_failed');

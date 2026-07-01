@@ -2,17 +2,19 @@
 $titulo = 'Restablecer contraseña';
 $token = $_GET['token'] ?? '';
 
+require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/TokenRecuperacion.php';
 
+$con = conectarBD();
+
 if (empty($token)) {
-    header('Location: index.php?page=recuperacion&error=invalid_token');
-    exit;
+    redirigir('index.php?page=recuperacion&error=invalid_token');
 }
 
 $tokenManager = new TokenRecuperacion($con);
 if ($tokenManager->verificarToken($token) === false) {
-    header('Location: index.php?page=recuperacion&error=invalid_token');
-    exit;
+    redirigir('index.php?page=recuperacion&error=invalid_token');
 }
 ?>
 <div class="spc">
@@ -28,7 +30,7 @@ if ($tokenManager->verificarToken($token) === false) {
         <h1>Nueva contraseña</h1>
     </div>
 
-    <form action="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/includes/restablecer-procesar.php" method="post" novalidate style="margin-top: -30px;">
+    <form action="/sistema-general/includes/restablecer-procesar.php" method="post" novalidate style="margin-top: -30px;">
         <input type="hidden" name="token" value="<?= htmlspecialchars($token, ENT_QUOTES, 'UTF-8') ?>">
         <input type="password" name="nueva_contrasena" placeholder="Nueva contraseña (mínimo 6 caracteres)" required class="input-pastel" autocomplete="new-password">
         <input type="password" name="confirmar_contrasena" placeholder="Confirmar contraseña" required class="input-pastel" autocomplete="new-password">

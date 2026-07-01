@@ -11,8 +11,7 @@ $con = conectarBD();
 $pagina_actual = basename($_SERVER['PHP_SELF']);
 $logueado = !empty($_SESSION['usuario']) || !empty($_SESSION['correo']) || !empty($_SESSION['usuario_id']);
 if (!$logueado && $pagina_actual !== 'login.php' && $pagina_actual !== 'procesar.php') {
-    header('Location: index.php?page=login');
-    exit();
+    redirigir('index.php?page=login');
 }
 
 $rol_actual = $_SESSION['usuario_rol'] ?? 'cliente';

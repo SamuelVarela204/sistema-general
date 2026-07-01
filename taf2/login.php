@@ -1,12 +1,13 @@
 <?php
 require_once 'controlador/controlador.php';
+require_once __DIR__ . '/../includes/functions.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Si ya está logueado, redirigir al panel
 if (isset($_SESSION['usuario_id'])) {
-    header('Location: index.php');
-    exit();
+    redirigir('taf2/index.php');
 }
 ?>
 <!DOCTYPE html>

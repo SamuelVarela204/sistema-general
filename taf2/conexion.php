@@ -1,5 +1,15 @@
 <?php
 // conexion.php
+// Definir la URL base del proyecto (usado por functions.php)
+if (!defined('BASE_URL')) {
+    define('BASE_URL', '/sistema-general');
+}
+
+// Definir la URL base del módulo TAF2 (usado para redirecciones internas del módulo)
+if (!defined('TAF2_URL')) {
+    define('TAF2_URL', '/sistema-general/taf2');
+}
+
 $host = 'localhost';
 $db   = 'taf2';
 $user = 'root';

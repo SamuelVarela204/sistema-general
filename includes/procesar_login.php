@@ -38,8 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inic'])) {
             }
 
             if ($rolUsuario === 1) {
-                header('Location: ../taf2/index.php');
-                exit;
+                redirigir('index.php?page=taf2');
             }
 
             redirigir('index.php');

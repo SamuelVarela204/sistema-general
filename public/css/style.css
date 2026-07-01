@@ -479,8 +479,6 @@ body {
 .delet-buttons:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 28px rgba(240, 100, 140, 0.16);
-    background: url('https://us-tuna-sounds-images.voicemod.net/fbe2c85e-6382-448c-8f10-4b9d83e2da19-1718609963845.png') no-repeat center center fixed;
-    background-size: cover;
 }
 
 /* =========================================

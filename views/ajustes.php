@@ -1,11 +1,47 @@
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Ajustes · Modo Blanco y Negro</title>
-    <style>
+
+
+
+
+
+
+<?php
+// Obtener alergias y notificaciones del usuario logueado
+$alergiasUsuario = '';
+$notificacionesUsuario = false;
+if (estaLogueado()) {
+    $con = conectarBD();
+    $alergiasCol = mysqli_query($con, "SHOW COLUMNS FROM usuarios LIKE 'alergias'");
+    $notificacionesCol = mysqli_query($con, "SHOW COLUMNS FROM usuarios LIKE 'notificaciones'");
+    $columnas = [];
+    if ($alergiasCol && mysqli_num_rows($alergiasCol) > 0) {
+        $columnas[] = 'alergias';
+    }
+    if ($notificacionesCol && mysqli_num_rows($notificacionesCol) > 0) {
+        $columnas[] = 'notificaciones';
+    }
+
+    if (!empty($columnas)) {
+        $query = 'SELECT ' . implode(', ', $columnas) . ' FROM usuarios WHERE correo = ?';
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, 's', $_SESSION['correo']);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if ($row = mysqli_fetch_assoc($result)) {
+            if (in_array('alergias', $columnas, true)) {
+                $alergiasUsuario = $row['alergias'] ?? '';
+            }
+            if (in_array('notificaciones', $columnas, true)) {
+                $notificacionesUsuario = (bool)($row['notificaciones'] ?? false);
+            }
+        }
+        mysqli_stmt_close($stmt);
+    }
+    mysqli_close($con);
+}
+?>
+
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -443,9 +479,9 @@
             }
         }
     </style>
-</head>
 
-<body>
+
+
 
     <div class="settings-container">
 
@@ -679,41 +715,5 @@
             document.getElementById('noAnimationsToggle').checked = localStorage.getItem('noAnimations') === 'true';
             aplicarApariencia();
         </script>
-        <?php
-        // Obtener alergias y notificaciones del usuario logueado
-        $alergiasUsuario = '';
-        $notificacionesUsuario = false;
-        if (estaLogueado()) {
-            $con = conectarBD();
-            $alergiasCol = mysqli_query($con, "SHOW COLUMNS FROM usuarios LIKE 'alergias'");
-            $notificacionesCol = mysqli_query($con, "SHOW COLUMNS FROM usuarios LIKE 'notificaciones'");
-            $columnas = [];
-            if ($alergiasCol && mysqli_num_rows($alergiasCol) > 0) {
-                $columnas[] = 'alergias';
-            }
-            if ($notificacionesCol && mysqli_num_rows($notificacionesCol) > 0) {
-                $columnas[] = 'notificaciones';
-            }
 
-            if (!empty($columnas)) {
-                $query = 'SELECT ' . implode(', ', $columnas) . ' FROM usuarios WHERE correo = ?';
-                $stmt = mysqli_prepare($con, $query);
-                mysqli_stmt_bind_param($stmt, 's', $_SESSION['correo']);
-                mysqli_stmt_execute($stmt);
-                $result = mysqli_stmt_get_result($stmt);
-                if ($row = mysqli_fetch_assoc($result)) {
-                    if (in_array('alergias', $columnas, true)) {
-                        $alergiasUsuario = $row['alergias'] ?? '';
-                    }
-                    if (in_array('notificaciones', $columnas, true)) {
-                        $notificacionesUsuario = (bool)($row['notificaciones'] ?? false);
-                    }
-                }
-                mysqli_stmt_close($stmt);
-            }
-            mysqli_close($con);
-        }
-        ?>
-</body>
 
-</html>

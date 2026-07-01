@@ -4,14 +4,17 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start(); // Iniciar el motor de sesiones de PHP
 }
 
-// Conexión a la base de datos subiendo correctamente a la raíz
 require_once __DIR__ . '/../conexion.php';
+require_once __DIR__ . '/../../includes/functions.php';
 
-// Protección de páginas
+// Protección de páginas - redirigir usando TAF2_URL
 $pagina_actual = basename($_SERVER['PHP_SELF']);
 if (!isset($_SESSION['usuario_id']) && $pagina_actual !== 'login.php' && $pagina_actual !== 'procesar.php') {
-    header("Location: login.php");
-    exit();
+    // Redirección manual para TAF2 ya que BASE_URL apunta a la raíz
+    $basePath = TAF2_URL;
+    $url = $basePath . '/login.php';
+    header("Location: $url");
+    exit;
 }
 
 // Rol sidebar
