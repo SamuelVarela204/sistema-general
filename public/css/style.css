@@ -106,7 +106,14 @@ body {
     }
 }
 
-/* =========================================`n    LAYOUT GENERAL`n========================================= */`n`n.pagina-completa {`n    padding: 120px 20px 0;`n    flex: 1;`n    min-height: 0;`n}
+/* =========================================
+    LAYOUT GENERAL
+========================================= */
+
+.pagina-completa {
+    padding: 50px 20px 0;
+    flex: 1;   
+    min-height: 0;}
 
 .contenido-principal {
     width: 100%;

@@ -31,7 +31,7 @@ class AuthController {
         }
         
         // Cargar la vista
-        require_once VIEW_PATH . '../views/auth/login.php';
+        require_once VIEWS_PATH . '/auth/login.php';
     }
     
     public function register() {
@@ -67,7 +67,7 @@ class AuthController {
             }
         }
         
-        require_once VIEW_PATH . '../views/auth/register.php';
+        require_once VIEWS_PATH . '/auth/register.php';
     }
     
     public function logout() {

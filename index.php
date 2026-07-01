@@ -41,6 +41,10 @@ switch ($page) {
         $controller = new ProductController();
         $controller->search();
         break;
+    case 'siscop':
+        $titulo = 'Siscop';
+        require_once 'app/views/siscop.php';
+        break;
     default:
         // Para la página home, simplemente cargar la vista
         $titulo = 'Inicio';

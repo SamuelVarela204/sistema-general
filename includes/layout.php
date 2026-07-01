@@ -83,7 +83,7 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
-            <p><a href="views/siscop.php" class="footer-link">&copy;</a>Samuel Varela y Diego Garcia — Todos los derechos reservados.</p>
+            <p><a href="index.php?page=siscop" class="footer-link">&copy;</a>Samuel Varela y Diego Garcia — Todos los derechos reservados.</p>
         </div>
     </footer>
 

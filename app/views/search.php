@@ -31,4 +31,4 @@ $busqueda = $_GET['q'] ?? '';
 </main>
 
 <?php
-require_once VIEW_PATH . '/footer.php';
+require_once LAYOUTS_PATH . '/footer.php';

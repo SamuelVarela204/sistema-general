@@ -1,6 +1,6 @@
 <?php
 // app/views/user/settings.php
-require_once VIEW_PATH . '/header.php';
+require_once LAYOUTS_PATH . '/header.php';
 $titulo = 'Ajustes';
 ?>
 
@@ -27,4 +27,4 @@ $titulo = 'Ajustes';
 </div>
 
 <?php
-require_once VIEW_PATH . '/footer.php';
+require_once LAYOUTS_PATH . '/footer.php';

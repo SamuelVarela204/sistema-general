@@ -9,6 +9,6 @@ class ProductController {
         $productos = $productModel->getAllProducts($searchTerm);
         
         // Cargar la vista con los resultados
-        require_once VIEW_PATH . '../views/search.php';
+        require_once VIEWS_PATH . '/search.php';
     }
 }

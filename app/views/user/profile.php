@@ -1,6 +1,6 @@
 <?php
 // app/views/user/profile.php
-require_once VIEW_PATH . '../layouts/header.php';
+require_once LAYOUTS_PATH . '/header.php';
 $titulo = 'Mi Perfil';
 ?>
 
@@ -49,4 +49,4 @@ $titulo = 'Mi Perfil';
 </main>
 
 <?php
-require_once VIEW_PATH . '../layouts/footer.php';
+require_once LAYOUTS_PATH . '/footer.php';

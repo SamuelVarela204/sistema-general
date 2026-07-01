@@ -1,6 +1,6 @@
 <?php
 // app/views/auth/login.php
-require_once VIEW_PATH . '../layouts/header.php';
+require_once LAYOUTS_PATH . '/header.php';
 
 $titulo = 'Iniciar sesión';
 ?>
@@ -38,4 +38,4 @@ $titulo = 'Iniciar sesión';
 </div>
 
 <?php
-require_once VIEW_PATH . '../layouts/footer.php';
+require_once LAYOUTS_PATH . '/footer.php';

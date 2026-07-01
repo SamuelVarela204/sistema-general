@@ -16,7 +16,7 @@ class UserController {
             die('Usuario no encontrado');
         }
         
-        require_once VIEW_PATH . '../views/user/profile.php';
+        require_once VIEWS_PATH . '/user/profile.php';
     }
     
     public function settings() {
@@ -33,7 +33,7 @@ class UserController {
             die('Usuario no encontrado');
         }
         
-        require_once VIEW_PATH . '../views/user/settings.php';
+        require_once VIEWS_PATH . '/user/settings.php';
     }
     
     public function updateProfile() {
