@@ -450,7 +450,7 @@
     <div class="settings-container">
 
         <div class="page-header">
-            <h1>⚙️ Panel de ajustes</h1>
+            <h1>Panel de ajustes</h1>
             <p>Personaliza la experiencia visual de la aplicación</p>
         </div>
 
@@ -459,7 +459,7 @@
             <div class="setting-item">
                 <div class="setting-info">
                     <h2>
-                        <span>🎨</span> tema negro
+                        tema negro
                         <span class="status-badge" id="statusLabel">Desactivado</span>
                     </h2>
                     <p class="desc">Activa el filtro de escala de grises en toda la interfaz. Ideal para reducir distracciones visuales o simular una vista monocromática.</p>
@@ -470,21 +470,21 @@
                 </label>
             </div>
             <div style="margin-top: 0.9rem; font-size: 0.75rem; color: #5b7a9a; background: #eef3fa; padding: 0.4rem 1rem; border-radius: 40px; display: inline-block;">
-                💾 El ajuste se guarda automáticamente en tu navegador
+                El ajuste se guarda automáticamente en tu navegador
             </div>
         </div>
 
         <!-- Área de vista previa / demo del aplicativo (elementos llenos de color) -->
         <div class="preview-area">
             <div class="preview-title">
-                <h3>🌈 Vista previa del aplicativo</h3>
+                <h3>Vista previa del aplicativo</h3>
             </div>
             <p style="margin-bottom: 1rem; color: #2c4e6e;">Componentes de ejemplo: tarjetas, botones, badges y degradados. Al activar el modo B/N todo se volverá monocromático.</p>
             <!-- Tarjeta: Alergias -->
             <div class="settings-card">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h2><span>🥜</span> Mis alergias</h2>
+                        <h2>Mis alergias</h2>
                         <p class="desc">Indica tus alergias para filtrar productos que no puedas consumir.</p>
                     </div>
                 </div>
@@ -498,7 +498,7 @@
             <div class="settings-card">
                 <div class="setting-item">
                     <div class="setting-info">
-                        <h2><span>🔔</span> Notificaciones</h2>
+                        <h2>Notificaciones</h2>
                         <p class="desc">Recibe correos con promociones y novedades.</p>
                     </div>
                     <label class="toggle-switch">
@@ -511,7 +511,7 @@
             <!-- Tarjeta: Apariencia adicional -->
             <div class="settings-card">
                 <div class="setting-info">
-                    <h2><span>🎨</span> Apariencia adicional</h2>
+                    <h2>Apariencia adicional</h2>
                     <p class="desc">Ajusta el tamaño de fuente, el contraste y las animaciones.</p>
                 </div>
                 <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem;">
