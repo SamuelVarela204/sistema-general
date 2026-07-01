@@ -14,7 +14,7 @@ $titulo = 'Inicio';
     </div>
     
     <div class="contenido-principal">
-        <div class="columna-de-accion">
+        <div class="columna-de-acción">
             <h3 style="text-align: center;">¿Qué buscas hoy?</h3>
             <div style="text-align: center; margin-bottom: 10px;">Encuentra tu bebida favorita</div>
             

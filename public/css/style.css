@@ -90,6 +90,8 @@ body {
     min-height: 100vh;
     background: url('../images/cats.avif') no-repeat center center fixed;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes gradientMove {
@@ -104,9 +106,7 @@ body {
     }
 }
 
-/* =========================================
-    LAYOUT GENERAL
-========================================= */
+/* =========================================`n    LAYOUT GENERAL`n========================================= */`n`n.pagina-completa {`n    padding: 120px 20px 0;`n    flex: 1;`n    min-height: 0;`n}
 
 .contenido-principal {
     width: 100%;
@@ -527,10 +527,6 @@ body {
     padding: 12px 0;
     max-width: 100%;
     position: relative;
-
-
-
-
     box-sizing: border-box;
     position: relative;
 }
@@ -980,3 +976,7 @@ body {
     transition: none !important;
     transform: none !important;
 }
+
+
+
+
