@@ -1,0 +1,176 @@
+:root {
+  --taf2-accent: #af002d;
+  --taf2-accent-2: #ff7a18;
+  --taf2-bg: #fff7fa;
+  --taf2-card: #ffffff;
+}
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  background: linear-gradient(180deg, #fdf4f7 0%, #fff8fb 100%);
+  color: #2d3748;
+}
+.taf2-sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--taf2-accent) 0%, #7b0030 100%);
+  color: #fff;
+  padding: 28px 20px;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.taf2-sidebar a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  margin: 10px 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.taf2-sidebar a:hover {
+  background: rgba(255,255,255,0.16);
+  transform: translateX(2px);
+}
+.taf2-main {
+  margin-left: 260px;
+  padding: 40px; /* mayor espacio alrededor del contenido */
+}
+.taf2-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.taf2-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 28px; /* aumentar separación entre tarjetas */
+}
+.taf2-card {
+  background: var(--taf2-card);
+  border-radius: 14px; /* un poco menos redondeado para look más sobrio */
+  padding: 28px; /* más espacio interior */
+  box-shadow: 0 14px 32px rgba(45, 55, 72, 0.06);
+  margin-bottom: 6px; /* asegurar separación extra en flujos verticales */
+}
+.taf2-hero {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, #ffefef 0%, #ffffff 100%);
+  border: 1px solid rgba(175, 0, 45, 0.12);
+  border-radius: 24px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 10px 32px rgba(45, 55, 72, 0.06);
+}
+.taf2-hero-info {
+  max-width: 620px;
+}
+.taf2-hero-info h1 {
+  margin: 0 0 10px;
+  font-size: clamp(2rem, 2.6vw, 3rem);
+  letter-spacing: -0.04em;
+}
+.taf2-hero-info p {
+  margin: 0;
+  color: #5f5f78;
+  line-height: 1.7;
+}
+.taf2-avatar {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ffffff;
+  box-shadow: 0 12px 28px rgba(175, 0, 45, 0.18);
+  background: #ffe6ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.taf2-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.taf2-avatar-fallback {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #af002d;
+}
+.taf2-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+.taf2-logout-hero {
+  background: rgba(175, 0, 45, 0.14);
+  color: #7b0030;
+  border-radius: 999px;
+  padding: 12px 18px;
+  text-decoration: none;
+  font-weight: 700;
+}
+.taf2-logout-hero:hover {
+  background: rgba(175, 0, 45, 0.2);
+}
+.taf2-card h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #2d3748;
+}
+.taf2-card p {
+  margin: 14px 0 0;
+  color: #555f7a;
+}
+.taf2-btn, .taf2-form button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background: var(--taf2-accent);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px; /* más cuadrado */
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.12s ease;
+  box-shadow: none;
+}
+.taf2-btn:hover, .taf2-form button:hover {
+  transform: translateY(-1px);
+  background-color: #8f001f; /* tono ligeramente más oscuro al pasar */
+}
+.taf2-form { display: grid; gap: 14px; margin-bottom: 24px; }
+.taf2-form input, .taf2-form select {
+  padding: 14px;
+  border: 1px solid #e9d7df;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.03);
+}
+.taf2-form button, .taf2-form a {
+  width: fit-content;
+}
+.taf2-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.taf2-table th, .taf2-table td { padding: 14px 12px; border-bottom: 1px solid #f1e3eb; text-align: left; }
+.taf2-table th { background: #fff5f7; font-weight: 700; color: #4b2750; }
+.taf2-table tr:hover { background: #fff1f5; }
+.taf2-logout { background: rgba(255,255,255,0.18); }
+@media (max-width: 900px) {
+  .taf2-main { margin-left: 0; padding: 18px; }
+  .taf2-sidebar { position: relative; width: 100%; min-height: auto; }
+  .taf2-hero { flex-direction: column; align-items: stretch; }
+}

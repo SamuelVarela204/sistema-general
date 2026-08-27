@@ -1,0 +1,2 @@
+@extends('layouts.app')
+@section('content')<section class="hero compact"><p class="eyebrow">ADMINISTRACIÓN</p><h1>Panel TAF2</h1><p>Control operativo de Tropical & Fresh.</p></section><section class="stats"><a href="{{ route('admin.products') }}"><strong>{{ $products }}</strong><span>Productos</span></a><a href="{{ route('admin.users') }}"><strong>{{ $users }}</strong><span>Usuarios</span></a><a href="{{ route('admin.orders') }}"><strong>{{ $orders }}</strong><span>Pedidos</span></a></section>@endsection
