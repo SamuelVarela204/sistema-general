@@ -1,8 +1,16 @@
 <?php
 require_once '../controlador/controlador.php';
 
-// Consulta para obtener los productos registrados
-$productos = $pdo->query("SELECT * FROM producto ORDER BY id_pro DESC")->fetchAll();
+// Consulta para obtener los productos registrados con sus categorías
+$productos = $pdo->query("
+    SELECT p.*, c.nombre_cat 
+    FROM producto p
+    LEFT JOIN categorias c ON p.id_cat = c.id_cat
+    ORDER BY p.id_pro DESC
+")->fetchAll();
+
+// Obtener categorías disponibles
+$categorias = obtener_categorias();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -73,7 +81,12 @@ $productos = $pdo->query("SELECT * FROM producto ORDER BY id_pro DESC")->fetchAl
 
                                 <div class="form-group" style="margin-bottom: 20px;">
                                     <label class="form-label" style="display: block; margin-bottom: 5px; font-weight: 600;">Categoría</label>
-                                    <input type="text" name="categoria" class="form-input" required placeholder="Bebidas" style="width: 100%; padding: 8px; border: 1px solid #ced4da; border-radius: 4px;">
+                                    <select name="id_cat" class="form-input" required style="width: 100%; padding: 8px; border: 1px solid #ced4da; border-radius: 4px;">
+                                        <option value="">-- Selecciona una categoría --</option>
+                                        <?php foreach ($categorias as $cat): ?>
+                                            <option value="<?= (int)$cat['id_cat'] ?>"><?= htmlspecialchars($cat['nombre_cat']) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
 
                                 <button type="submit" class="btn-submit-dark" style="width: 100%; padding: 10px; background-color: #212529; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Guardar Producto</button>
@@ -109,7 +122,7 @@ $productos = $pdo->query("SELECT * FROM producto ORDER BY id_pro DESC")->fetchAl
                                                     <td><?= htmlspecialchars($p['descripcion'] ?? '') ?></td>
                                                     <td class="table-total-column">$<?= number_format((float)($p['precio'] ?? 0), 2) ?></td>
                                                     <td><?= (int)($p['stock'] ?? 0) ?></td>
-                                                    <td><span class="custom-badge badge-warning"><?= htmlspecialchars($p['categoria'] ?? '') ?></span></td>
+                                                    <td><span class="custom-badge badge-warning"><?= htmlspecialchars($p['nombre_cat'] ?? 'Sin categoría') ?></span></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>

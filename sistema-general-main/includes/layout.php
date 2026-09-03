@@ -67,27 +67,6 @@
     <?php if (estaLogueado()): ?>
         <?php
             $rolSidebar = strtolower((string)($_SESSION['usuario_rol'] ?? ($_SESSION['rol_id'] ?? 'cliente')));
-            $sidebarActions = [
-                ['label' => 'Perfil', 'href' => 'index.php?page=perfil'],
-                ['label' => 'Pedidos', 'href' => 'index.php?page=pedidos'],
-                ['label' => 'Recetas', 'href' => 'index.php?page=recetas'],
-                ['label' => 'Ajustes', 'href' => 'index.php?page=ajustes'],
-            ];
-
-            if ($rolSidebar === 'admin') {
-                $sidebarActions = array_merge($sidebarActions, [
-                    ['label' => 'Panel TAF2', 'href' => 'index.php?page=taf2'],
-                    ['label' => 'Usuarios', 'href' => 'index.php?page=taf2&view=usuarios'],
-                    ['label' => 'Productos', 'href' => 'index.php?page=taf2&view=productos'],
-                    ['label' => 'Pedidos TAF2', 'href' => 'index.php?page=taf2&view=pedidos'],
-                ]);
-            } elseif (in_array($rolSidebar, ['inventario', 'gerente'], true)) {
-                $sidebarActions = array_merge($sidebarActions, [
-                    ['label' => 'Panel TAF2', 'href' => 'index.php?page=taf2'],
-                    ['label' => 'Productos', 'href' => 'index.php?page=taf2&view=productos'],
-                    ['label' => 'Pedidos TAF2', 'href' => 'index.php?page=taf2&view=pedidos'],
-                ]);
-            }
         ?>
         <div class="notification-widget" id="notificationWidget">
             <button id="notificationBell" class="notification-bell" aria-label="Abrir notificaciones">
@@ -114,13 +93,44 @@
                 <?php endif; ?>
             </div>
             <h1 style="text-align: center; margin-bottom: 6px;"><?= htmlspecialchars($_SESSION['usuario']) ?></h1>
-            <p style="text-align: center; margin: 0 0 12px; color: #d8d8d8; font-size: 0.95rem;"><?= htmlspecialchars($rolSidebar === 'admin' ? 'Aplicación admin' : 'Aplicación cliente') ?></p>
-            <h1 style="text-align: center; margin-top: 0; margin-bottom: 18px; font-size: 1.05rem; color: #7e7e7e;"> <?= htmlspecialchars($descripcionPerfil ?: 'Perfil sin descripción') ?></h1>
+            <p style="text-align: center; margin: 0 0 12px; color: #d8d8d8; font-size: 0.95rem;"><?= htmlspecialchars($rolSidebar === 'admin' ? 'Admin - Acceso completo' : 'Cliente') ?></p>
+            <h1 style="text-align: center; margin-top: 0; margin-bottom: 18px; font-size: 1.05rem; color: #7e7e7e;"> <?= htmlspecialchars($descripcionPerfil ?: 'Sin descripción') ?></h1>
+            
             <nav class="sidebar-menu">
-                <?php foreach ($sidebarActions as $action): ?>
-                    <a href="<?= htmlspecialchars($action['href']) ?>" class="menu-item"><?= htmlspecialchars($action['label']) ?></a>
-                <?php endforeach; ?>
+                <!-- Sección común para todos -->
+                <div class="menu-section">
+                    <span class="section-label">Perfil</span>
+                    <a href="index.php?page=perfil" class="menu-item">👤 Perfil</a>
+                    <a href="index.php?page=taf2&view=alergias" class="menu-item">⚠️ Mis alergias</a>
+                    <a href="index.php?page=ajustes" class="menu-item">⚙️ Ajustes</a>
+                </div>
+
+                <!-- Sección de órdenes para todos -->
+                <div class="menu-section">
+                    <span class="section-label">Compras</span>
+                    <a href="index.php?page=pedidos" class="menu-item">📋 Mis pedidos</a>
+                    <a href="index.php?page=recetas" class="menu-item">📚 Recetas</a>
+                </div>
+
+                <!-- Sección admin -->
+                <?php if ($rolSidebar === 'admin'): ?>
+                    <div class="menu-section">
+                        <span class="section-label">Administración</span>
+                        <a href="index.php?page=taf2" class="menu-item">📊 Panel TAF2</a>
+                        <a href="index.php?page=taf2&view=usuarios" class="menu-item">👥 Usuarios</a>
+                        <a href="index.php?page=taf2&view=productos" class="menu-item">📦 Productos</a>
+                        <a href="index.php?page=taf2&view=pedidos" class="menu-item">📈 Todas las órdenes</a>
+                    </div>
+                <?php elseif (in_array($rolSidebar, ['inventario', 'gerente'], true)): ?>
+                    <div class="menu-section">
+                        <span class="section-label">Operaciones</span>
+                        <a href="index.php?page=taf2" class="menu-item">📊 Panel TAF2</a>
+                        <a href="index.php?page=taf2&view=productos" class="menu-item">📦 Productos</a>
+                        <a href="index.php?page=taf2&view=pedidos" class="menu-item">📈 Órdenes</a>
+                    </div>
+                <?php endif; ?>
             </nav>
+
             <nav class="sidebar-menu-bottom">
                 <a href="index.php?page=logout" class="menu-item logout">Cerrar sesión</a>
             </nav>

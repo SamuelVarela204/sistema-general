@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regi'])) {
                 </ul>
             </div>
             
-            <a href="http://localhost/sistema-general/index.php" class="cta-button">
+            <a href="' . BASE_URL . '/index.php" class="cta-button">
                 ➜ Ir a mi cuenta
             </a>
             

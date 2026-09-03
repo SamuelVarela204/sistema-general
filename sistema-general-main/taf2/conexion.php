@@ -2,12 +2,12 @@
 // conexion.php
 // Definir la URL base del proyecto (usado por functions.php)
 if (!defined('BASE_URL')) {
-    define('BASE_URL', '/sistema-general');
+    define('BASE_URL', '/sistema-general-main/sistema-general-main');
 }
 
 // Definir la URL base del módulo TAF2 (usado para redirecciones internas del módulo)
 if (!defined('TAF2_URL')) {
-    define('TAF2_URL', '/sistema-general/taf2');
+    define('TAF2_URL', '/sistema-general-main/sistema-general-main/taf2');
 }
 
 $host = 'localhost';

@@ -74,6 +74,27 @@ CREATE TABLE IF NOT EXISTS frutas (
 
 
 -- =========================================
+-- TABLA: categorias
+-- =========================================
+
+CREATE TABLE IF NOT EXISTS categorias (
+    id_cat INT NOT NULL AUTO_INCREMENT,
+    nombre_cat VARCHAR(100) NOT NULL UNIQUE,
+    descripcion VARCHAR(255),
+    estado VARCHAR(20) NOT NULL DEFAULT 'activo',
+
+    PRIMARY KEY (id_cat)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT IGNORE INTO categorias (id_cat, nombre_cat, descripcion, estado) VALUES
+(1, 'Bebidas', 'Jugos y bebidas naturales', 'activo'),
+(2, 'Platos', 'Platos principales y combinados', 'activo'),
+(3, 'Postres', 'Postres y frutas con acompañamientos', 'activo'),
+(4, 'Ensaladas', 'Ensaladas frescas y saludables', 'activo'),
+(5, 'Productos', 'Productos varios', 'activo');
+
+
+-- =========================================
 -- TABLA: producto
 -- =========================================
 
@@ -83,25 +104,32 @@ CREATE TABLE IF NOT EXISTS producto (
     descripcion VARCHAR(100),
     precio DECIMAL(10,2) NOT NULL,
     stock INT NOT NULL,
-    categoria VARCHAR(100) NOT NULL,
+    id_cat INT NOT NULL,
 
-    PRIMARY KEY (id_pro)
+    PRIMARY KEY (id_pro),
+    KEY id_cat (id_cat),
+
+    CONSTRAINT producto_ibfk_categorias
+        FOREIGN KEY (id_cat)
+        REFERENCES categorias (id_cat)
+        ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
 INSERT IGNORE INTO producto
-(id_pro, nom_pro, descripcion, precio, stock, categoria)
+(id_pro, nom_pro, descripcion, precio, stock, id_cat)
 VALUES
 (1, 'Jugo de Naranja 500ml',
  '100% natural sin azúcar',
- 6000.00, 50, 'Bebidas'),
+ 6000.00, 50, 1),
 
 (2, 'Ensalada de Frutas Especial',
  'Con helado y queso',
- 12500.00, 30, 'Platos'),
+ 12500.00, 30, 2),
 
 (3, 'Porción de Fresas con Crema',
  'Fresas frescas del día',
- 8000.00, 40, 'Postres');
+ 8000.00, 40, 3);
 
 
 -- =========================================

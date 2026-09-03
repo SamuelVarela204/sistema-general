@@ -1,7 +1,7 @@
 <?php
 // Definir la URL base del proyecto
 if (!defined('BASE_URL')) {
-    define('BASE_URL', '/sistema-general');
+    define('BASE_URL', '/sistema-general-main/sistema-general-main');
 }
 
 function conectarBD()

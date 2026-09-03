@@ -1,3 +1,42 @@
+const loadingIndicator = document.createElement('div');
+loadingIndicator.className = 'loading-indicator';
+loadingIndicator.setAttribute('role', 'status');
+loadingIndicator.setAttribute('aria-live', 'polite');
+loadingIndicator.setAttribute('aria-label', 'Cargando');
+loadingIndicator.innerHTML = '<span class="loading-spinner" aria-hidden="true"></span>';
+document.body.appendChild(loadingIndicator);
+
+function mostrarCarga() {
+    loadingIndicator.classList.add('is-visible');
+}
+
+function ocultarCarga() {
+    loadingIndicator.classList.remove('is-visible');
+}
+
+window.addEventListener('load', ocultarCarga, { once: true });
+
+const fetchOriginal = window.fetch;
+window.fetch = (...args) => {
+    mostrarCarga();
+    return fetchOriginal(...args).finally(ocultarCarga);
+};
+
+document.addEventListener('submit', (event) => {
+    if (event.defaultPrevented) return;
+    mostrarCarga();
+});
+
+document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href]');
+    if (!link || event.defaultPrevented || link.target === '_blank' || link.hasAttribute('download')) return;
+
+    const url = new URL(link.href, window.location.href);
+    if (url.origin === window.location.origin && url.href !== window.location.href && !url.hash) {
+        mostrarCarga();
+    }
+});
+
 const sidebar = document.getElementById("sidebar");
 const holder = document.getElementById("hoverHolder");
 let closeTimeout = null;

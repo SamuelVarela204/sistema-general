@@ -9,6 +9,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
 //
 if (isset($_POST['action']) && $_POST['action'] == 'nuevo_usuario') {
+    // Validar permisos - Solo admin puede crear usuarios
+    if (!verificar_permiso('admin')) {
+        redirigir('taf2/paginas/usuarios.php?error=No+tienes+permiso+para+crear+usuarios');
+    }
     
     $nom_com = trim($_POST['nom_com']);
     $correo  = trim($_POST['correo']);
@@ -42,7 +46,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'nuevo_usuario') {
         redirigir('taf2/paginas/usuarios.php?error=El correo electronico ya se encuentra registrado.');
     }
 }
-// --- DETECTAR ACCIONES POR MÉTODO GET (Cerrar Sesión) ---
+// --- DETECTAR ACCIONES POR MÉTODO GET (Cerrar Sesión, Eliminar) ---
 if (isset($_GET['action']) && $_GET['action'] === 'cerrar_sesion') {
     // Limpiar variables de sesión
     $_SESSION = array();
@@ -61,26 +65,93 @@ if (isset($_GET['action']) && $_GET['action'] === 'cerrar_sesion') {
     redirigir('taf2/login.php');
 }
 
+// Eliminar categoría (Solo Admin)
+if (isset($_GET['action']) && $_GET['action'] === 'eliminar_categoria') {
+    // Validar permisos
+    if (!verificar_permiso('admin')) {
+        redirigir('taf2/paginas/categorias.php?error=No+tienes+permiso+para+eliminar+categorías');
+    }
+    
+    $id_cat = (int)$_GET['id_cat'];
+    
+    if ($id_cat <= 0) {
+        redirigir('taf2/paginas/categorias.php?error=ID+de+categoría+no+válido');
+    }
+    
+    try {
+        // Verificar que la categoría exista
+        $check = $pdo->prepare("SELECT id_cat FROM categorias WHERE id_cat = ?");
+        $check->execute([$id_cat]);
+        
+        if (!$check->fetch()) {
+            redirigir('taf2/paginas/categorias.php?error=Categoría+no+encontrada');
+        }
+        
+        // Verificar que no haya productos en esta categoría
+        $checkProducts = $pdo->prepare("SELECT COUNT(*) as count FROM producto WHERE id_cat = ?");
+        $checkProducts->execute([$id_cat]);
+        $result = $checkProducts->fetch();
+        
+        if ($result['count'] > 0) {
+            redirigir('taf2/paginas/categorias.php?error=No+puedes+eliminar+esta+categoría+porque+tiene+productos+asociados');
+        }
+        
+        // Eliminar la categoría
+        $stmt = $pdo->prepare("DELETE FROM categorias WHERE id_cat = ?");
+        $stmt->execute([$id_cat]);
+        
+        redirigir('taf2/paginas/categorias.php?msg=Categoría+eliminada+exitosamente');
+    } catch (PDOException $e) {
+        redirigir('taf2/paginas/categorias.php?error=Error+al+eliminar+categoría');
+    }
+}
+
 // --- DETECTAR ACCIONES POR MÉTODO POST (Formularios) ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    // ACCIÓN 1: Registrar Producto
+    // ACCIÓN 1: Registrar Producto (Solo Admin e Inventario)
     if (isset($_POST['action']) && $_POST['action'] === 'nuevo_producto') {
-        $sql = "INSERT INTO producto (nom_pro, descripcion, precio, stock, categoria) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            $_POST['nom_pro'],
-            $_POST['descripcion'],
-            $_POST['precio'],
-            $_POST['stock'],
-            $_POST['categoria']
-        ]);
-        redirigir('taf2/paginas/productos.php?msg=Producto+registrado');
+        // Validar permisos
+        if (!verificar_permiso(['admin', 'inventario'])) {
+            redirigir('taf2/paginas/productos.php?error=No+tienes+permiso+para+registrar+productos');
+        }
+        
+        $nom_pro = trim($_POST['nom_pro']);
+        $descripcion = trim($_POST['descripcion']);
+        $precio = (float)$_POST['precio'];
+        $stock = (int)$_POST['stock'];
+        $id_cat = (int)$_POST['id_cat'];
+        
+        if (empty($nom_pro) || $precio <= 0 || $stock < 0 || $id_cat <= 0) {
+            redirigir('taf2/paginas/productos.php?error=Datos+inválidos');
+        }
+        
+        try {
+            // Verificar que la categoría existe
+            $checkCat = $pdo->prepare("SELECT id_cat FROM categorias WHERE id_cat = ? AND estado = 'activo'");
+            $checkCat->execute([$id_cat]);
+            
+            if (!$checkCat->fetch()) {
+                redirigir('taf2/paginas/productos.php?error=Categoría+no+válida');
+            }
+            
+            $sql = "INSERT INTO producto (nom_pro, descripcion, precio, stock, id_cat) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$nom_pro, $descripcion, $precio, $stock, $id_cat]);
+            redirigir('taf2/paginas/productos.php?msg=Producto+registrado+exitosamente');
+        } catch (PDOException $e) {
+            redirigir('taf2/paginas/productos.php?error=Error+al+registrar+producto');
+        }
     }
     
-    // ACCIÓN 2: Registrar Pedido (Venta de múltiples productos)
+    // ACCIÓN 2: Registrar Pedido (Venta de múltiples productos) - Admin e Inventario
     if (isset($_POST['action']) && $_POST['action'] === 'nuevo_pedido') {
-        $id_usu = $_POST['id_usu'];
+        // Validar permisos
+        if (!verificar_permiso(['admin', 'inventario'])) {
+            redirigir('taf2/index.php?error=No+tienes+permiso+para+crear+pedidos');
+        }
+        
+        $id_usu = (int)$_POST['id_usu'];
         $productos = $_POST['productos']; // Array con IDs de productos
         $cantidades = $_POST['cantidades']; // Array con cantidades
         
@@ -159,12 +230,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($usuario && $passwordValido) {
             // Guardamos los datos clave en la sesión
             $_SESSION['usuario_id'] = $usuario['id_usu'];
+            $_SESSION['usuario'] = $usuario['nom_com'];
             $_SESSION['nom_com'] = $usuario['nom_com'];
+            $_SESSION['correo'] = $correo;
             $_SESSION['usuario_rol'] = $usuario['nombre_rol']; // Guarda 'admin', 'vendedor' o 'gerente'
             
             redirigir('taf2/index.php');
         } else {
             redirigir('taf2/login.php?error=Usuario o contraseña incorrectos');
+        }
+    }
+
+    // ACCIÓN 4: Crear Nueva Categoría (Solo Admin)
+    if (isset($_POST['action']) && $_POST['action'] === 'nueva_categoria') {
+        // Validar permisos
+        if (!verificar_permiso('admin')) {
+            redirigir('taf2/paginas/categorias.php?error=No+tienes+permiso+para+crear+categorías');
+        }
+        
+        $nombre_cat = trim($_POST['nombre_cat']);
+        $descripcion = trim($_POST['descripcion']);
+        $estado = trim($_POST['estado']);
+        
+        if (empty($nombre_cat) || empty($estado)) {
+            redirigir('taf2/paginas/categorias.php?error=El+nombre+de+la+categoría+es+requerido');
+        }
+        
+        try {
+            $sql = "INSERT INTO categorias (nombre_cat, descripcion, estado) VALUES (?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$nombre_cat, $descripcion, $estado]);
+            redirigir('taf2/paginas/categorias.php?msg=Categoría+creada+exitosamente');
+        } catch (PDOException $e) {
+            if (strpos($e->getMessage(), 'Duplicate') !== false) {
+                redirigir('taf2/paginas/categorias.php?error=La+categoría+ya+existe');
+            }
+            redirigir('taf2/paginas/categorias.php?error=Error+al+crear+categoría');
         }
     }
 }

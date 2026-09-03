@@ -6,11 +6,12 @@ require_once __DIR__ . '/functions.php';
 header('Content-Type: application/json');
 
 if (!estaLogueado()) {
-    respuestaJSON(false, 'No estás logueado');
+    respuestaJSON(false, 'No estás logueado', [], 400);
 }
 
 $con = conectarBD();
-$userEmail = $_SESSION['correo'];
+$userEmail = $_SESSION['correo'] ?? '';
+$userId = (int)($_SESSION['usuario_id'] ?? 0);
 $accion = $_GET['accion'] ?? $_POST['accion'] ?? '';
 
 function columnaExiste($con, $columna)
@@ -29,7 +30,7 @@ if ($accion === 'actualizar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $descripcion = trim($_POST['descripcion'] ?? '');
 
     if (empty($nombre)) {
-        respuestaJSON(false, 'El nombre es obligatorio');
+        respuestaJSON(false, 'El nombre es obligatorio', [], 400);
     }
 
     $imagen = null;
@@ -70,12 +71,17 @@ if ($accion === 'actualizar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($set)) {
-        respuestaJSON(false, 'No hay campos disponibles para actualizar');
+        respuestaJSON(false, 'No hay campos disponibles para actualizar', [], 400);
     }
 
-    $query = 'UPDATE usuarios SET ' . implode(', ', $set) . ' WHERE correo = ?';
-    $types .= 's';
-    $values[] = $userEmail;
+    $whereField = ($userEmail !== '' ? 'correo' : ($userId > 0 ? 'id_usu' : null));
+    if ($whereField === null) {
+        respuestaJSON(false, 'No se pudo identificar al usuario actual', [], 400);
+    }
+
+    $query = 'UPDATE usuarios SET ' . implode(', ', $set) . ' WHERE ' . $whereField . ' = ?';
+    $types .= ($whereField === 'id_usu' ? 'i' : 's');
+    $values[] = $userEmail !== '' ? $userEmail : $userId;
 
     $stmt = mysqli_prepare($con, $query);
     mysqli_stmt_bind_param($stmt, $types, ...$values);
@@ -89,24 +95,31 @@ if ($accion === 'actualizar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['descripcion'] = $descripcion;
         }
         mysqli_stmt_close($stmt);
-        respuestaJSON(true, 'Perfil actualizado correctamente');
+        respuestaJSON(true, 'Perfil actualizado correctamente', [], 200);
     }
 
-    respuestaJSON(false, 'Error al actualizar el perfil');
+    respuestaJSON(false, 'Error al actualizar el perfil', [], 500);
 }
 
 // Eliminar perfil
 if ($accion === 'eliminar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = mysqli_prepare($con, 'DELETE FROM usuarios WHERE correo = ?');
-    mysqli_stmt_bind_param($stmt, 's', $userEmail);
+    $whereField = ($userEmail !== '' ? 'correo' : ($userId > 0 ? 'id_usu' : null));
+    if ($whereField === null) {
+        respuestaJSON(false, 'No se pudo identificar al usuario actual', [], 400);
+    }
+
+    $stmt = mysqli_prepare($con, 'DELETE FROM usuarios WHERE ' . $whereField . ' = ?');
+    $valorWhere = $userEmail !== '' ? $userEmail : $userId;
+    $tipoWhere = ($whereField === 'id_usu' ? 'i' : 's');
+    mysqli_stmt_bind_param($stmt, $tipoWhere, $valorWhere);
 
     if (mysqli_stmt_execute($stmt)) {
         session_destroy();
         mysqli_stmt_close($stmt);
-        respuestaJSON(true, 'Perfil eliminado correctamente');
+        respuestaJSON(true, 'Perfil eliminado correctamente', [], 200);
     }
 
-    respuestaJSON(false, 'Error al eliminar el perfil');
+    respuestaJSON(false, 'Error al eliminar el perfil', [], 500);
 }
 
 if ($accion === 'actualizar_alergias' && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -115,12 +128,22 @@ if ($accion === 'actualizar_alergias' && $_SERVER['REQUEST_METHOD'] === 'POST') 
     if (mysqli_num_rows($check) == 0) {
         mysqli_query($con, "ALTER TABLE usuarios ADD COLUMN alergias TEXT DEFAULT NULL");
     }
-    $stmt = mysqli_prepare($con, 'UPDATE usuarios SET alergias = ? WHERE correo = ?');
-    mysqli_stmt_bind_param($stmt, 'ss', $alergias, $userEmail);
-    if (mysqli_stmt_execute($stmt)) {
-        respuestaJSON(true, 'Alergias guardadas correctamente');
+    $whereField = ($userEmail !== '' ? 'correo' : ($userId > 0 ? 'id_usu' : null));
+    if ($whereField === null) {
+        respuestaJSON(false, 'No se pudo identificar al usuario actual', [], 400);
+    }
+    $stmt = mysqli_prepare($con, 'UPDATE usuarios SET alergias = ? WHERE ' . $whereField . ' = ?');
+    $valorWhere = $userEmail !== '' ? $userEmail : $userId;
+    $tipoWhere = ($whereField === 'id_usu' ? 'is' : 'ss');
+    if ($whereField === 'id_usu') {
+        mysqli_stmt_bind_param($stmt, 'si', $alergias, $valorWhere);
     } else {
-        respuestaJSON(false, 'Error al guardar alergias');
+        mysqli_stmt_bind_param($stmt, 'ss', $alergias, $valorWhere);
+    }
+    if (mysqli_stmt_execute($stmt)) {
+        respuestaJSON(true, 'Alergias guardadas correctamente', [], 200);
+    } else {
+        respuestaJSON(false, 'Error al guardar alergias', [], 500);
     }
 }
 
@@ -131,13 +154,22 @@ if ($accion === 'actualizar_notificaciones' && $_SERVER['REQUEST_METHOD'] === 'P
     if (mysqli_num_rows($check) == 0) {
         mysqli_query($con, "ALTER TABLE usuarios ADD COLUMN notificaciones TINYINT(1) DEFAULT 0");
     }
-    $stmt = mysqli_prepare($con, 'UPDATE usuarios SET notificaciones = ? WHERE correo = ?');
-    mysqli_stmt_bind_param($stmt, 'is', $notificaciones, $userEmail);
-    if (mysqli_stmt_execute($stmt)) {
-        respuestaJSON(true, 'Preferencia de notificaciones actualizada');
+    $whereField = ($userEmail !== '' ? 'correo' : ($userId > 0 ? 'id_usu' : null));
+    if ($whereField === null) {
+        respuestaJSON(false, 'No se pudo identificar al usuario actual', [], 400);
+    }
+    $stmt = mysqli_prepare($con, 'UPDATE usuarios SET notificaciones = ? WHERE ' . $whereField . ' = ?');
+    $valorWhere = $userEmail !== '' ? $userEmail : $userId;
+    if ($whereField === 'id_usu') {
+        mysqli_stmt_bind_param($stmt, 'ii', $notificaciones, $valorWhere);
     } else {
-        respuestaJSON(false, 'Error al actualizar');
+        mysqli_stmt_bind_param($stmt, 'is', $notificaciones, $valorWhere);
+    }
+    if (mysqli_stmt_execute($stmt)) {
+        respuestaJSON(true, 'Preferencia de notificaciones actualizada', [], 200);
+    } else {
+        respuestaJSON(false, 'Error al actualizar', [], 500);
     }
 }
 
-respuestaJSON(false, 'Acción no válida');
+respuestaJSON(false, 'Acción no válida', [], 400);

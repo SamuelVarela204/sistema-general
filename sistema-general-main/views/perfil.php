@@ -7,7 +7,8 @@ if (!estaLogueado()) {
 $titulo = 'Mi Perfil';
 
 // Obtener datos actualizados del usuario
-$userEmail = $_SESSION['correo'];
+$userEmail = $_SESSION['correo'] ?? '';
+$userId = (int)($_SESSION['usuario_id'] ?? 0);
 $con = conectarBD();
 
 function columnaExiste($con, $columna)
@@ -17,7 +18,7 @@ function columnaExiste($con, $columna)
     return $resultado && mysqli_num_rows($resultado) > 0;
 }
 
-function obtenerCamposUsuario($con, $correo)
+function obtenerCamposUsuario($con, $correo = '', $idUsuario = 0)
 {
     $campos = ['nom_com', 'imagen', 'telefono'];
     foreach (['direccion', 'alergias', 'descripcion'] as $campo) {
@@ -26,9 +27,18 @@ function obtenerCamposUsuario($con, $correo)
         }
     }
 
-    $query = 'SELECT ' . implode(', ', $campos) . ' FROM usuarios WHERE correo = ? LIMIT 1';
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 's', $correo);
+    if ($correo !== '') {
+        $query = 'SELECT ' . implode(', ', $campos) . ' FROM usuarios WHERE correo = ? LIMIT 1';
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, 's', $correo);
+    } elseif ($idUsuario > 0) {
+        $query = 'SELECT ' . implode(', ', $campos) . ' FROM usuarios WHERE id_usu = ? LIMIT 1';
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $idUsuario);
+    } else {
+        return [];
+    }
+
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     $datos = mysqli_fetch_assoc($result);
@@ -36,7 +46,8 @@ function obtenerCamposUsuario($con, $correo)
     return $datos ?: [];
 }
 
-$userData = obtenerCamposUsuario($con, $userEmail);
+$userData = obtenerCamposUsuario($con, $userEmail, $userId);
+$nombrePerfil = $userData['nom_com'] ?? ($_SESSION['usuario'] ?? ($_SESSION['nom_com'] ?? 'Usuario'));
 ?>
 
 <style>
@@ -51,7 +62,7 @@ $userData = obtenerCamposUsuario($con, $userEmail);
     <section class="perfil-header">
         <div class="cirp perfil-foto" style="<?php if (!empty($userData['imagen'])): ?>background-image: url('data:image/jpeg;base64,<?php echo base64_encode($userData['imagen']); ?>');<?php endif; ?>"></div>
         <div class="profile-info">
-            <h1><?php echo htmlspecialchars($userData['nom_com'] ?: $_SESSION['usuario']); ?></h1>
+            <h1><?php echo htmlspecialchars($nombrePerfil); ?></h1>
             <div class="profile-grid">
                 <div class="profile-item"><strong>Correo electrónico:</strong> <?php echo htmlspecialchars($_SESSION['correo']); ?></div>
                 <?php if (!empty($userData['telefono'])): ?>
@@ -93,7 +104,7 @@ $userData = obtenerCamposUsuario($con, $userEmail);
 </main>
 
 <script>
-    const defaultNombre = <?php echo json_encode($userData['nom_com'] ?: $_SESSION['usuario']); ?>;
+    const defaultNombre = <?php echo json_encode($nombrePerfil); ?>;
     const defaultTelefono = <?php echo json_encode($userData['telefono'] ?? ''); ?>;
     const defaultDireccion = <?php echo json_encode($userData['direccion'] ?? ''); ?>;
     const defaultAlergias = <?php echo json_encode($userData['alergias'] ?? ''); ?>;

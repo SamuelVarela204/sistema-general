@@ -80,7 +80,7 @@ function obtenerDescripcionUsuario($con, $correo)
  */
 function estaLogueado()
 {
-    return isset($_SESSION['usuario']) && !empty($_SESSION['usuario']);
+    return (!empty($_SESSION['usuario']) || !empty($_SESSION['correo']) || !empty($_SESSION['usuario_id']));
 }
 
 /**
@@ -117,14 +117,19 @@ function esEmailValido($email)
 /**
  * Generar respuesta JSON
  */
-function respuestaJSON($exito, $mensaje, $datos = [])
+function respuestaJSON($exito, $mensaje, $datos = [], $codigoHttp = null)
 {
-    header('Content-Type: application/json');
+    if ($codigoHttp === null) {
+        $codigoHttp = $exito ? 200 : 400;
+    }
+
+    http_response_code($codigoHttp);
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
         'exito' => $exito,
         'mensaje' => $mensaje,
         'datos' => $datos
-    ]);
+    ], JSON_UNESCAPED_UNICODE);
     exit;
 }
 

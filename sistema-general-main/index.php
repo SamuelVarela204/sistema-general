@@ -38,7 +38,8 @@ if (estaLogueado()) {
         mysqli_stmt_close($stmtRol);
     }
 
-    if ((int)$rolUsuario === 1 && $page !== 'taf2') {
+    $paginasAdminPermitidas = ['taf2', 'perfil', 'ajustes'];
+    if ((int)$rolUsuario === 1 && !in_array($page, $paginasAdminPermitidas, true)) {
         header('Location: index.php?page=taf2');
         exit;
     }
@@ -134,11 +135,31 @@ if ($page === 'taf2') {
             $descripcion = trim($_POST['descripcion'] ?? '');
             $precio = (float)($_POST['precio'] ?? 0);
             $stock = (int)($_POST['stock'] ?? 0);
-            $categoria = trim($_POST['categoria'] ?? 'General');
+            $id_cat = (int)($_POST['id_cat'] ?? 1);
+            $categoria = trim($_POST['categoria'] ?? '');
 
             if ($nom_pro !== '' && $precio >= 0 && $stock >= 0) {
-                $stmt = mysqli_prepare($con, 'INSERT INTO producto (nom_pro, descripcion, precio, stock, categoria) VALUES (?, ?, ?, ?, ?)');
-                mysqli_stmt_bind_param($stmt, 'ssdss', $nom_pro, $descripcion, $precio, $stock, $categoria);
+                // Verificar si la tabla producto tiene la columna id_cat
+                $columnas = mysqli_query($con, "DESCRIBE producto");
+                $tiene_id_cat = false;
+                while ($col = mysqli_fetch_assoc($columnas)) {
+                    if ($col['Field'] === 'id_cat') {
+                        $tiene_id_cat = true;
+                        break;
+                    }
+                }
+                
+                if ($tiene_id_cat && $id_cat > 0) {
+                    // Usar el nuevo sistema con id_cat
+                    $stmt = mysqli_prepare($con, 'INSERT INTO producto (nom_pro, descripcion, precio, stock, id_cat) VALUES (?, ?, ?, ?, ?)');
+                    mysqli_stmt_bind_param($stmt, 'ssdsi', $nom_pro, $descripcion, $precio, $stock, $id_cat);
+                } else {
+                    // Fallback: usar el antiguo sistema con categoria de texto
+                    $categoria = $categoria ?: 'General';
+                    $stmt = mysqli_prepare($con, 'INSERT INTO producto (nom_pro, descripcion, precio, stock, categoria) VALUES (?, ?, ?, ?, ?)');
+                    mysqli_stmt_bind_param($stmt, 'ssdss', $nom_pro, $descripcion, $precio, $stock, $categoria);
+                }
+                
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
             }
@@ -153,11 +174,31 @@ if ($page === 'taf2') {
             $descripcion = trim($_POST['descripcion'] ?? '');
             $precio = (float)($_POST['precio'] ?? 0);
             $stock = (int)($_POST['stock'] ?? 0);
-            $categoria = trim($_POST['categoria'] ?? 'General');
+            $id_cat = (int)($_POST['id_cat'] ?? 1);
+            $categoria = trim($_POST['categoria'] ?? '');
 
             if ($id_pro > 0 && $nom_pro !== '' && $precio >= 0 && $stock >= 0) {
-                $stmt = mysqli_prepare($con, 'UPDATE producto SET nom_pro = ?, descripcion = ?, precio = ?, stock = ?, categoria = ? WHERE id_pro = ?');
-                mysqli_stmt_bind_param($stmt, 'ssdssi', $nom_pro, $descripcion, $precio, $stock, $categoria, $id_pro);
+                // Verificar si la tabla producto tiene la columna id_cat
+                $columnas = mysqli_query($con, "DESCRIBE producto");
+                $tiene_id_cat = false;
+                while ($col = mysqli_fetch_assoc($columnas)) {
+                    if ($col['Field'] === 'id_cat') {
+                        $tiene_id_cat = true;
+                        break;
+                    }
+                }
+                
+                if ($tiene_id_cat && $id_cat > 0) {
+                    // Usar el nuevo sistema con id_cat
+                    $stmt = mysqli_prepare($con, 'UPDATE producto SET nom_pro = ?, descripcion = ?, precio = ?, stock = ?, id_cat = ? WHERE id_pro = ?');
+                    mysqli_stmt_bind_param($stmt, 'ssdsii', $nom_pro, $descripcion, $precio, $stock, $id_cat, $id_pro);
+                } else {
+                    // Fallback: usar el antiguo sistema con categoria de texto
+                    $categoria = $categoria ?: 'General';
+                    $stmt = mysqli_prepare($con, 'UPDATE producto SET nom_pro = ?, descripcion = ?, precio = ?, stock = ?, categoria = ? WHERE id_pro = ?');
+                    mysqli_stmt_bind_param($stmt, 'ssdssi', $nom_pro, $descripcion, $precio, $stock, $categoria, $id_pro);
+                }
+                
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
             }
@@ -255,12 +296,45 @@ if ($page === 'taf2') {
             header('Location: index.php?page=taf2&view=pedidos');
             exit;
         }
+
+        // ====================================
+        // ACCIONES DE ALERGIAS
+        // ====================================
+        if ($action === 'agregar_alergia') {
+            $id_usu = $_SESSION['usuario_id'] ?? 0;
+            $id_fru = (int)($_POST['id_fru'] ?? 0);
+
+            if ($id_usu > 0 && $id_fru > 0) {
+                $stmt = mysqli_prepare($con, 'INSERT IGNORE INTO usuario_alergias (id_usu, id_fru) VALUES (?, ?)');
+                mysqli_stmt_bind_param($stmt, 'ii', $id_usu, $id_fru);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+            }
+            header('Location: index.php?page=taf2&view=alergias');
+            exit;
+        }
+
+        if ($action === 'remover_alergia') {
+            $id_usu = $_SESSION['usuario_id'] ?? 0;
+            $id_fru = (int)($_POST['id_fru'] ?? 0);
+
+            if ($id_usu > 0 && $id_fru > 0) {
+                $stmt = mysqli_prepare($con, 'DELETE FROM usuario_alergias WHERE id_usu = ? AND id_fru = ?');
+                mysqli_stmt_bind_param($stmt, 'ii', $id_usu, $id_fru);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+            }
+            header('Location: index.php?page=taf2&view=alergias');
+            exit;
+        }
     }
 
     $vistaTaf2 = match ($view) {
         'productos' => 'taf2/productos.php',
         'usuarios' => 'taf2/usuarios.php',
         'pedidos' => 'taf2/pedidos.php',
+        'alergias' => 'taf2/alergias.php',
+        'detalle' => 'taf2/detalle.php',
         default => 'taf2/index.php'
     };
 

@@ -30,7 +30,7 @@ if ($tokenManager->verificarToken($token) === false) {
         <h1>Nueva contraseña</h1>
     </div>
 
-    <form action="/sistema-general/includes/restablecer-procesar.php" method="post" novalidate style="margin-top: -30px;">
+    <form action="<?= BASE_URL ?>/includes/restablecer-procesar.php" method="post" novalidate style="margin-top: -30px;">
         <input type="hidden" name="token" value="<?= htmlspecialchars($token, ENT_QUOTES, 'UTF-8') ?>">
         <input type="password" name="nueva_contrasena" placeholder="Nueva contraseña (mínimo 6 caracteres)" required class="input-pastel" autocomplete="new-password">
         <input type="password" name="confirmar_contrasena" placeholder="Confirmar contraseña" required class="input-pastel" autocomplete="new-password">
