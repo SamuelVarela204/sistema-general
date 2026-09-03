@@ -1,0 +1,676 @@
+Plataforma Web para la Gestión de Inventario, Recetas y Ventas en Negocios de Bebidas Naturales en Bogotá
+	
+ 
+
+Aprendices:
+Samuel Varela Matapi
+Nicolle Agudelo Ramírez
+Diego Hernan Garcia Gonzalez
+Juan Pablo Gomez Gil
+
+
+Programa:
+Tecnólogo en Análisis y Desarrollo de Software 
+
+
+
+Ficha: 3160037
+
+
+Centro de Diseño y Metrología
+ Servicio Nacional de Aprendizaje-SENA
+Bogotá D.C., 2026
+Índice:
+1. Resumen:	3
+2. Abstract:	4
+3. Introducción:	5
+4. Planteamiento del problema:	7
+4.1.Objetivo general:	9
+4.2. Objetivos específicos:	9
+4.3. Justificación del proyecto:	10
+4.4. Alcance del proyecto:	10
+4.5. Matriz de riesgo:	12
+5. Elicitación de requisitos:	15
+5.1. Identificación de procesos:	15
+5.2. Recolección de la información del software a construir:	15
+5.2.1. Elección de la Técnica de Recolección de la Información:	15
+5.2.2. Diseño de los Formatos:	16
+5.2.3. Aplicación de la Técnica de Recolección de la Información:	16
+5.2.4. Organización de la Información Recolectada:	17
+5.3. Especificación de requerimientos:	17
+5.1. Requerimientos Funcionales (RF) :	17
+Módulos:	17
+5.2. Requerimientos No Funcionales (RNF) :	18
+5.3. Requerimientos Normativos:	18
+5.4. Propuesta Técnica:	18
+6. Reglas del negocio:	20
+
+
+
+
+
+
+
+
+Resumen:
+El presente informe técnico expone el diseño, desarrollo e implementación del sistema de información Tropical and Fresh, una solución de software orientada a optimizar la gestión operativa y administrativa de las fruterías en la ciudad de Bogotá. Históricamente, este sector comercial ha fundamentado sus actividades en procesos empíricos y manuales, lo que genera cuellos de botella críticos en las horas de mayor afluencia, pérdida recurrente de información estratégica, inexactitud en el control de inventarios de productos perecederos y un incremento en los tiempos de servicio al cliente.
+
+Para mitigar esta problemática, Tropical and Fresh se estructuró bajo una arquitectura relacional y un enfoque de desarrollo full-stack, integrando módulos automatizados para el registro y facturación de ventas en tiempo real, el control estricto de existencias en bodega, y la estandarización y personalización de recetas. Esta última funcionalidad resulta neurálgica, ya que permite dosificar con precisión las materias primas para reducir el desperdicio de insumos. Con la implementación de esta plataforma, el establecimiento automatiza sus flujos de trabajo tradicionales, transforma los datos operativos en conocimiento útil para la toma de decisiones y adquiere una infraestructura tecnológica robusta que garantiza un servicio ágil, control administrativo absoluto, competitividad y sostenibilidad en el mercado local.
+
+
+
+
+2. Abstract:
+This technical report presents the design, development, and implementation of the Tropical and Fresh information system, a software solution aimed at optimizing the operational and administrative management of fruit parlors in Bogotá. Historically, this commercial sector has relied on empirical and manual processes, which generate critical bottlenecks during peak hours, recurring loss of strategic information, inaccuracy in perishable inventory control, and an increase in customer service times.
+
+To mitigate this problem, Tropical and Fresh was structured under a relational architecture and a full-stack development approach, integrating automated modules for real-time sales logging and billing, strict warehouse stock control, and recipe standardization and customization. This final feature is core to the system, as it allows precise raw material portioning to significantly reduce supply waste. By implementing this platform, the establishment automates its traditional workflows, transforms operational data into actionable knowledge for decision-making, and acquires a robust technological infrastructure that guarantees agile service, absolute administrative control, competitiveness, and sustainability within the local market.
+
+
+
+
+
+
+
+3. Introducción:
+En el contexto comercial de Bogotá, las fruterías y establecimientos dedicados a la comercialización de alimentos frescos representan un sector dinámico pero altamente tradicional en sus procesos operativos. Actualmente, estos negocios enfrentan retos críticos en la gestión de sus actividades diarias, especialmente durante las horas de mayor afluencia o "horas pico". La dependencia de procesos manuales para la toma de pedidos, el cálculo de porciones y el despacho genera cuellos de botella severos que se traducen en tiempos de espera para el usuario que llegan a alcanzar los 25 minutos. Esta ineficiencia operativa no sólo degrada la experiencia del cliente, sino que impacta directamente en la rentabilidad del negocio debido a la pérdida de ventas potenciales.
+
+Más allá de la atención al público, la carencia de una infraestructura tecnológica adecuada debilita la administración interna de estos establecimientos. La falta de un registro centralizado provoca la pérdida constante de información valiosa, inconsistencias en el control de inventarios y errores humanos recurrentes al momento de gestionar la rotación de insumos perecederos. Al no contar con datos en tiempo real, la toma de decisiones estratégicas se vuelve reactiva, limitando la capacidad de crecimiento, competitividad y sostenibilidad en el mercado local.
+Como respuesta a esta problemática, el presente proyecto plantea el desarrollo e implementación del sistema de información Fresh And Fruits. Esta solución tecnológica tiene como objetivo principal optimizar la cadena operativa mediante la automatización integral de tres componentes neurálgicos: el control estricto de inventarios de materia prima, la estandarización y personalización de recetas para mitigar el desperdicio de insumos, y el registro automatizado de ventas en tiempo real. Con la implementación de este software, se busca transformar los flujos de trabajo empíricos en procesos sistemáticos y eficientes, garantizando un servicio ágil y un control administrativo absoluto.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4. Planteamiento del problema:
+En el sector comercial de Bogotá, el establecimiento Tropical and Fresh enfrenta serias dificultades operativas durante las horas pico debido a la ausencia de un sistema tecnológico centralizado que permita gestionar eficientemente los flujos de información. Actualmente, procesos críticos como la toma de pedidos, el control estricto de existencias en bodega, la administración financiera y la estandarización de recetas de bebidas naturales se ejecutan de manera manual o empírica.
+
+Esta carencia tecnológica genera un impacto negativo sistemático: pérdida recurrente de datos comerciales por no contar con un sistema de persistencia (base de datos), inconsistencias en el stock de insumos perecederos y retrasos severos en la atención que elevan los tiempos de espera hasta los 25 minutos. Estos efectos son el resultado directo de causas estructurales como la falta de una plataforma web propia, el uso de herramientas de registro obsoletas y la inexistencia de un almacenamiento digital automatizado. Como consecuencia, la gestión ineficaz limita la capacidad de escalabilidad, afecta la experiencia del cliente y pone en riesgo la sostenibilidad financiera y competitividad del negocio en el mercado local.
+
+
+A través del árbol de problemas desarrollado para el establecimiento Tropical and Fresh, se identifican de forma sistemática las causas y efectos que validan la necesidad de la solución de software:
+Efectos (Hojas y Ramas): Representan las consecuencias directas de la problemática. Se destaca la pérdida de información estratégica y comercial debido a la falta de métodos de almacenamiento seguros; el mal funcionamiento operativo traducido en bloqueos y demoras administrativas; y la formación de filas y tiempos de espera prolongados, lo que degrada la experiencia del usuario y arriesga la fidelización de los clientes.
+Problema Central (Tronco): Se define como una gestión inapropiada e ineficiente de los recursos y flujos de trabajo de la empresa, lo que compromete la productividad y su viabilidad financiera a largo plazo.
+Causas (Raíces): Constituyen el origen del problema técnico. Se estructuran bajo tres ejes: no contar con una plataforma web propia para automatizar las operaciones; el uso de recursos obsoletos y rudimentarios (como cuadernos o registros en papel) para la administración del inventario y recetas; y la inexistencia de bases de datos estructuradas que aseguren la persistencia, integridad y disponibilidad de los datos históricos del negocio.
+
+4.1.Objetivo general:
+Desarrollar e implementar una plataforma web para la gestión integral de inventarios, estandarización de recetas y automatización de ventas en el establecimiento de bebidas naturales Tropical and Fresh en la ciudad de Bogotá.
+
+4.2. Objetivos específicos:
+
+Determinar los requerimientos funcionales y no funcionales del negocio mediante técnicas de recolección de información para especificar el alcance técnico del sistema.
+Diseñar la arquitectura lógica del software, el modelo entidad-relación de la base de datos y los componentes de la interfaz de usuario (UI/UX) alineados con las necesidades operativas.
+Codificar los módulos de inventario, recetas, facturación y roles de usuario utilizando tecnologías full-stack y conexiones seguras a bases de datos relacionales.
+Validar el correcto funcionamiento del sistema mediante pruebas de software y despliegue en un entorno real de producción para recopilar la retroalimentación de los usuarios.
+
+4.3. Justificación del proyecto:
+La optimización operativa en los negocios gastronómicos y de bebidas naturales exige la transición de modelos tradicionales a infraestructuras digitales. Tropical and Fresh presenta falencias logísticas derivadas de la gestión manual que impactan su productividad y generan pérdidas económicas por el desperdicio de insumos. La implementación de esta plataforma web se justifica plenamente al automatizar los procesos administrativos, mitigar los errores humanos, reducir drásticamente los tiempos de servicio al cliente y proveer reportes precisos en tiempo real para una toma de decisiones estratégica y proactiva.
+Desde la perspectiva académica y profesional, este proyecto es fundamental ya que consolida las competencias de los desarrolladores en el análisis, diseño arquitectónico, modelado de bases de datos y construcción de aplicaciones full-stack. Asimismo, el software se diseña bajo principios de usabilidad, garantizando que una solución de alto nivel técnico resuelva una problemática comercial del entorno real.
+
+4.4. Alcance del proyecto:
+El proyecto comprende el ciclo completo de desarrollo del software (análisis, diseño, codificación, pruebas y despliegue) para el sistema de información de Tropical and Fresh. La plataforma incluirá un sistema de autenticación de usuarios con control de acceso basado en roles específicos (Administrador, Gerente, Cajero, Trabajador). El software permitirá la gestión de inventario de materia prima en tiempo real, el módulo de personalización y costeo de recetas para bebidas naturales, y un panel de facturación rápida de ventas. El alcance está delimitado para operar en un entorno web local o alojado en un servidor en la nube, optimizado para navegadores modernos, y excluye el desarrollo de aplicaciones móviles nativas o sistemas de pasarelas de pago externas en esta primera fase.
+
+
+
+
+
+
+
+
+
+
+4.5. Matriz de riesgo:
+Riesgo Identificado
+Probabilidad
+Impacto
+Nivel
+Medidas de Prevención / Mitigación
+Diligenciamiento erróneo por fatiga o distracción
+3
+2
+Medio
+Validaciones automáticas, formación práctica, pausas activas
+Olvido registrar entradas o salidas
+2
+3
+Medio
+Alertas por niveles bajos, roles definidos, revisión diaria
+Falta de claridad o malentendidos en tareas técnicas
+2
+2
+Medio
+Reuniones breves, checklist colaborativos, buena comunicación interna
+Sobrecarga de trabajo y errores por presión
+3
+3
+Alto
+Medidas: Capacitación continua, optimización de procesos y apoyo entre 
+Errores operativos durante periodos de alta demanda 
+2
+2
+Medio
+Capacitación emocional, enfoque en atención amable, soporte entre compañeros
+Registro incorrecto de cantidades o ingredientes
+2
+3
+Medio
+Confirmación doble de recetas, vista previa clara antes de guardar
+Uso de contraseñas débiles o compartidas
+2
+3
+Medio
+Autenticación segura, control de accesos, educación digital
+Fallos al implementar cambios sin pruebas previas
+3
+3
+Alto
+Fases de prueba, feedback de usuarios reales, control de versiones
+Desmotivación por falta de avances visibles
+2
+2
+Medio
+Retroalimentación positiva, celebraciones de pequeños logros, clima de trabajo sano
+Resistencia al uso de herramientas digitales
+2
+3
+Medio
+Capacitación personalizada, demostraciones prácticas, acompañamiento cercano
+Falla o corrupción de la base de datos 
+2
+3
+Alto
+Copias de seguridad automáticas, monitoreo y recuperación de datos. 
+Uso de contraseñas débiles o compartidas 
+2
+3
+Medio
+Autenticación segura, control de accesos y educación digital. 
+Acceso no autorizado a información sensible 
+2
+3
+Alto
+Gestión de roles, cifrado de datos y auditoría de accesos. 
+Fallos al implementar cambios sin pruebas previas 
+3
+3
+Alto
+Fases de prueba, entorno de pruebas y control de versiones. 
+Errores en la lógica de inventario, ventas o recetas 
+3
+3
+Alto
+Validaciones, pruebas funcionales y revisión de código. 
+Diligenciamiento erróneo por fatiga o distracción 
+3
+2
+Medio
+Validaciones automáticas, formación práctica y pausas activas. 
+Olvido de registrar entradas o salidas 
+2
+3
+Medio
+Alertas automáticas, roles definidos y revisión diaria. 
+Registro incorrecto de cantidades o ingredientes 
+2
+3
+Medio
+Confirmación doble de recetas y vista previa antes de guardar. 
+Sobrecarga de trabajo y errores por presión 
+3
+3
+Alto
+Automatización de procesos y mejora del flujo de trabajo. 
+Resistencia al uso de herramientas digitales 
+2
+3
+Medio
+Capacitación personalizada y acompañamiento cercano. 
+Caída del servidor o pérdida de conexión a internet 
+2
+3
+Alto
+Hosting confiable, monitoreo y respaldos periódicos 
+Falta de integración entre inventario, recetas y ventas 
+2
+3
+Alto
+Pruebas de integración y validación de procesos. 
+
+
+
+
+
+
+
+
+
+
+
+
+5. Elicitación de requisitos:
+5.1. Identificación de procesos:
+
+Para el desarrollo del sistema de información Tropical and Fresh, se clasificaron los procesos del negocio en tres macroprocesos estratégicos:
+Gestión de Inventarios (Bodega): Control de entrada de materias primas (frutas, endulzantes, vasos, pitillos), cálculo de existencias en tiempo real, alertas de stock mínimo y registro de mermas o insumos vencidos.
+Gestión de Producción (Recetas): Estandarización de las fórmulas de las bebidas naturales, dosificación exacta por porción y opción de personalización según el pedido del cliente (ej. sin azúcar, adición de fruta).
+Gestión de Ventas y Caja: Registro rápido de transacciones en el punto de venta (POS), generación de facturas físicas o digitales, y asignación de transacciones según el rol del usuario (Cajero, Gerente).
+
+5.2. Recolección de la información del software a construir:
+5.2.1. Elección de la Técnica de Recolección de la Información:
+Se seleccionó la entrevista estructurada como técnica principal de recolección de información. Esta elección se justifica debido a que permite un diálogo directo con la administración del establecimiento, facilitando la delimitación exacta de las reglas de negocio, los flujos de trabajo en horas pico y las restricciones operativas que el software debe resolver de forma prioritaria.
+
+5.2.2. Diseño de los Formatos:
+Para la ejecución de la técnica, se diseñó un cuestionario guía con preguntas cerradas y abiertas orientadas a la arquitectura de software:
+Formato de Entrevista Técnica – Proyecto Tropical and Fresh
+Objetivo: Levantar los requerimientos funcionales para el sistema web.
+Cuestionario Base:
+¿Cuáles son los roles de usuario requeridos y qué permisos específicos tendrá cada uno en el sistema?
+¿Cómo se maneja actualmente el inventario de frutas y qué datos se necesitan almacenar de cada insumo?
+¿Qué variables componen la preparación de una bebida dentro del menú para el módulo de recetas?
+¿Qué datos mínimos debe contener el módulo de facturación al momento de registrar una venta rápida?
+
+5.2.3. Aplicación de la Técnica de Recolección de la Información:
+La entrevista se llevó a cabo en las instalaciones del establecimiento. Durante la sesión, se recopilaron las necesidades críticas del negocio, destacando la urgencia de reemplazar los cuadernos manuales de cuentas por un sistema con persistencia de datos relacional y un control estricto de accesos. 
+5.2.4. Organización de la Información Recolectada:
+Los datos obtenidos se consolidaron en los siguientes puntos clave de desarrollo:
+Usuarios: Es obligatorio restringir las visitas. Un cajero no puede modificar los precios del inventario ni alterar las recetas base; estas funciones quedan exclusivas para el Administrador y el Gerente.
+Seguridad: El sistema debe validar las credenciales de correo y contraseña antes de permitir el ingreso a los módulos operativos.
+Base de Datos: Se requiere un diseño relacional donde cada usuario esté vinculado de forma obligatoria a un ID de rol existente en el sistema.
+
+5.3. Especificación de requerimientos:
+Aplicando los principios de la norma IEEE 830 para la Especificación de Requisitos de Software (SRS), se definen los requerimientos del sistema: 
+
+
+
+
+5.1. Requerimientos Funcionales (RF) :
+Modulo 1: Usuarios:
+Código
+Requisitos funcionales
+RU01
+Nombre: Registrar usuario
+Descripción: Permite crear una cuenta almacenando los datos personales y asignando el tipo de rol correspondiente (cliente o empleado). Debe contar con seguridad en autenticación mediante JWT (Soporte RNU01).
+entradas: Datos personales del usuario
+Acción iniciada por: Cliente o Administrador.
+Predecesor: –
+Prioridad: Alta
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Código
+Requisitos funcionales
+RU02
+Nombre: Inicio de sesión
+Descripción: erifica las credenciales introducidas en el sistema y permite el acceso seguro según el rol asignado. Cuenta con validación automática de campos en tiempo real (Soporte RNU02)
+entradas: Credenciales de acceso (Usuario / Contraseña).
+Acción iniciada por: Usuario. 
+Predecesor:  RU01
+Prioridad: Alta
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Código
+Requisitos funcionales
+RU03
+Nombre: Modificación de usuario
+Descripción: Permite actualizar la información de un perfil de usuario determinado. El módulo debe garantizar una disponibilidad constante del servicio del 99% (Soporte RNU03).
+entradas: Nuevos datos del perfil a modificar.
+Acción iniciada por: Administrador.
+Predecesor:  RU01
+Prioridad: Media
+
+
+
+
+
+
+
+
+
+
+
+
+
+Código
+Requisitos funcionales
+RU04
+Nombre:  Eliminación de usuario
+Descripción:  Permite dar de baja y borrar un perfil de usuario del sistema de forma definitiva.
+entradas:  ID del usuario a eliminar.
+Acción iniciada por: Administrador.
+Predecesor:  RU01
+Prioridad: Baja
+
+
+
+
+
+
+
+
+
+
+Modulo 2: Recetas:
+Código
+Requisitos funcionales
+RR01
+Nombre:   Crear recetas
+Descripción:   Permite ingresar una nueva bebida al catálogo con sus ingredientes y cantidades definidas. El sistema debe garantizar su uso continuo sin interrupciones en el horario operativo (Soporte RNR01).
+entradas:   Ingredientes y cantidades de la bebida.
+Acción iniciada por: Administrador.
+Predecesor:  RU02
+Prioridad: Alta
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Código
+Requisitos funcionales
+RR02
+Nombre:  ID de la receta y modificaciones técnicas.
+Descripción: Modifica recetas ya existentes debido a cambios en los productos o mejoras en la preparación. Cuenta con un respaldo automático en la base de datos para prevenir pérdidas (Soporte RNR02).
+entradas:   Ingredientes y cantidades de la bebida.
+Acción iniciada por: Administrador.
+Predecesor:  RR01
+Prioridad: Media
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Código
+Requisitos funcionales
+RR03
+Nombre:  Eliminar recetas
+Descripción:  Elimina del catálogo general aquellas recetas que ya no se utilicen. El sistema guarda versiones previas para restaurarlas en caso de error (Soporte RNR03).
+entradas:  ID de la receta a eliminar.
+Acción iniciada por: Administrador.
+Predecesor:  RR01
+Prioridad: Baja
+
+
+
+
+
+
+
+
+
+
+
+
+
+Código
+Requisitos funcionales
+RR04
+Nombre:  Leer recetas
+Descripción: Permite consultar de forma abierta la lista completa de recetas que se encuentran disponibles en el sistema.
+entradas:  Petición de lectura o filtros de búsqueda..
+Acción iniciada por: Empleado o Cliente.
+Predecesor:  RU02
+Prioridad: Alta
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Código
+Requisitos funcionales
+RR05
+Nombre: Compartir recetas
+Descripción: Envía recetas por medio de la plataforma o habilita su uso como plantillas base para que otros usuarios las puedan personalizar.
+entradas:  ID de la receta a compartir y usuario destino.
+Acción iniciada por: Administrador.
+Predecesor:  RR04
+Prioridad: Media
+
+
+
+
+
+
+
+
+
+
+
+
+Código
+Requisitos funcionales
+RR06
+Nombre: Verificar compatibilidad con personalización
+Descripción: Proceso automatizado donde el sistema determina si una receta en específico puede ser alterada o personalizada por el usuario sin arruinar su coherencia.
+entradas:  Análisis técnico de ingredientes por parte del Sistema.
+Acción iniciada por: Administrador.
+Predecesor:  RR01
+Prioridad: Media
+
+
+
+
+
+
+
+
+
+
+Modulo 3: Inventario:
+
+Código
+Requisitos funcionales
+RI01
+Nombre: Añadir Producto
+Descripción: Permite registrar nuevos insumos e ingredientes al inventario. Vinculado a un sistema de alertas automatizadas ante niveles bajos de stock (Soporte RNI01).
+entradas:  Datos del nuevo insumo (nombre, tipo).
+Acción iniciada por: Administrador.
+Predecesor:  -
+Prioridad: Alta
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Código
+Requisitos funcionales
+RI02
+Nombre: Modificar cantidades o características
+Descripción: Ajusta el stock actual físico y las propiedades de los insumos (fecha de caducidad, fecha de compra y estado). Genera un registro de auditoría con fecha, hora y responsable (Soporte RNI02).
+entradas:  ID del insumo y variables a actualizar.
+Acción iniciada por: Administrador.
+Predecesor:  RI01
+Prioridad: Media
+
+
+5.2. Requerimientos No Funcionales (RNF) :
+
+5.3. Requerimientos Normativos:
+El sistema de información se alineará con las normativas vigentes en Colombia:
+Ley 1581 de 2012 (Habeas Data): Protección y almacenamiento seguro de los datos personales registrados en el sistema (nombres, correos, teléfonos del personal y clientes).
+Estatuto Tributario Nacional: Estructuración de los módulos de facturación de acuerdo con los requisitos básicos exigidos para el registro de transacciones comerciales locales en establecimientos de comercio.
+
+5.4. Propuesta Técnica:
+Para el cumplimiento de los requerimientos identificados, se plantea una solución de software basada en una arquitectura monolítica liviana o desacoplada por capas:
+Backend: Lenguaje de programación PHP, utilizando PDO (PHP Data Objects) para gestionar de manera segura la comunicación con la capa de persistencia de datos.
+Frontend: Interfaces construidas con HTML5, CSS3 (utilizando frameworks modernos de estilos para garantizar un entorno adaptativo y limpio) y JavaScript para la validación dinámica de formularios en el lado del cliente y alertas interactivas.
+Base de Datos: Motor relacional MySQL, administrado a través del entorno phpMyAdmin, estructurado mediante tablas normalizadas con restricciones de integridad referencial para evitar datos huérfanos o inconsistencias en los registros de la empresa.
+
+
+6. Reglas del negocio:
+Las reglas de negocio para el sistema de información de Tropical and Fresh se clasifican de acuerdo con los componentes estratégicos de la plataforma, garantizando la integridad de los datos, la seguridad del software y la optimización del servicio: 
+Control de Acceso y Gestión de Usuarios
+RN-01 (Autenticación Obligatoria): Ningún usuario puede interactuar con las interfaces operativas o administrativas del sistema sin haber iniciado sesión de forma exitosa mediante sus credenciales de correo electrónico y contraseña (usu_con).
+RN-02 (Unicidad de Identificadores): El correo electrónico registrado funciona como el identificador único de acceso en la base de datos. El sistema no permitirá la creación de dos usuarios con la misma dirección de correo electrónico.
+RN-03 (Restricción Jerárquica por Roles): El acceso a los módulos está estrictamente ligado al rol asignado (id_rol):
+El Administrador y el Gerente tienen permisos de lectura y escritura global (gestión de usuarios, inventarios, recetas y reportes financieros).
+El Cajero tiene acceso exclusivo al módulo de facturación de ventas rápidas POS y lectura básica de productos.
+El Trabajador solo tiene acceso al panel de visualización de recetas y control operativo de producción diaria.
+RN-04 (Estado del Usuario): Solo los usuarios cuyo campo estado se encuentre configurado como "activo" podrán autenticarse en la plataforma. Si un trabajador pasa a estado "inactivo", el backend bloqueará de inmediato sus permisos de sesión sin necesidad de borrar su registro histórico de la base de datos.
+Gestión de Inventarios y Bodega
+RN-05 (Control de Stock Mínimo): El sistema debe evaluar de forma automatizada la cantidad de existencias de cada materia prima. Cuando un insumo llegue a la cantidad mínima crítica definida, la plataforma generará una alerta visual en el panel para notificar al Gerente la necesidad de reabastecimiento.
+RN-06 (Persistencia de Movimientos): Todo ingreso (compra a proveedores) o salida (merma por daño o insumo vencido) de materia prima debe quedar registrado obligatoriamente con el ID del usuario que ejecuta la acción, la cantidad exacta y la fecha de la transacción para mantener la trazabilidad de la bodega.
+Estandarización de Recetas y Menú
+RN-07 (Vinculación de Insumos): Toda bebida natural creada en el menú del sistema debe estar vinculada de forma obligatoria a una receta que desglose de manera exacta los ingredientes y porciones requeridas para su preparación. No se pueden registrar productos de fabricación propia sin ingredientes asignados.
+RN-08 (Exclusividad de Modificación): La estandarización de las porciones base de las recetas de la frutería es facultad exclusiva de los usuarios con rol de Administrador o Gerente, evitando alteraciones empíricas en la dosificación por parte del personal operativo.
+Módulo de Ventas y Facturación
+RN-09 (Descarga Automatizada de Inventario): Al momento de procesar y consolidar una venta rápida en el módulo POS, el sistema debe consultar la receta asociada a la bebida vendida y descontar de forma automática y en tiempo real las cantidades exactas de materia prima del inventario de bodega.
+RN-10 (Cierre de Transacciones): Toda venta registrada en el sistema se considera definitiva, requiriendo el ID del cajero responsable, el detalle de los productos despachados, el valor total acumulado y la fecha/hora exacta de la operación. Las modificaciones posteriores o anulaciones de facturas solo podrán ser autorizadas y ejecutadas por el Gerente o Administrador mediante clave de confirmación.
+
+
+
+
+
+
+
+
+
+
+7. Análisis de la especificación de requisitos del software: 
+7.1. Alternativas de solución(prototipo o prototipos del sistema, mockups):
+7.2. Diagrama de casos de uso y extensibilidad de estos:
+7.3. Diagramas de actividades y secuencias:
+7.4. Construir el modelo del dominio del sistema(Diagrama de clases):
+7.5. Elaborar el modelo entidad-relación:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8. Diseño de la solución del software de acuerdo con los procedimientos y requisitos técnicos:
+8.1. Arquitectura del software(diagrama de componentes), y patrones de diseño de software:
+8.2. Diagrama de despliegue:
+8.3. Diseño front-end-interfaces gráficas de usuario (HTML.CSS Y JS) :
+8.4. Interfaces gráficas de usuario móviles:
+8.5. Mapa de navegación de la aplicación:
+8.6. Determinar tipos de bases de datos:
+8.7. Modelo de datos diagrama ER (normalización de la base de datos) (Mínimo tercera forma normal) 
+8.8. Diccionario de datos: 
+8.9. Políticas de seguridad de los datos:
+Para mitigar riesgos informáticos y garantizar la protección de la información bajo la Ley 1581 de Habeas Data, el sistema implementa tres políticas de seguridad:
+P1 - Mecanismo de Sentencias Preparadas (Anti-Inyección SQL): Queda estrictamente prohibido concatenar variables directas provenientes de formularios HTTP en las sentencias de consulta. Todas las interacciones con la base de datos se deben ejecutar a través de parámetros enlazados en PDO ($stmt->bindParam()), forzando al motor MySQL a tratar las entradas de usuario estrictamente como valores de datos y no como código ejecutable.
+P2 - Cifrado de Contraseñas en la Capa de Datos: Las contraseñas de los usuarios bajo ninguna circunstancia se almacenarán en texto plano dentro de la base de datos. Todo registro o actualización de claves debe procesarse en PHP utilizando algoritmos de hash seguros como password_hash($contrasenia, PASSWORD_BCRYPT), garantizando su irreversibilidad ante accesos no autorizados al servidor.
+P3 - Ciclo de Vida y Caducidad de Sesiones: El sistema destruirá las variables de autenticación global tras un periodo prolongado de inactividad del usuario en la interfaz o al accionar de forma explícita el botón de cierre de sesión, previniendo secuestros de sesión en los terminales físicos del punto de venta.
+
+
+
+10. Construcción del software
+10.1. Base de datos para el software a partir del modelo de datos:
+10.1.1. Objetos de la base de datos (procedimientos almacenados, vistas, disparadores)
+10.1.2. Esquemas de seguridad de los datos:
+10.2. Codificación del software de acuerdo con el diseño establecido:
+10.2.1. Front-end (HTML, CSS, JAVASCRIPT, RESPONSIVE) 
+10.2.2. Estándar de codificación(Documentación del código aplicabilidad del estándar de codificación):
+10.2.3. Código fuente de los módulos del software web y móvil:
+10.2.4. Servicios web:
+10.2.5. Control de versiones: 
+10.2.6. Pruebas del software:
+10.2.6.1. Planeación de las pruebas a nivel unitario(módulos), con base en los requerimientos funcionales y no funcionales:		 
+10.2.6.2. EJECUCIÓN DE LAS PRUEBAS, INFORME DE HALLAZGOS 
+10.2.6.3. CORRECCIÓN DEL ERRORES, Y DOCUMENTACIÓN DE  LOS MISMOS. 
+10.2.6.4. MANEJO DE ALERTAS / EXCEPCIONES 
+10.2.6.5. PLANEACIÓN Y DISEÑO DE LA PRUEBAS A NIVEL SISTEMA, CON   BASE EN LO REQUERIMIENTOS FUNCIONALES Y NO FUNCIONALES. 
+10.2.6.6. EJECUCIÓN DE LAS PRUEBAS, INFORME DE  HALLAZGOS 
+10.2.6.7. CORRECCIÓN DEL ERRORES, Y DOCUMENTACIÓN DE LOS MISMOS. 

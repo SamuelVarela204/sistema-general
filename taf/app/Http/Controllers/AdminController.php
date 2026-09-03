@@ -6,7 +6,9 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\GlobalSetting;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -48,4 +50,25 @@ class AdminController extends Controller
     public function orders() { return view('admin.orders', ['orders' => Order::with('user')->latest('id_ped')->paginate(15)]); }
     public function updateOrder(Request $request, Order $order) { $order->update($request->validate(['estado' => 'required|in:pendiente,preparando,enviado,entregado,cancelado', 'total' => 'required|numeric|min:0'])); return back()->with('success', 'Pedido actualizado.'); }
     public function destroyOrder(Order $order) { $order->delete(); return back()->with('success', 'Pedido eliminado.'); }
+
+    public function background() { return view('admin.background', ['setting' => GlobalSetting::find(1)]); }
+
+    public function updateBackground(Request $request)
+    {
+        $request->validate(['fondo' => ['required', 'image', 'mimes:jpeg,jpg,png,webp', 'max:8192']]);
+        GlobalSetting::updateOrCreate(['id' => 1], [
+            'glob_wall' => file_get_contents($request->file('fondo')->getRealPath()),
+            'glob_mime' => $request->file('fondo')->getMimeType(),
+        ]);
+        return back()->with('success', 'Fondo global actualizado.');
+    }
+
+    public function destroyBackground() { GlobalSetting::where('id', 1)->update(['glob_wall' => null, 'glob_mime' => null]); return back()->with('success', 'Fondo global eliminado.'); }
+
+    public function backgroundImage(): Response
+    {
+        $setting = GlobalSetting::find(1);
+        abort_unless($setting && $setting->glob_wall, 404);
+        return response($setting->glob_wall)->header('Content-Type', $setting->glob_mime ?: 'image/jpeg')->header('Cache-Control', 'public, max-age=3600');
+    }
 }

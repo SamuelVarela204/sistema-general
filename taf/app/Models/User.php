@@ -60,6 +60,33 @@ class User extends Authenticatable
 
     public function getRoleNameAttribute()
     {
-        return strtolower((string) optional($this->role)->nombre_rol);
+        $idRol = (int) ($this->attributes['id_rol'] ?? $this->id_rol ?? 2);
+
+        $roleName = trim((string) ($this->attributes['nombre_rol'] ?? ''));
+        if ($roleName === '' && $this->relationLoaded('role')) {
+            $roleName = trim((string) optional($this->role)->nombre_rol);
+        }
+
+        if ($roleName !== '') {
+            return strtolower($roleName);
+        }
+
+        return match ($idRol) {
+            1 => 'admin',
+            2 => 'cliente',
+            3 => 'inventario',
+            4 => 'gerente',
+            5 => 'cajero',
+            6 => 'trabajador',
+            default => 'cliente',
+        };
+    }
+
+    public function hasRole(string ...$roles): bool
+    {
+        $requested = array_map('strtolower', $roles);
+        $roleName = strtolower((string) $this->role_name);
+
+        return in_array($roleName, $requested, true);
     }
 }

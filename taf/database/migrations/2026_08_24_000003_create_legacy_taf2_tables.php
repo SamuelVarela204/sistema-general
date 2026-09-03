@@ -20,6 +20,8 @@ return new class extends Migration
             ['id_rol' => 2, 'nombre_rol' => 'cliente'],
             ['id_rol' => 3, 'nombre_rol' => 'inventario'],
             ['id_rol' => 4, 'nombre_rol' => 'gerente'],
+            ['id_rol' => 5, 'nombre_rol' => 'cajero'],
+            ['id_rol' => 6, 'nombre_rol' => 'trabajador'],
         ]);
 
         if (! Schema::hasTable('usuarios')) {
@@ -28,7 +30,7 @@ return new class extends Migration
                 $table->unsignedInteger('id_rol')->default(2);
                 $table->string('nom_com', 225);
                 $table->string('usu_con', 225);
-                $table->mediumBlob('imagen')->nullable();
+                $table->binary('imagen')->nullable();
                 $table->string('telefono', 15)->nullable();
                 $table->string('correo', 225)->unique();
                 $table->string('direccion', 225)->nullable();

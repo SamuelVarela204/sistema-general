@@ -2,15 +2,17 @@
 
 namespace Tests\Unit;
 
+use App\Models\User;
 use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     */
-    public function test_that_true_is_true(): void
+    public function test_user_role_mapping_supports_cajero_and_trabajador(): void
     {
-        $this->assertTrue(true);
+        $cajero = new User(['id_rol' => 5]);
+        $this->assertTrue($cajero->hasRole('cajero'));
+
+        $trabajador = new User(['id_rol' => 6]);
+        $this->assertTrue($trabajador->hasRole('trabajador'));
     }
 }

@@ -26,7 +26,20 @@ class AuthController extends Controller
         }
         Auth::login($user, $request->boolean('recordar'));
         $request->session()->regenerate();
-        return redirect()->intended($user->role_name === 'admin' ? route('admin.dashboard') : route('home'));
+
+        if ($user->hasRole('admin', 'inventario', 'gerente')) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        if ($user->hasRole('cajero')) {
+            return redirect()->route('pos.index');
+        }
+
+        if ($user->hasRole('trabajador')) {
+            return redirect()->route('recipes.index');
+        }
+
+        return redirect()->route('home');
     }
 
     public function register(Request $request)
